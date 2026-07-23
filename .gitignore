@@ -1,0 +1,42 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Build and packaging artifacts
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Test, type-check, lint, and coverage output
+.pytest_cache/
+.mypy_cache/
+.pytype/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+
+# Local configuration and notebooks
+.env
+.env.*
+!.env.example
+.ipynb_checkpoints/
+
+# Editor files: share workspace run/debug settings, ignore personal state
+.vscode/*
+!.vscode/launch.json
+!.vscode/settings.json
+
+# Operating-system files
+.DS_Store
+Thumbs.db
