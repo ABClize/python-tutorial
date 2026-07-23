@@ -1,9 +1,9 @@
 """常见 Python 面试算法题：优先理解思路与复杂度。"""
 
 
-def two_sum(numbers, target):
+def two_sum(numbers: list[int], target: int) -> list[int]:
     """哈希表：时间 O(n)，空间 O(n)。"""
-    seen = {}
+    seen: dict[int, int] = {}
     for index, number in enumerate(numbers):
         complement = target - number
         if complement in seen:
@@ -39,9 +39,8 @@ def valid_brackets(text):
     for char in text:
         if char in "([{":
             stack.append(char)
-        elif char in pairs:
-            if not stack or stack.pop() != pairs[char]:
-                return False
+        elif char in pairs and (not stack or stack.pop() != pairs[char]):
+            return False
     return not stack
 
 

@@ -21,7 +21,7 @@ def list_tuple_examples():
     print("原列表不变:", numbers)
 
     point = (10, 20)  # 元组不可修改，适合表示固定结构的数据
-    x, y = point      # 解包
+    x, y = point  # 解包
     first, *middle, last = numbers
     print("元组解包:", x, y)
     print("星号解包:", first, middle, last)

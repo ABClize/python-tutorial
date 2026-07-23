@@ -6,19 +6,19 @@ import copy
 def copy_example():
     """浅拷贝与深拷贝。"""
     original = [[1, 2], [3, 4]]
-    shallow = original.copy()          # 只复制最外层列表
-    deep = copy.deepcopy(original)     # 递归复制所有嵌套对象
+    shallow = original.copy()  # 只复制最外层列表
+    deep = copy.deepcopy(original)  # 递归复制所有嵌套对象
 
     original[0].append(99)
     print("原列表:", original)
-    print("浅拷贝:", shallow)         # 内层列表仍然是同一个对象，能看到 99
-    print("深拷贝:", deep)            # 内层列表独立，不会看到 99
+    print("浅拷贝:", shallow)  # 内层列表仍然是同一个对象，能看到 99
+    print("深拷贝:", deep)  # 内层列表独立，不会看到 99
 
 
 def mutable_default_argument_example():
     """高频陷阱：不要把 [] 直接作为函数默认值。"""
 
-    def append_bad(value, items=[]):
+    def append_bad(value, items=[]):  # noqa: B006 - 故意演示反例
         items.append(value)
         return items
 
@@ -47,8 +47,8 @@ def generator_example():
 def comprehension_example():
     """列表推导式与字典推导式。"""
     numbers = [1, 2, 3, 4, 5]
-    even_squares = [number ** 2 for number in numbers if number % 2 == 0]
-    square_map = {number: number ** 2 for number in numbers}
+    even_squares = [number**2 for number in numbers if number % 2 == 0]
+    square_map = {number: number**2 for number in numbers}
     print("偶数平方:", even_squares)
     print("平方字典:", square_map)
 

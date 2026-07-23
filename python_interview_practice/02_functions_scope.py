@@ -38,6 +38,7 @@ def counter_factory():
 
 def log_calls(func):
     """装饰器：在不修改原函数代码的前提下增加功能。"""
+
     @wraps(func)
     def wrapper(*args, **kwargs):
         print(f"调用 {func.__name__}: args={args}, kwargs={kwargs}")

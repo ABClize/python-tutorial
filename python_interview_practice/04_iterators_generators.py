@@ -30,7 +30,7 @@ def fibonacci():
 
 def read_chunks(text, size):
     for start in range(0, len(text), size):
-        yield text[start:start + size]
+        yield text[start : start + size]
 
 
 def main():

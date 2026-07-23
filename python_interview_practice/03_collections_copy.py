@@ -2,6 +2,12 @@
 
 import copy
 from collections import Counter, defaultdict, deque
+from typing import TypedDict
+
+
+class StudentRecord(TypedDict):
+    name: str
+    score: int
 
 
 def copy_examples():
@@ -33,7 +39,7 @@ def collections_examples():
 
 
 def sorting_examples():
-    students = [
+    students: list[StudentRecord] = [
         {"name": "Alice", "score": 88},
         {"name": "Bob", "score": 95},
         {"name": "Carol", "score": 88},

@@ -36,6 +36,8 @@ htmlcov/
 .vscode/*
 !.vscode/launch.json
 !.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/tasks.json
 
 # Operating-system files
 .DS_Store

@@ -1,7 +1,46 @@
 [project]
 name = "test"
 version = "0.1.0"
-description = "Add your description here"
+description = "A runnable Python interview preparation workspace"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []
+
+[dependency-groups]
+dev = [
+    "hypothesis",
+    "ipykernel",
+    "jupyterlab",
+    "mypy",
+    "pytest",
+    "pytest-asyncio",
+    "pytest-cov",
+    "ruff",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+asyncio_mode = "auto"
+pythonpath = ["."]
+
+[tool.coverage.run]
+branch = true
+source = ["python_interview_practice", "interview_exercises"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.mypy]
+python_version = "3.11"
+check_untyped_defs = true
+warn_return_any = true
+warn_unused_ignores = true

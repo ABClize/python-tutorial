@@ -6,9 +6,9 @@ def reverse_words(sentence):
     return " ".join(reversed(sentence.split()))
 
 
-def first_non_repeating_char(text):
+def first_non_repeating_char(text: str) -> str | None:
     """题：返回第一个只出现一次的字符；不存在则返回 None。"""
-    counts = {}
+    counts: dict[str, int] = {}
     for char in text:
         counts[char] = counts.get(char, 0) + 1
     for char in text:
@@ -38,9 +38,9 @@ def merge_sorted(left, right):
     return result
 
 
-def group_anagrams(words):
+def group_anagrams(words: list[str]) -> list[list[str]]:
     """题：把由相同字母组成的单词分为一组。"""
-    groups = {}
+    groups: dict[str, list[str]] = {}
     for word in words:
         key = "".join(sorted(word))
         groups.setdefault(key, []).append(word)
@@ -55,7 +55,9 @@ def run_checks():
     assert flatten_once([[1, 2], [3], [], [4, 5]]) == [1, 2, 3, 4, 5]
     assert merge_sorted([1, 4, 7], [2, 3, 8]) == [1, 2, 3, 4, 7, 8]
     assert group_anagrams(["eat", "tea", "tan", "ate", "nat", "bat"]) == [
-        ["eat", "tea", "ate"], ["tan", "nat"], ["bat"]
+        ["eat", "tea", "ate"],
+        ["tan", "nat"],
+        ["bat"],
     ]
 
 

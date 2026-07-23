@@ -1,0 +1,43 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Python: 运行全部示例",
+            "type": "shell",
+            "command": "uv run python run_all.py",
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "Python: 运行 pytest",
+            "type": "shell",
+            "command": "uv run pytest -v",
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Python: 测试覆盖率",
+            "type": "shell",
+            "command": "uv run pytest --cov --cov-report=term-missing",
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "Python: Ruff 检查",
+            "type": "shell",
+            "command": "uv run ruff check .",
+            "group": "test",
+            "problemMatcher": []
+        },
+        {
+            "label": "Jupyter: 启动 Lab",
+            "type": "shell",
+            "command": "uv run jupyter lab",
+            "isBackground": true,
+            "problemMatcher": []
+        }
+    ]
+}
