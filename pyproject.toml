@@ -4,11 +4,19 @@ version = "0.1.0"
 description = "A runnable Python interview preparation workspace"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "fastapi",
+    "pydantic[email]",
+    "pydantic-settings",
+    "uvicorn[standard]",
+]
 
 [dependency-groups]
 dev = [
+    "asgi-lifespan",
     "hypothesis",
+    "httpx",
+    "httpx2",
     "ipykernel",
     "jupyterlab",
     "mypy",
@@ -26,7 +34,7 @@ pythonpath = ["."]
 
 [tool.coverage.run]
 branch = true
-source = ["python_interview_practice", "interview_exercises"]
+source = ["python_interview_practice", "interview_exercises", "backend_interview"]
 
 [tool.coverage.report]
 show_missing = true

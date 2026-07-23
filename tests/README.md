@@ -5,6 +5,7 @@
 - `python_interview_practice/08_algorithms.py`
 - `python_interview_practice/09_practice_questions.py`
 - `interview_exercises/` 中的算法、容器、面向对象和异步代码
+- `backend_interview/` 中的 FastAPI、Pydantic v2、服务层和 asyncio 场景
 
 由于源文件以数字开头，不能写普通的
 `import python_interview_practice.08_algorithms`。测试通过
@@ -24,6 +25,7 @@ uv run pytest -v
 uv run pytest tests/test_algorithms.py -v
 uv run pytest tests/test_practice_questions.py -v
 uv run pytest tests/test_properties.py -v
+uv run pytest tests/backend -v
 ```
 
 ## 阅读建议
@@ -40,6 +42,10 @@ uv run pytest tests/test_properties.py -v
 `test_properties.py` 不只测试手写的几个样例，而是用 Hypothesis 自动生成大量输入，
 验证“合并结果一定有序”“编码后再解码一定回到原字符串”等普遍性质。这能发现人工
 样例容易遗漏的边界情况。
+
+`tests/backend/` 同时展示四个测试层次：Pydantic 模型测试、服务层异步测试、
+FastAPI `TestClient` 请求测试，以及 `HTTPX + ASGITransport` 的全异步请求测试。
+依赖覆盖、幂等并发、乐观锁、超时取消和资源清理也都有独立样例。
 
 这些测试依据当前函数文档所表达的契约编写。例如二分查找假定输入
 已经按升序排列，斐波那契函数的有效业务输入假定为非负整数；测试

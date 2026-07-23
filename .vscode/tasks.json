@@ -38,6 +38,20 @@
             "command": "uv run jupyter lab",
             "isBackground": true,
             "problemMatcher": []
+        },
+        {
+            "label": "Backend: 启动 FastAPI",
+            "type": "shell",
+            "command": "uv run uvicorn backend_interview.main:app --reload",
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Backend: 运行面试场景测试",
+            "type": "shell",
+            "command": "uv run pytest tests/backend -v",
+            "group": "test",
+            "problemMatcher": []
         }
     ]
 }

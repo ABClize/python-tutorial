@@ -13,6 +13,7 @@
 uv sync --group dev
 uv run python run_all.py
 uv run pytest -v
+uv run uvicorn backend_interview.main:app --reload
 uv run jupyter lab
 ```
 
@@ -26,6 +27,7 @@ VS Code 打开项目后会推荐 Python、Debugger、Pylance 和 Jupyter 扩展�
 .
 ├── python_interview_practice/  # 按主题编号的可运行讲解
 ├── interview_exercises/        # 面试题、参考实现和自检
+├── backend_interview/          # FastAPI、Pydantic v2、asyncio 项目实战
 ├── tests/                      # unittest、pytest、Hypothesis 属性测试
 ├── notebooks/                  # 从上到下可复现的 Jupyter 教程
 ├── tools/                      # Notebook 构建工具
@@ -44,6 +46,8 @@ VS Code 打开项目后会推荐 Python、Debugger、Pylance 和 Jupyter 扩展�
 | 类型系统 | 类型标注、泛型、`Protocol`、`TypeVar`、`TypedDict` |
 | 工程能力 | 异常、上下文管理器、测试、Mock、依赖注入、代码质量 |
 | 并发 | 线程、锁、线程池、`asyncio`、任务、超时和队列 |
+| 现代后端 | FastAPI、Pydantic v2、认证、幂等、乐观锁、依赖覆盖 |
+| 可靠性 | 限流、重试、取消、缓存击穿、生命周期、可观测性 |
 | 性能 | 时间复杂度、`timeit`、`cProfile`、`tracemalloc`、内存模型 |
 | 算法 | 哈希表、栈、队列、二分、排序、双指针、动态规划 |
 | 标准库 | `collections`、`functools`、`heapq`、`bisect`、`pathlib` |
@@ -92,6 +96,16 @@ uv run pytest -v
 5. 如果数据量扩大十倍，会改什么？
 6. 有没有更 Pythonic 或更易维护的写法？
 
+### 第六遍：项目场景面试
+
+进入 [`backend_interview/`](backend_interview/README.md)，运行订单 API 并配合
+[`QUESTIONS.md`](backend_interview/QUESTIONS.md) 练习。这里不只问框架语法，还要求解释：
+
+- 为什么路由、服务、仓储和外部网关要分层；
+- 取消、超时、并发上限和幂等如何共同影响可靠性；
+- Pydantic 校验边界、领域规则和数据库约束应分别放在哪里；
+- 如何用同步客户端、异步客户端、依赖覆盖和 Fake 设计可维护测试。
+
 ## 常用命令
 
 ```bash
@@ -108,7 +122,13 @@ uv run pytest --cov --cov-report=term-missing
 uv run ruff check .
 
 # 静态类型检查
-uv run mypy run_all.py interview_exercises python_interview_practice
+uv run mypy run_all.py interview_exercises python_interview_practice backend_interview
+
+# 启动现代后端项目（Swagger UI: http://127.0.0.1:8000/docs）
+uv run uvicorn backend_interview.main:app --reload
+
+# 只运行后端场景测试
+uv run pytest tests/backend -v
 
 # 启动 Notebook
 uv run jupyter lab
