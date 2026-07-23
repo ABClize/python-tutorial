@@ -19,11 +19,24 @@ from backend_interview.schemas import CreateOrderRequest
 
 @dataclass(frozen=True, slots=True)
 class CreateOrderResult:
+    """Return value for create operations.
+
+    ``created`` mirrors the HTTP/API contract: ``False`` means the request was
+    a safe idempotent replay and the existing order is returned.
+    """
+
     order: Order
     created: bool
 
 
 class OrderService:
+    """Use-case layer that coordinates repositories and external gateways.
+
+    The service deliberately does not import FastAPI classes. That keeps
+    business orchestration testable without an ASGI client and makes it easier
+    to reuse the same use cases from a CLI, worker, or message consumer.
+    """
+
     def __init__(
         self,
         repository: OrderRepository,
@@ -46,6 +59,8 @@ class OrderService:
         command: CreateOrderRequest,
         idempotency_key: str,
     ) -> CreateOrderResult:
+        # Fast path for retries that arrive after the first request completed.
+        # The repository still repeats this check atomically to handle races.
         existing = await self.repository.find_by_idempotency_key(idempotency_key)
         if existing is not None:
             return CreateOrderResult(existing, created=False)
@@ -54,6 +69,8 @@ class OrderService:
         try:
             async with asyncio.timeout(self.timeout_seconds):
                 try:
+                    # TaskGroup gives structured concurrency: if catalog or
+                    # inventory fails, sibling tasks are cancelled as a group.
                     async with asyncio.TaskGroup() as task_group:
                         for item in command.items:
                             product_tasks[item.sku] = task_group.create_task(
@@ -78,6 +95,8 @@ class OrderService:
             )
             for item in command.items
         )
+        # Pydantic validates the boundary request; the domain object owns
+        # business defaults such as initial status, UUID, timestamp, and version.
         candidate = Order.create(str(command.customer_email), items)
         saved, created = await self.repository.create(candidate, idempotency_key)
         return CreateOrderResult(saved, created)
@@ -89,6 +108,7 @@ class OrderService:
         return order
 
     async def list_orders(self, offset: int, limit: int) -> tuple[list[Order], int]:
+        # Listing and counting are independent reads, so they can run together.
         orders, total = await asyncio.gather(
             self.repository.list(offset, limit),
             self.repository.count(),
@@ -147,6 +167,8 @@ class OrderService:
             command: CreateOrderRequest,
             key: str,
         ) -> CreateOrderResult:
+            # Bound fan-out from one bulk request so a single client cannot
+            # create unbounded upstream catalog/inventory pressure.
             async with self._bulk_semaphore:
                 return await self.create_order(command, key)
 

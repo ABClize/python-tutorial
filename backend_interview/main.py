@@ -40,6 +40,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @asynccontextmanager
     async def lifespan(application: FastAPI) -> AsyncIterator[None]:
+        # Lifespan is the composition root for process-scoped resources.
+        # Replace these fakes with real database pools or HTTP clients in prod.
         repository = InMemoryOrderRepository()
         application.state.order_repository = repository
         application.state.catalog_gateway = FakeCatalogGateway()
@@ -64,6 +66,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         request: Request,
         call_next: RequestResponseEndpoint,
     ) -> Response:
+        # Store request ID in both request.state and a ContextVar so code that
+        # does not receive Request explicitly can still attach correlation data.
         request_id = request.headers.get("X-Request-ID") or uuid4().hex
         request.state.request_id = request_id
         token = request_id_context.set(request_id)
@@ -81,6 +85,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         request: Request,
         exception: BackendInterviewError,
     ) -> JSONResponse:
+        # Domain exceptions stay HTTP-agnostic until this API boundary maps
+        # them to transport-level status codes and a stable error envelope.
         status_by_type: dict[type[BackendInterviewError], int] = {
             OrderNotFoundError: status.HTTP_404_NOT_FOUND,
             ProductUnavailableError: status.HTTP_409_CONFLICT,

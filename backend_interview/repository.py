@@ -13,6 +13,12 @@ from backend_interview.exceptions import OptimisticLockError, OrderNotFoundError
 
 
 class OrderRepository(Protocol):
+    """Persistence port used by the service layer.
+
+    A Protocol documents behavior without forcing inheritance, which keeps tests
+    free to provide lightweight fakes as long as they implement the same shape.
+    """
+
     async def find_by_idempotency_key(self, key: str) -> Order | None: ...
 
     async def create(self, order: Order, idempotency_key: str) -> tuple[Order, bool]: ...
@@ -55,6 +61,8 @@ class InMemoryOrderRepository:
     async def create(self, order: Order, idempotency_key: str) -> tuple[Order, bool]:
         self._ensure_open()
         async with self._lock:
+            # The check and insert happen under one lock; in a database this
+            # should be backed by a unique constraint on the idempotency key.
             existing_id = self._order_id_by_idempotency_key.get(idempotency_key)
             if existing_id is not None:
                 return deepcopy(self._orders[existing_id]), False
@@ -88,6 +96,7 @@ class InMemoryOrderRepository:
             existing = self._orders.get(order.id)
             if existing is None:
                 raise OrderNotFoundError(str(order.id))
+            # Optimistic locking rejects writes based on stale client state.
             if existing.version != expected_version:
                 raise OptimisticLockError(expected_version, existing.version)
 
