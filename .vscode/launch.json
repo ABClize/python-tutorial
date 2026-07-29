@@ -5,12 +5,12 @@
             "name": "Python: 调试 main.py",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/main.py",
-            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/python/main.py",
+            "cwd": "${workspaceFolder}/python",
             "console": "integratedTerminal",
             "justMyCode": true,
             "env": {
-                "PYTHONPATH": "${workspaceFolder}"
+                "PYTHONPATH": "${workspaceFolder}/python"
             }
         },
         {
@@ -18,11 +18,11 @@
             "type": "debugpy",
             "request": "launch",
             "program": "${file}",
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/python",
             "console": "integratedTerminal",
             "justMyCode": true,
             "env": {
-                "PYTHONPATH": "${workspaceFolder}"
+                "PYTHONPATH": "${workspaceFolder}/python"
             }
         },
         {
@@ -34,11 +34,11 @@
                 "-v",
                 "-s"
             ],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/python",
             "console": "integratedTerminal",
             "justMyCode": true,
             "env": {
-                "PYTHONPATH": "${workspaceFolder}"
+                "PYTHONPATH": "${workspaceFolder}/python"
             }
         },
         {
@@ -51,11 +51,11 @@
                 "-v",
                 "-s"
             ],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/python",
             "console": "integratedTerminal",
             "justMyCode": true,
             "env": {
-                "PYTHONPATH": "${workspaceFolder}"
+                "PYTHONPATH": "${workspaceFolder}/python"
             }
         },
         {
@@ -71,11 +71,11 @@
                 "--port",
                 "8000"
             ],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/python",
             "console": "integratedTerminal",
             "justMyCode": true,
             "env": {
-                "PYTHONPATH": "${workspaceFolder}"
+                "PYTHONPATH": "${workspaceFolder}/python"
             }
         }
     ]

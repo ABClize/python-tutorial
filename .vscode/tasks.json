@@ -5,6 +5,9 @@
             "label": "Python: 运行全部示例",
             "type": "shell",
             "command": "uv run python run_all.py",
+            "options": {
+                "cwd": "${workspaceFolder}/python"
+            },
             "group": "test",
             "problemMatcher": []
         },
@@ -12,6 +15,9 @@
             "label": "Python: 运行 pytest",
             "type": "shell",
             "command": "uv run pytest -v",
+            "options": {
+                "cwd": "${workspaceFolder}/python"
+            },
             "group": {
                 "kind": "test",
                 "isDefault": true
@@ -22,6 +28,9 @@
             "label": "Python: 测试覆盖率",
             "type": "shell",
             "command": "uv run pytest --cov --cov-report=term-missing",
+            "options": {
+                "cwd": "${workspaceFolder}/python"
+            },
             "group": "test",
             "problemMatcher": []
         },
@@ -29,20 +38,39 @@
             "label": "Python: Ruff 检查",
             "type": "shell",
             "command": "uv run ruff check .",
+            "options": {
+                "cwd": "${workspaceFolder}/python"
+            },
             "group": "test",
             "problemMatcher": []
         },
         {
-            "label": "Jupyter: 启动 Lab",
+            "label": "Docs: 启动教程站点",
             "type": "shell",
-            "command": "uv run jupyter lab",
+            "command": "npm run docs:dev",
+            "options": {
+                "cwd": "${workspaceFolder}/website"
+            },
             "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Docs: 构建教程站点",
+            "type": "shell",
+            "command": "npm run docs:build",
+            "options": {
+                "cwd": "${workspaceFolder}/website"
+            },
+            "group": "build",
             "problemMatcher": []
         },
         {
             "label": "Backend: 启动 FastAPI",
             "type": "shell",
             "command": "uv run uvicorn backend_interview.main:app --reload",
+            "options": {
+                "cwd": "${workspaceFolder}/python"
+            },
             "isBackground": true,
             "problemMatcher": []
         },
@@ -50,6 +78,9 @@
             "label": "Backend: 运行面试场景测试",
             "type": "shell",
             "command": "uv run pytest tests/backend -v",
+            "options": {
+                "cwd": "${workspaceFolder}/python"
+            },
             "group": "test",
             "problemMatcher": []
         }

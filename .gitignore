@@ -14,9 +14,14 @@ build/
 dist/
 wheels/
 *.egg-info/
+node_modules/
+website/docs/.vitepress/cache/
+website/docs/.vitepress/dist/
+website/docs/.vitepress/.temp/
 
 # Test, type-check, lint, and coverage output
 .pytest_cache/
+.hypothesis/
 .mypy_cache/
 .pytype/
 .ruff_cache/
@@ -25,13 +30,13 @@ wheels/
 .coverage
 .coverage.*
 htmlcov/
+/output/
 
 # Local configuration and notebooks
 .env
 .env.*
 !.env.example
 .ipynb_checkpoints/
-/openspec/
 /.codex/
 
 # Editor files: share workspace run/debug settings, ignore personal state
