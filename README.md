@@ -29,7 +29,7 @@ VS Code 打开项目后会推荐 Python、Debugger、Pylance 和 Jupyter 扩展�
 ├── interview_exercises/        # 面试题、参考实现和自检
 ├── backend_interview/          # FastAPI、Pydantic v2、asyncio 项目实战
 ├── tests/                      # unittest、pytest、Hypothesis 属性测试
-├── notebooks/                  # 从上到下可复现的 Jupyter 教程
+├── notebooks/                  # 可调参数、图示和时间线组成的 Jupyter 概念教程
 ├── tools/                      # Notebook 构建工具
 ├── run_all.py                  # 隔离运行所有编号示例
 └── pyproject.toml              # 开发依赖和工具配置
@@ -82,7 +82,8 @@ uv run pytest -v
 
 ### 第四遍：分步实验
 
-在 `notebooks/` 中修改输入并重新执行单元格。Notebook 适合观察现象，但最终答案
+在 `notebooks/` 中操作下拉框和滑块，观察对象引用图、生成器暂停状态和 asyncio
+任务时间线如何变化；再修改输入并重新执行单元格。Notebook 适合建立执行模型，但最终答案
 仍应整理成可以从头运行的函数和测试，避免依赖隐藏状态。
 
 ### 第五遍：模拟口述
