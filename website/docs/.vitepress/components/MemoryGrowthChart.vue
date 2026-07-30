@@ -1,9 +1,11 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { observePlotTheme, readPlotTheme } from "./plotTheme.js";
 
 const itemCount = ref(100_000);
 const plot = ref(null);
 let Plotly;
+let stopObservingTheme;
 
 const listBytes = computed(() => 56 + itemCount.value * 8);
 const generatorBytes = 208;
@@ -22,6 +24,7 @@ function renderPlot() {
     return;
   }
 
+  const colors = readPlotTheme();
   const sizes = [1_000, 10_000, 50_000, 100_000, 250_000, 500_000];
   Plotly.react(
     plot.value,
@@ -32,7 +35,7 @@ function renderPlot() {
         type: "scatter",
         mode: "lines",
         name: "列表容器（估算）",
-        line: { color: "#d97706", width: 3 },
+        line: { color: colors.secondary, width: 3 },
         hovertemplate: "n = %{x:,}<br>容器 ≈ %{y:,} B<extra></extra>",
       },
       {
@@ -41,7 +44,7 @@ function renderPlot() {
         type: "scatter",
         mode: "lines",
         name: "生成器对象（近似常量）",
-        line: { color: "#256f8a", width: 3 },
+        line: { color: colors.primary, width: 3 },
         hovertemplate: "n = %{x:,}<br>对象 ≈ %{y:,} B<extra></extra>",
       },
       {
@@ -50,7 +53,11 @@ function renderPlot() {
         type: "scatter",
         mode: "markers",
         name: "当前 n",
-        marker: { color: ["#d97706", "#256f8a"], size: 11 },
+        marker: {
+          color: [colors.secondary, colors.primary],
+          size: 11,
+          line: { color: colors.markerBorder, width: 2 },
+        },
         hovertemplate: "%{y:,} B<extra></extra>",
       },
     ],
@@ -61,7 +68,7 @@ function renderPlot() {
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
       font: {
-        color: "#506176",
+        color: colors.text,
         family: "'Segoe UI', 'Microsoft YaHei', sans-serif",
       },
       legend: { orientation: "h", x: 0, y: 1.13 },
@@ -70,7 +77,7 @@ function renderPlot() {
         automargin: true,
         type: "log",
         minorloglabels: "none",
-        gridcolor: "rgba(23,32,51,0.12)",
+        gridcolor: colors.grid,
         zeroline: false,
       },
       yaxis: {
@@ -78,7 +85,7 @@ function renderPlot() {
         automargin: true,
         type: "log",
         minorloglabels: "none",
-        gridcolor: "rgba(23,32,51,0.12)",
+        gridcolor: colors.grid,
         zeroline: false,
       },
       hovermode: "x unified",
@@ -92,10 +99,12 @@ watch(itemCount, renderPlot);
 onMounted(async () => {
   const module = await import("plotly.js-basic-dist-min");
   Plotly = module.default ?? module;
+  stopObservingTheme = observePlotTheme(renderPlot);
   renderPlot();
 });
 
 onBeforeUnmount(() => {
+  stopObservingTheme?.();
   if (Plotly && plot.value) {
     Plotly.purge(plot.value);
   }

@@ -1,13 +1,14 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { observePlotTheme, readPlotTheme } from "./plotTheme.js";
 
 const delays = ref([0.8, 0.5, 0.3]);
 const cancelB = ref(false);
 const plot = ref(null);
 let Plotly;
+let stopObservingTheme;
 
 const names = ["任务 A", "任务 B", "任务 C"];
-const colors = ["#173b5c", "#d97706", "#256f8a"];
 const cancelAt = 0.3;
 
 const visibleDelays = computed(() => [
@@ -57,6 +58,8 @@ function renderPlot() {
     return;
   }
 
+  const theme = readPlotTheme();
+  const taskColors = [theme.tertiary, theme.secondary, theme.primary];
   const shapes = isActuallyCancelled.value
     ? [
         {
@@ -65,7 +68,7 @@ function renderPlot() {
           x1: cancelAt,
           y0: -0.5,
           y1: 2.5,
-          line: { color: "#b91c1c", width: 2, dash: "dot" },
+          line: { color: theme.danger, width: 2, dash: "dot" },
         },
       ]
     : [];
@@ -78,7 +81,7 @@ function renderPlot() {
           yref: "paper",
           text: "cancel(B)",
           showarrow: false,
-          font: { color: "#b91c1c", size: 12 },
+          font: { color: theme.danger, size: 12 },
         },
       ]
     : [];
@@ -92,7 +95,7 @@ function renderPlot() {
         type: "bar",
         orientation: "h",
         name: "等待外部 I/O",
-        marker: { color: colors, opacity: 0.82 },
+        marker: { color: taskColors, opacity: 0.82 },
         text: visibleDelays.value.map((delay, index) =>
           isActuallyCancelled.value && index === 1
             ? `等待 ${delay.toFixed(1)} 秒后取消`
@@ -109,12 +112,12 @@ function renderPlot() {
         mode: "markers",
         name: "恢复或取消点",
         marker: {
-          color: colors,
+          color: taskColors,
           size: 14,
           symbol: names.map((_, index) =>
             isActuallyCancelled.value && index === 1 ? "x" : "diamond",
           ),
-          line: { color: "#ffffff", width: 2 },
+          line: { color: theme.markerBorder, width: 2 },
         },
         hovertemplate: "%{y}<br>时间 %{x:.1f} 秒<extra></extra>",
       },
@@ -126,7 +129,7 @@ function renderPlot() {
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
       font: {
-        color: "#506176",
+        color: theme.text,
         family: "'Segoe UI', 'Microsoft YaHei', sans-serif",
       },
       showlegend: false,
@@ -135,7 +138,7 @@ function renderPlot() {
         title: { text: "相对时间（秒）", standoff: 10 },
         automargin: true,
         range: [0, Math.max(1.05, Math.max(...delays.value) + 0.08)],
-        gridcolor: "rgba(23,32,51,0.12)",
+        gridcolor: theme.grid,
         zeroline: false,
       },
       yaxis: { autorange: "reversed", gridcolor: "rgba(0,0,0,0)" },
@@ -151,10 +154,12 @@ watch([delays, cancelB], renderPlot, { deep: true });
 onMounted(async () => {
   const module = await import("plotly.js-basic-dist-min");
   Plotly = module.default ?? module;
+  stopObservingTheme = observePlotTheme(renderPlot);
   renderPlot();
 });
 
 onBeforeUnmount(() => {
+  stopObservingTheme?.();
   if (Plotly && plot.value) {
     Plotly.purge(plot.value);
   }

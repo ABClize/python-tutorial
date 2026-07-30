@@ -25,6 +25,9 @@ npm run docs:build
 npm run docs:preview
 ```
 
+本地开发使用根路径 `/`。GitHub Actions 构建时从 GitHub Pages 元数据取得站点路径，通过
+`VITEPRESS_BASE` 传给 VitePress，并将 `docs/.vitepress/dist` 发布到 GitHub Pages。
+
 教程采用两级结构：`docs/tutorials/NN-topic.md` 是章目录和稳定入口，同名目录中的 Markdown
 负责讲解各个概念簇。
 

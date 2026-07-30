@@ -1,5 +1,10 @@
 import { defineConfig } from "vitepress";
 
+const rawSiteBase = process.env.VITEPRESS_BASE ?? "/";
+const trimmedSiteBase = rawSiteBase.replace(/^\/+|\/+$/g, "");
+const siteBase = trimmedSiteBase ? `/${trimmedSiteBase}/` : "/";
+const publicAsset = (path) => `${siteBase}${path.replace(/^\/+/, "")}`;
+
 const tutorialSections = [
   {
     text: "Python 核心",
@@ -472,12 +477,32 @@ const tutorialSections = [
 ];
 
 export default defineConfig({
+  base: siteBase,
   lang: "zh-CN",
   title: "Python 概念教程",
   description: "从基础语法到并发与后端工程，逐步讲清 Python 的常用概念。",
   cleanUrls: true,
-  appearance: false,
-  head: [["link", { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" }]],
+  appearance: true,
+  head: [
+    ["link", { rel: "icon", href: publicAsset("favicon.svg"), type: "image/svg+xml" }],
+    [
+      "link",
+      {
+        rel: "preload",
+        href: publicAsset("fonts/maple-mono/be10bee3.woff2"),
+        as: "font",
+        type: "font/woff2",
+        crossorigin: "anonymous",
+      },
+    ],
+    [
+      "link",
+      {
+        rel: "stylesheet",
+        href: publicAsset("fonts/maple-mono/maple-mono.css"),
+      },
+    ],
+  ],
   themeConfig: {
     sidebar: [
       {
@@ -494,6 +519,9 @@ export default defineConfig({
       prev: "上一篇",
       next: "下一篇",
     },
+    darkModeSwitchLabel: "主题",
+    lightModeSwitchTitle: "切换到浅色主题",
+    darkModeSwitchTitle: "切换到深色主题",
     sidebarMenuLabel: "教程目录",
     returnToTopLabel: "返回顶部",
   },

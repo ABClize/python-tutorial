@@ -1,4 +1,4 @@
-# Python 概念学习项目
+# Python 教程
 
 这个仓库由两个彼此独立的工程组成：`python/` 保存可运行的学习代码和测试，`website/`
 保存面向阅读的 VitePress 教程站点。教程中的概念、代码和路径都以 Python 工程为依据。
@@ -21,6 +21,9 @@ npm run docs:dev
 ```
 
 然后打开终端显示的本地地址，默认是 <http://localhost:5173>。
+
+在线版本发布在 <https://abclize.github.io/python-tutorial/>。推送到 `master` 分支后，GitHub
+Actions 会自动构建并部署教程站点。
 
 教程按 16 章组织，每章先提供目录，再用多篇短教程分别讲清相关概念。从基础类型、引用、函数和数据
 模型，一直覆盖算法、测试、并发、FastAPI、Pydantic v2 和异步可靠性。交互图只用于解释对象引用、

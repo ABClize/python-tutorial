@@ -1,5 +1,22 @@
 # 架构变更记录
 
+## 2026-07-30：项目更名并接入 GitHub Pages
+
+- 仓库由 `python-interview-learning` 更名为 `python-tutorial`，站点默认地址调整为
+  `https://abclize.github.io/python-tutorial/`。
+- 增加 GitHub Pages 工作流，从 `master` 分支构建并部署 `website/`。
+- VitePress 部署前缀由 GitHub Pages 元数据经 `VITEPRESS_BASE` 注入，本地开发仍使用根路径
+  `/`。
+- favicon、代码字体样式和预加载字体改为跟随部署前缀，避免项目站点子路径下资源 404。
+
+## 2026-07-30：教程站点支持深色主题与本地代码字体
+
+- 启用 VitePress 深浅主题切换，并让 Plotly 可视化跟随主题重新着色。
+- 优化手机端导航、代码块、表格和交互式可视化的响应式布局。
+- 将 Maple Mono CN 拆分为按 `unicode-range` 加载的本地 WOFF2 静态资源，不依赖访客设备字体
+  或外部 CDN。
+- 字体来源、版本、校验值和 SIL Open Font License 记录在字体资源目录中。
+
 ## 2026-07-30：教程改为章目录与子教程
 
 - 保留 16 个编号教程入口作为章目录，为每章增加围绕单个概念簇编写的子教程。

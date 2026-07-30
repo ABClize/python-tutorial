@@ -1,10 +1,12 @@
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { observePlotTheme, readPlotTheme } from "./plotTheme.js";
 
 const inputSize = ref(120);
 const scale = ref("linear");
 const plot = ref(null);
 let Plotly;
+let stopObservingTheme;
 
 const counts = computed(() => ({
   brute: (inputSize.value * (inputSize.value - 1)) / 2,
@@ -19,6 +21,7 @@ function renderPlot() {
     return;
   }
 
+  const colors = readPlotTheme();
   const xValues = [];
   const bruteValues = [];
   const hashValues = [];
@@ -37,7 +40,7 @@ function renderPlot() {
         type: "scatter",
         mode: "lines",
         name: "暴力搜索 O(n²)",
-        line: { color: "#d97706", width: 3 },
+        line: { color: colors.secondary, width: 3 },
         hovertemplate: "n = %{x}<br>数对检查 ≈ %{y:,}<extra></extra>",
       },
       {
@@ -46,7 +49,7 @@ function renderPlot() {
         type: "scatter",
         mode: "lines",
         name: "哈希表 O(n)",
-        line: { color: "#256f8a", width: 3 },
+        line: { color: colors.primary, width: 3 },
         hovertemplate: "n = %{x}<br>元素处理 ≈ %{y:,}<extra></extra>",
       },
       {
@@ -56,9 +59,9 @@ function renderPlot() {
         mode: "markers",
         name: "当前 n",
         marker: {
-          color: ["#d97706", "#256f8a"],
+          color: [colors.secondary, colors.primary],
           size: 11,
-          line: { color: "#ffffff", width: 2 },
+          line: { color: colors.markerBorder, width: 2 },
         },
         hovertemplate: "当前值：%{y:,}<extra></extra>",
       },
@@ -70,21 +73,21 @@ function renderPlot() {
       paper_bgcolor: "rgba(0,0,0,0)",
       plot_bgcolor: "rgba(0,0,0,0)",
       font: {
-        color: "#506176",
+        color: colors.text,
         family: "'Segoe UI', 'Microsoft YaHei', sans-serif",
       },
       legend: { orientation: "h", x: 0, y: 1.12 },
       xaxis: {
         title: { text: "输入规模 n", standoff: 10 },
         automargin: true,
-        gridcolor: "rgba(23,32,51,0.12)",
+        gridcolor: colors.grid,
         zeroline: false,
       },
       yaxis: {
         title: { text: "主要操作量（估算）", standoff: 8 },
         automargin: true,
         type: scale.value,
-        gridcolor: "rgba(23,32,51,0.12)",
+        gridcolor: colors.grid,
         zeroline: false,
         rangemode: "tozero",
       },
@@ -100,10 +103,12 @@ watch([inputSize, scale], renderPlot);
 onMounted(async () => {
   const module = await import("plotly.js-basic-dist-min");
   Plotly = module.default ?? module;
+  stopObservingTheme = observePlotTheme(renderPlot);
   renderPlot();
 });
 
 onBeforeUnmount(() => {
+  stopObservingTheme?.();
   if (Plotly && plot.value) {
     Plotly.purge(plot.value);
   }
