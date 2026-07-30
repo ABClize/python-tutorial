@@ -98,7 +98,8 @@ function drawConnections() {
     const startY = from.top + from.height / 2 - stageRect.top;
     const endX = to.left - stageRect.left;
     const endY = to.top + to.height / 2 - stageRect.top;
-    const bend = Math.max(26, (endX - startX) * 0.48);
+    const horizontalGap = Math.max(0, endX - startX);
+    const bend = Math.min(26, horizontalGap * 0.36);
     return [
       `M ${startX} ${startY} C ${startX + bend} ${startY}, ${
         endX - bend

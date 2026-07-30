@@ -18,22 +18,30 @@ const visibleDelays = computed(() => [
 const isActuallyCancelled = computed(
   () => cancelB.value && cancelAt < delays.value[1],
 );
-const completionOrder = computed(() =>
+const timelineEvents = computed(() =>
   names
     .map((name, index) => ({
       name: isActuallyCancelled.value && index === 1 ? "任务 B（取消）" : name,
       time: visibleDelays.value[index],
       index,
     }))
-    .sort((left, right) => left.time - right.time || left.index - right.index)
-    .map((event) => event.name),
+    .sort((left, right) => left.time - right.time || left.index - right.index),
 );
 const summary = computed(() => {
   if (isActuallyCancelled.value) {
     return "B 在等待期间收到取消，先执行 finally 清理，再把 CancelledError 传播给等待 gather 的调用者。";
   }
+
+  const earliestTime = timelineEvents.value[0].time;
+  const earliestTasks = timelineEvents.value
+    .filter((event) => event.time === earliestTime)
+    .map((event) => event.name);
+  const earliestDescription =
+    earliestTasks.length === 1
+      ? `${earliestTasks[0]} 最先完成`
+      : `${earliestTasks.join("、")} 在图中同时完成`;
   const longest = Math.max(...visibleDelays.value);
-  return `${completionOrder.value[0]} 最先完成；总等待约等于最慢任务的 ${longest.toFixed(
+  return `${earliestDescription}；总等待约等于最慢任务的 ${longest.toFixed(
     1,
   )} 秒，而不是三段延迟相加。`;
 });
@@ -202,11 +210,13 @@ onBeforeUnmount(() => {
     <div class="figure-canvas">
       <div ref="plot" class="plot-container" aria-label="asyncio 任务时间线"></div>
       <div class="state-row">
-        <small>实际完成顺序</small>
+        <small>按时间排序的完成 / 取消事件</small>
         <div class="task-order">
-          <template v-for="(name, index) in completionOrder" :key="name">
-            <span class="task-pill">{{ name }}</span>
-            <span v-if="index < completionOrder.length - 1" aria-hidden="true">→</span>
+          <template v-for="(event, index) in timelineEvents" :key="event.name">
+            <span class="task-pill">{{ event.name }}</span>
+            <span v-if="index < timelineEvents.length - 1" aria-hidden="true">
+              {{ event.time === timelineEvents[index + 1].time ? "＝" : "→" }}
+            </span>
           </template>
         </div>
       </div>
@@ -226,6 +236,7 @@ onBeforeUnmount(() => {
 
     <figcaption class="figure-caption">
       条形长度表示任务暂停等待外部 I/O 的时间；菱形或叉号表示任务恢复或接收取消的位置。
+      等号表示事件落在同一图示时刻，不代表事件循环内部存在固定先后顺序。
     </figcaption>
   </figure>
 </template>

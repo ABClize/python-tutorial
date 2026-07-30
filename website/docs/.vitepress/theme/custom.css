@@ -80,6 +80,28 @@ body {
   margin-inline: auto;
 }
 
+@media (min-width: 1120px) and (max-width: 1279px) {
+  .VPLocalNav {
+    display: none;
+  }
+
+  .VPDoc .container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .VPDoc .aside {
+    display: block;
+    flex: 0 0 256px;
+  }
+
+  .VPDoc .content {
+    order: 1;
+    margin: 0;
+    min-width: 0;
+  }
+}
+
 .vp-doc h1 {
   margin-bottom: 20px;
   color: #173b5c;

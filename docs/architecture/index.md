@@ -34,7 +34,7 @@ python/
 ```text
 website/
 ├── docs/
-│   ├── tutorials/              # Markdown 教程
+│   ├── tutorials/              # 章目录 Markdown 与同名子教程目录
 │   ├── .vitepress/components/  # Vue 与 Plotly 可视化
 │   ├── .vitepress/theme/       # 文档主题
 │   └── index.md                # 教程目录
@@ -45,9 +45,14 @@ website/
 站点由 VitePress 构建。Markdown 负责稳定正文，Vue 组件只承载需要交互状态或定量曲线的概念。
 Plotly 随 npm 构建本地打包，不依赖运行时 CDN。
 
+教程采用两级内容结构：`tutorials/NN-topic.md` 是章目录和稳定入口，
+`tutorials/NN-topic/*.md` 是围绕单个概念簇编写的子教程。VitePress 左侧导航按章折叠这些子教程，
+右侧导航只展示当前文章的标题大纲。
+
 ## 跨工程契约
 
 - 教程中的“对应源码”路径必须指向 `python/` 中存在的文件。
 - Python 主题新增或职责明显变化时，检查对应教程是否需要更新。
-- 教程文件新增、删除或重命名时，同步更新 VitePress 侧栏与首页目录。
+- 教程章节新增、删除或重命名时，同步更新 VitePress 侧栏与首页目录；章内子教程变化时同步更新章目录
+  与侧栏。
 - 根目录 VS Code 配置通过不同 `cwd` 分别调用两个工程，不要求根目录存在包管理配置。

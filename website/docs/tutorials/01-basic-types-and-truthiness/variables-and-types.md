@@ -1,0 +1,309 @@
+# Python 变量、基本类型与类型转换
+
+程序要处理数据，第一步是给数据起名字，并弄清楚每个值属于什么类型。本页从赋值开始，依次说明命名、注释、缩进、常见内置类型和类型转换；读完后，你应当能看懂一段基础 Python 代码中的每个名字和值。
+
+<p class="source-note">对应源码：<code>python/python_interview_practice/01_basic_types.py</code></p>
+
+## 变量赋值
+
+赋值使用等号 `=`，基本语法如下：
+
+```python
+变量名 = 值
+```
+
+等号右边的表达式先执行，得到的对象再交给左边的变量名。
+
+### 实例
+
+```python
+name = "小林"
+age = 20
+score = 82.5
+
+print(name)
+print(age)
+print(score)
+```
+
+运行结果：
+
+```text
+小林
+20
+82.5
+```
+
+这三次赋值分别让：
+
+- `name` 指向字符串 `"小林"`；
+- `age` 指向整数 `20`；
+- `score` 指向浮点数 `82.5`。
+
+变量本身没有固定类型，类型属于变量当前指向的对象：
+
+```python
+value = 82
+print(type(value))
+
+value = "82"
+print(type(value))
+```
+
+运行结果：
+
+```text
+<class 'int'>
+<class 'str'>
+```
+
+第一次赋值后，`value` 指向整数对象；第二次赋值后，它改为指向字符串对象。虽然这种写法合法，但同一
+变量反复表示不同含义会降低代码可读性。
+
+### 多个变量赋值
+
+多个变量可以同时赋值：
+
+```python
+x, y = 10, 20
+print(x, y)
+```
+
+运行结果：
+
+```text
+10 20
+```
+
+右边先组成两个值，左边再按位置接收。左右数量不一致会抛出 `ValueError`：
+
+```python
+x, y = 10, 20, 30
+```
+
+```text
+ValueError: too many values to unpack (expected 2)
+```
+
+多个变量也可以指向同一个对象：
+
+```python
+a = b = []
+```
+
+这里不会创建两个列表。`a` 和 `b` 指向同一个列表，修改列表时两边都能看到变化。引用和复制会在
+[可变对象、引用与拷贝](../02-mutability-and-copy)中详细说明。
+
+## 变量命名
+
+变量名可以包含字母、数字和下划线，但不能以数字开头。
+
+```python
+student_name = "小林"  # 合法
+score2 = 90           # 合法
+_temporary = 1        # 合法
+
+# 2score = 90         # 非法：不能以数字开头
+```
+
+Python 区分大小写，`score` 和 `Score` 是两个不同的变量名。
+
+`if`、`for`、`class` 等关键字不能作为变量名。可以使用 `keyword` 模块查看全部关键字：
+
+```python
+import keyword
+
+print(keyword.iskeyword("if"))
+print(keyword.iskeyword("score"))
+```
+
+运行结果：
+
+```text
+True
+False
+```
+
+变量名通常使用小写字母和下划线，例如 `student_score`。不要使用 `list`、`str`、`sum` 等内置名称
+作为变量名，否则会覆盖原来的内置对象。
+
+## 注释与缩进
+
+井号 `#` 后面的内容是单行注释：
+
+```python
+score = 82  # 学生本次考试分数
+```
+
+多行说明通常使用连续的 `#`。三引号字符串可以作为模块、类或函数的文档字符串，但它不是通用的
+“多行注释语法”。
+
+Python 使用缩进表示代码块，一般使用四个空格：
+
+```python
+score = 82
+
+if score >= 60:
+    print("通过")
+    print("可以继续学习下一章")
+
+print("成绩处理完成")
+```
+
+运行结果：
+
+```text
+通过
+可以继续学习下一章
+成绩处理完成
+```
+
+两条缩进语句属于 `if` 代码块。最后一条语句没有缩进，因此不受 `if` 控制。
+
+同一个代码块的缩进必须一致。混用不同数量的空格，或者混用 Tab 和空格，可能产生
+`IndentationError` 或 `TabError`。
+
+## 基本数据类型
+
+常用内置类型如下：
+
+| 类型 | 示例 | 说明 |
+| --- | --- | --- |
+| `int` | `82`、`-3` | 整数 |
+| `float` | `82.5`、`-0.25` | 浮点数 |
+| `complex` | `3 + 4j` | 复数 |
+| `bool` | `True`、`False` | 布尔值 |
+| `str` | `"Python"` | 字符串 |
+| `list` | `[1, 2, 3]` | 有序、可修改的序列 |
+| `tuple` | `(1, 2, 3)` | 有序、不可修改的序列 |
+| `set` | `{1, 2, 3}` | 不重复元素的集合 |
+| `dict` | `{"name": "小林"}` | key 与 value 的映射 |
+| `NoneType` | `None` | 表示没有值或结果缺失 |
+
+容器类型会在[容器：列表、元组、字典与集合](../04-containers-and-sorting)中详细说明。
+
+### 查看对象类型
+
+`type()` 返回对象的实际类型：
+
+```python
+print(type(82))
+print(type(82.5))
+print(type("Python"))
+print(type(None))
+```
+
+运行结果：
+
+```text
+<class 'int'>
+<class 'float'>
+<class 'str'>
+<class 'NoneType'>
+```
+
+`isinstance()` 判断对象是否属于指定类型：
+
+```python
+score = 82
+
+print(isinstance(score, int))
+print(isinstance(score, str))
+print(isinstance(score, (int, float)))
+```
+
+运行结果：
+
+```text
+True
+False
+True
+```
+
+第三个判断表示：只要 `score` 是 `int` 或 `float` 中的一种，就返回 `True`。
+
+`isinstance()` 会考虑继承关系，`type(value) is SomeType` 只检查实际类型是否完全相同。普通类型判断
+通常优先使用 `isinstance()`。
+
+## 类型转换
+
+常用类型可以通过对应的类型函数转换：
+
+```python
+print(int("82"))
+print(float("82.5"))
+print(str(82))
+print(list("ABC"))
+```
+
+运行结果：
+
+```text
+82
+82.5
+82
+['A', 'B', 'C']
+```
+
+结果中的第三行看起来仍然是 `82`，但它已经是字符串。可以使用 `repr()` 看得更清楚：
+
+```python
+text = str(82)
+print(repr(text))
+print(type(text))
+```
+
+运行结果：
+
+```text
+'82'
+<class 'str'>
+```
+
+转换要求原始内容符合目标类型的格式：
+
+```python
+int("八十二")
+```
+
+```text
+ValueError: invalid literal for int() with base 10: '八十二'
+```
+
+### `input()` 返回字符串
+
+`input()` 用于读取键盘输入。无论用户输入数字还是文字，返回值都是 `str`。
+
+```python
+age_text = input("请输入年龄：")
+
+print(repr(age_text))
+print(type(age_text))
+```
+
+假设输入 `20`，运行结果为：
+
+```text
+请输入年龄：20
+'20'
+<class 'str'>
+```
+
+需要数值计算时应先转换：
+
+```python
+age_text = input("请输入年龄：").strip()
+age = int(age_text)
+
+print(age + 1)
+```
+
+假设输入 `20`，运行结果为：
+
+```text
+请输入年龄：20
+21
+```
+
+`strip()` 去掉输入两端的空白，`int()` 再把数字文本转换为整数。无效输入的处理方式参见
+[异常与上下文管理器](../06-exceptions-and-context-managers)。

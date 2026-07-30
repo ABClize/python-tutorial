@@ -6,11 +6,12 @@ import MemoryGrowthChart from "../components/MemoryGrowthChart.vue";
 import MutabilityDiagram from "../components/MutabilityDiagram.vue";
 import ThreadLockDiagram from "../components/ThreadLockDiagram.vue";
 import TruthinessExplorer from "../components/TruthinessExplorer.vue";
+import { installArticleOutlineSync } from "./articleOutlineSync.js";
 import "./custom.css";
 
 export default {
   extends: DefaultTheme,
-  enhanceApp({ app }) {
+  enhanceApp({ app, router }) {
     app.component("AsyncioTimeline", AsyncioTimeline);
     app.component("ComplexityChart", ComplexityChart);
     app.component("GeneratorFrame", GeneratorFrame);
@@ -18,5 +19,9 @@ export default {
     app.component("MutabilityDiagram", MutabilityDiagram);
     app.component("ThreadLockDiagram", ThreadLockDiagram);
     app.component("TruthinessExplorer", TruthinessExplorer);
+
+    if (typeof window !== "undefined") {
+      installArticleOutlineSync(router);
+    }
   },
 };

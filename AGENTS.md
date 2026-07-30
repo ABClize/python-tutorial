@@ -48,7 +48,8 @@ Ruff 启用 `E`、`F`、`I`、`B`、`UP` 和 `SIM`。模块、函数、fixture �
 
 ## 教程站点
 
-- `website/docs/tutorials/` 保存中文概念教程，每篇应对应 `python/` 中的真实源码。
+- `website/docs/tutorials/` 保存中文概念教程。根层编号文件是章目录，同名目录保存该章的子教程；
+  每篇应对应 `python/` 中的真实源码。
 - `website/docs/.vitepress/components/` 只放有明确教学价值的 Vue 可视化。
 - `website/docs/.vitepress/config.mjs` 和 `website/docs/index.md` 必须与教程目录同步。
 
@@ -61,8 +62,9 @@ npm run docs:build
 npm run docs:preview
 ```
 
-教程保持标准文档阅读流：概念说明、短代码、必要的图解、常见误区和面试表述。不要加入营销首页、
-演示式大屏、无教学价值的动画或重复卡片。Plotly 依赖必须本地打包，不使用 CDN。
+教程保持标准文档阅读流：先说明用途，再用基础语法、短代码、运行结果、原因解释和常见错误逐步展开。
+正文面向会运行 Python 但概念接近零基础的读者，不加入面试问答。不要加入营销首页、演示式大屏、
+无教学价值的动画或重复卡片。Plotly 依赖必须本地打包，不使用 CDN。
 
 ## 架构文档
 
