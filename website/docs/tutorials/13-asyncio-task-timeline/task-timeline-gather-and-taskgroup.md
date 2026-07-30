@@ -3,7 +3,7 @@
 调用异步函数会得到协程对象。把协程包装成 Task 后，事件循环才会调度它。Task 运行到 `await` 时
 可能暂停，等待完成后再继续。`gather()` 和 `TaskGroup` 都能组织多个 Task，但失败处理方式不同。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/13_asyncio_concurrency.py</code>、<code>python/backend_interview/async_patterns.py</code></p>
+<!-- 对应源码：python/python_interview_practice/13_asyncio_concurrency.py、python/backend_interview/async_patterns.py -->
 
 ## Task 状态时间线
 

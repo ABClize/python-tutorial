@@ -3,7 +3,7 @@
 `itertools` 提供处理迭代器的工具。它可以截取、连接、累计、配对、组合和分组数据。大多数函数按需
 产生结果，不会先把全部数据放进列表。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
+<!-- 对应源码：python/python_interview_practice/12_standard_library_patterns.py -->
 
 ## islice 与无限迭代器
 

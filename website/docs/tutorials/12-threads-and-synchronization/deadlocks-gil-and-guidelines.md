@@ -3,7 +3,7 @@
 死锁是多个线程互相等待资源，导致所有线程都无法继续。GIL 是 CPython 的全局解释器锁，它限制同一
 时刻执行 Python 字节码的线程数量。GIL 不会自动保护业务数据，修改共享状态时仍可能需要锁。
 
-<p class="source-note">对应源码：<code>python/interview_exercises/concurrency.py</code>、<code>python/python_interview_practice/07_concurrency.py</code></p>
+<!-- 对应源码：python/interview_exercises/concurrency.py、python/python_interview_practice/07_concurrency.py -->
 
 ## 死锁怎样发生
 

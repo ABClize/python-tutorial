@@ -3,7 +3,7 @@
 `await` 用来等待协程、Task 等可等待对象。可等待对象也叫 awaitable。结果尚未准备好时，当前协程
 暂停，并把执行权交还事件循环。事件循环随后可以运行其他 Task。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/13_asyncio_concurrency.py</code></p>
+<!-- 对应源码：python/python_interview_practice/13_asyncio_concurrency.py -->
 
 ## await 会暂停当前协程
 

@@ -3,7 +3,7 @@
 上下文管理器用于自动释放资源。文件、连接和锁使用完后都要释放。把它们放进 `with` 代码块后，无论
 代码正常结束还是抛出异常，Python 都会调用退出逻辑。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/06_exceptions_context.py</code></p>
+<!-- 对应源码：python/python_interview_practice/06_exceptions_context.py -->
 
 ## 手动关闭文件
 

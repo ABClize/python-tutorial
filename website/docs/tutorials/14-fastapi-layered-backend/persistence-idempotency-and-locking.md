@@ -6,7 +6,7 @@
 网络请求可能重发，多个客户端也可能同时写入。只在服务层“先查询、再写入”仍然会出现竞态，最终
 检查必须和写入放在同一个原子操作中。
 
-<p class="source-note">对应源码：<code>python/backend_interview/repository.py</code>、<code>python/backend_interview/service.py</code>、<code>python/backend_interview/domain.py</code></p>
+<!-- 对应源码：python/backend_interview/repository.py、python/backend_interview/service.py、python/backend_interview/domain.py -->
 
 ## 服务依赖仓储协议
 

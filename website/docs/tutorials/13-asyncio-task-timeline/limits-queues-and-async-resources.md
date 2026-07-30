@@ -3,7 +3,7 @@
 一次创建大量 Task 会同时占用内存、连接池和下游服务容量。`Semaphore` 限制正在执行的 Task 数量。
 有界 `Queue` 限制等待处理的任务数量。异步迭代器和异步上下文管理器用于处理需要等待的数据与资源。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/13_asyncio_concurrency.py</code>、<code>python/backend_interview/async_patterns.py</code></p>
+<!-- 对应源码：python/python_interview_practice/13_asyncio_concurrency.py、python/backend_interview/async_patterns.py -->
 
 ## Semaphore
 

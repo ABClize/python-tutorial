@@ -5,7 +5,7 @@
 
 本章先讲普通函数和作用域，再讲闭包、装饰器、递归、迭代器与生成器。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/02_functions_scope.py</code>、<code>python/python_interview_practice/04_iterators_generators.py</code></p>
+<!-- 对应源码：python/python_interview_practice/02_functions_scope.py、python/python_interview_practice/04_iterators_generators.py -->
 
 ## 本章内容
 

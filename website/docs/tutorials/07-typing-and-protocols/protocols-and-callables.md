@@ -3,7 +3,7 @@
 `Protocol` 说明对象必须提供哪些属性和方法。`Callable` 说明一个可调用对象接收什么参数、返回什么
 结果。实现类不必继承同一个基类，只要提供所需成员即可。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/11_typing_protocols.py</code></p>
+<!-- 对应源码：python/python_interview_practice/11_typing_protocols.py -->
 
 ## Protocol 与结构化类型
 

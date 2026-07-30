@@ -3,7 +3,7 @@
 标准库 `collections` 提供了一些专用容器。`Counter` 用于计数，`defaultdict` 用于自动创建默认值，
 `deque` 用于在两端快速添加或删除元素。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/03_collections_copy.py</code>、<code>python/interview_exercises/collections.py</code></p>
+<!-- 对应源码：python/python_interview_practice/03_collections_copy.py、python/interview_exercises/collections.py -->
 
 ## `Counter`
 

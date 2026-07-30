@@ -11,18 +11,18 @@ VS Code 中打断点逐行执行。
 
 | 文件 | 内容 |
 | --- | --- |
-| 01_basic_types.py | 字符串、列表、元组、字典、集合、真值判断 |
+| 01_basic_types.py | 基础类型、内置函数、控制流、文本编码、正则和常用容器 |
 | 02_functions_scope.py | 参数、作用域、闭包、装饰器 |
 | 03_collections_copy.py | 常用容器、排序、浅拷贝和深拷贝 |
 | 04_iterators_generators.py | 迭代器、生成器、`itertools` |
 | 05_oop_magic_methods.py | 类、继承、属性、数据类、魔术方法 |
 | 06_exceptions_context.py | 异常处理和上下文管理器 |
-| 07_concurrency.py | 线程、线程池、锁 |
+| 07_concurrency.py | 线程、线程池、进程池、锁 |
 | 08_algorithms.py | 常见手写算法题 |
 | 09_practice_questions.py | 小题目及参考解答 |
 | 10_data_model_descriptors.py | 属性查找、描述符、MRO、合作式 `super()` |
-| 11_typing_protocols.py | 泛型、协议、`TypeVar`、`TypedDict`、`TypeGuard` |
-| 12_standard_library_patterns.py | `functools`、`itertools`、堆和二分工具 |
+| 11_typing_protocols.py | 泛型、协议、`Enum`、`StrEnum`、`TypedDict`、`TypeGuard` |
+| 12_standard_library_patterns.py | 命令行、CSV、日志、数值计算及常用标准库工具 |
 | 13_asyncio_concurrency.py | 协程、任务、超时、队列和并发控制 |
 | 14_testing_and_mocking.py | Mock、依赖注入、`side_effect` 和测试隔离 |
 | 15_performance_and_memory.py | 基准测试、性能分析、内存跟踪和 `__slots__` |

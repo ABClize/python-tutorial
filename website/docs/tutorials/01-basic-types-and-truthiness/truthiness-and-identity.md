@@ -3,7 +3,7 @@
 Python 可以把任何对象当作真或假来判断，这叫真值判断。`==` 用来比较值，`is` 用来判断两边是否为
 同一个对象。这三种判断不能混用。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/01_basic_types.py</code></p>
+<!-- 对应源码：python/python_interview_practice/01_basic_types.py -->
 
 ## 真值判断
 

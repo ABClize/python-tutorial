@@ -3,7 +3,7 @@
 函数除了返回正常结果，也可能按规定抛出异常。`pytest.raises()` 用来检查异常。参数化让同一个测试
 运行多组数据。fixture 是 pytest 提供测试数据和清理资源的机制。
 
-<p class="source-note">对应源码：<code>python/tests/</code></p>
+<!-- 对应源码：python/tests/ -->
 
 ## 验证异常
 

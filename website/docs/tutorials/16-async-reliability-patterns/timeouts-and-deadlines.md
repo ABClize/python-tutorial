@@ -5,7 +5,7 @@
 
 没有时间限制的慢调用会长期占用连接、Task 和请求数据。
 
-<p class="source-note">对应源码：<code>python/backend_interview/async_patterns.py</code>、<code>python/backend_interview/service.py</code></p>
+<!-- 对应源码：python/backend_interview/async_patterns.py、python/backend_interview/service.py -->
 
 ## 没有超时的调用
 

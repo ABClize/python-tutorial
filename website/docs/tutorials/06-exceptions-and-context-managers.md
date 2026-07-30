@@ -8,7 +8,7 @@
 
 本章先讲异常的产生、捕获和抛出，再讲文件管理、`contextlib` 和 `ExceptionGroup`。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/06_exceptions_context.py</code></p>
+<!-- 对应源码：python/python_interview_practice/06_exceptions_context.py -->
 
 ## 本章内容
 

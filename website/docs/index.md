@@ -62,7 +62,7 @@ next: false
   <div class="index-group-label">并发模型</div>
   <a href="/tutorials/12-threads-and-synchronization">
     <span class="index-number">12</span>
-    <span><strong>线程、线程池与同步</strong><small>理解 Future、竞争条件、锁、队列和 I/O 并发边界。</small></span>
+    <span><strong>线程、线程池、进程池与同步</strong><small>区分 I/O 与 CPU 任务，理解 Future、竞争条件、锁和队列。</small></span>
   </a>
   <a href="/tutorials/13-asyncio-task-timeline">
     <span class="index-number">13</span>

@@ -5,7 +5,7 @@
 
 输入时执行校验，输出时执行序列化。环境变量本质上也是外部字符串，同样需要解析和范围检查。
 
-<p class="source-note">对应源码：<code>python/backend_interview/schemas.py</code>、<code>python/backend_interview/pydantic_patterns.py</code>、<code>python/backend_interview/config.py</code></p>
+<!-- 对应源码：python/backend_interview/schemas.py、python/backend_interview/pydantic_patterns.py、python/backend_interview/config.py -->
 
 ## 计算字段进入输出
 

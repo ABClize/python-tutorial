@@ -5,7 +5,7 @@
 
 本章依次介绍 `timeit`、`cProfile`、`tracemalloc`、生成器、垃圾回收、RSS、缓存和内存增长问题。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/15_performance_and_memory.py</code></p>
+<!-- 对应源码：python/python_interview_practice/15_performance_and_memory.py -->
 
 ## 本章内容
 

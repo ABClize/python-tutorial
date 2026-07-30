@@ -3,7 +3,7 @@
 复杂度用来说明：输入数据增大时，算法的运行时间和额外内存会怎样增长。两个函数可能得到同样结果，
 但数据越多，运行速度可能相差越大。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/08_algorithms.py</code></p>
+<!-- 对应源码：python/python_interview_practice/08_algorithms.py -->
 
 ## 先写清输入、输出和要求
 

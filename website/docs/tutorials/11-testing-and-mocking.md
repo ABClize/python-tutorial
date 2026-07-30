@@ -3,7 +3,7 @@
 自动化测试是可以重复运行的检查代码。它会调用程序，再核对返回值、异常、外部调用和资源清理结果。
 程序修改后，重新运行测试就能发现原有行为是否被破坏。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/14_testing_and_mocking.py</code>、<code>python/tests/</code></p>
+<!-- 对应源码：python/python_interview_practice/14_testing_and_mocking.py、python/tests/ -->
 
 ## 本章内容
 

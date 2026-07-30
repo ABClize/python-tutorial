@@ -3,7 +3,7 @@
 集合只保存不重复的元素，类型名是 `set`。它适合成员判断、去重和集合运算。推导式可以根据已有数据
 快速创建 list、dict 或 set。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/01_basic_types.py</code></p>
+<!-- 对应源码：python/python_interview_practice/01_basic_types.py -->
 
 ## 集合的创建和成员判断
 

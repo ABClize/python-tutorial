@@ -6,7 +6,7 @@
 客户端断开、超时、兄弟任务失败和应用关闭都可能触发取消。Task 停止前还要释放资源并等待子任务
 收尾。
 
-<p class="source-note">对应源码：<code>python/backend_interview/async_patterns.py</code>、<code>python/backend_interview/service.py</code>、<code>python/backend_interview/main.py</code></p>
+<!-- 对应源码：python/backend_interview/async_patterns.py、python/backend_interview/service.py、python/backend_interview/main.py -->
 
 ## 取消从哪里来
 

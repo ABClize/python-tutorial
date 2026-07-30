@@ -5,7 +5,7 @@ Pydantic 模型。严格模式会拒绝原本可能被自动转换的类型。
 
 这些规则应集中写在输入模型中，避免业务代码到处调用 `strip()` 和 `int()`。
 
-<p class="source-note">对应源码：<code>python/backend_interview/schemas.py</code>、<code>python/backend_interview/pydantic_patterns.py</code></p>
+<!-- 对应源码：python/backend_interview/schemas.py、python/backend_interview/pydantic_patterns.py -->
 
 ## 先规范化，再执行约束
 

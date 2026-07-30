@@ -3,7 +3,7 @@
 `datetime` 模块用于表示日期、时间和时间间隔。它能处理跨日、闰年和时间加减。需要跨时区转换时，
 还要配合 `zoneinfo` 使用。
 
-<p class="source-note">章节源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code>；相关标准库：<code>datetime</code>、<code>zoneinfo</code></p>
+<!-- 章节源码：python/python_interview_practice/12_standard_library_patterns.py；相关标准库：datetime、zoneinfo -->
 
 ## 日期、时间与时长
 

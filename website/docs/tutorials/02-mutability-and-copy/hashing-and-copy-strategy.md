@@ -3,7 +3,7 @@
 哈希值是 Python 为对象计算的整数，用于快速查找字典键和集合元素。字典键和集合元素必须可哈希。
 复制对象时，则要根据数据是否需要独立来选择复制方式。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/03_collections_copy.py</code></p>
+<!-- 对应源码：python/python_interview_practice/03_collections_copy.py -->
 
 ## 可变对象与哈希
 

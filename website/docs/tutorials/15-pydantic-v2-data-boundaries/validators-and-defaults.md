@@ -5,7 +5,7 @@ validator 是自定义校验函数。字段校验器处理一个字段，模型�
 
 validator 应快速、确定，只依赖当前输入。数据库查询和网络请求应放在业务服务中。
 
-<p class="source-note">对应源码：<code>python/backend_interview/schemas.py</code>、<code>python/backend_interview/pydantic_patterns.py</code></p>
+<!-- 对应源码：python/backend_interview/schemas.py、python/backend_interview/pydantic_patterns.py -->
 
 ## 字段校验器处理一个字段
 

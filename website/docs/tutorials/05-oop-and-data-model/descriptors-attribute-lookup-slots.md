@@ -3,7 +3,7 @@
 描述符是控制属性读取、赋值或删除的对象。读取 `obj.name` 时，Python 还可能检查实例字典、类属性和
 `__getattr__()`。`__slots__` 则可以声明实例允许使用的属性。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/10_data_model_descriptors.py</code></p>
+<!-- 对应源码：python/python_interview_practice/10_data_model_descriptors.py -->
 
 ## 描述符
 

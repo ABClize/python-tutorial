@@ -3,7 +3,7 @@
 继承让子类使用父类的属性和方法，也允许子类重写方法。MRO 是方法解析顺序，规定多重继承时按什么顺序
 查找。抽象基类用来声明子类必须实现的方法。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/05_oop_magic_methods.py</code>、<code>python/python_interview_practice/10_data_model_descriptors.py</code></p>
+<!-- 对应源码：python/python_interview_practice/05_oop_magic_methods.py、python/python_interview_practice/10_data_model_descriptors.py -->
 
 ## 继承和方法重写
 

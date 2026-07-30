@@ -3,7 +3,7 @@
 `raise` 用于主动抛出异常。函数发现参数错误、状态不正确或业务规则不成立时，可以立即停止当前操作，
 并告诉调用方发生了什么错误。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/06_exceptions_context.py</code></p>
+<!-- 对应源码：python/python_interview_practice/06_exceptions_context.py -->
 
 ## 使用 raise 主动抛出异常
 

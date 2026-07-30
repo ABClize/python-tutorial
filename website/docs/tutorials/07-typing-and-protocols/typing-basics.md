@@ -3,7 +3,7 @@
 Python 是动态类型语言，同一个变量名可以在运行时指向不同类型的对象。类型标注写出程序期望的类型，
 让编辑器和 Mypy 在运行前发现一部分错误。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/11_typing_protocols.py</code></p>
+<!-- 对应源码：python/python_interview_practice/11_typing_protocols.py -->
 
 ## 函数参数与返回值
 

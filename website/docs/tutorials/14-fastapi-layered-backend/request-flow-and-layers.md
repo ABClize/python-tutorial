@@ -5,7 +5,7 @@
 
 创建订单时，请求依次经过这些模块。每一层只处理自己的工作，再把结果交给下一层。
 
-<p class="source-note">对应源码：<code>python/backend_interview/api.py</code>、<code>python/backend_interview/schemas.py</code>、<code>python/backend_interview/service.py</code>、<code>python/backend_interview/domain.py</code></p>
+<!-- 对应源码：python/backend_interview/api.py、python/backend_interview/schemas.py、python/backend_interview/service.py、python/backend_interview/domain.py -->
 
 ## 创建订单的执行顺序
 

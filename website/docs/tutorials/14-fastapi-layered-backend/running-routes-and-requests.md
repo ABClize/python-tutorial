@@ -7,7 +7,7 @@ HTTP 响应。
 HTTP 是客户端与服务器交换请求和响应的协议。JSON 是表示对象、数组、字符串、数字、布尔值和
 `null` 的文本格式。
 
-<p class="source-note">对应源码：<code>python/backend_interview/main.py</code>、<code>python/backend_interview/api.py</code></p>
+<!-- 对应源码：python/backend_interview/main.py、python/backend_interview/api.py -->
 
 ## 启动订单 API
 

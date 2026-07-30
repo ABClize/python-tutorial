@@ -3,7 +3,7 @@
 测试替身是在测试中代替真实依赖的对象。例如，可以用内存仓储代替数据库，用 Mock 代替支付客户端。
 替身可以返回固定值、保存状态，也可以记录调用参数。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/14_testing_and_mocking.py</code></p>
+<!-- 对应源码：python/python_interview_practice/14_testing_and_mocking.py -->
 
 ## Fake、Stub、Mock 和 Spy
 

@@ -3,7 +3,7 @@
 变量名通过引用指向对象。给另一个变量赋值时，复制的通常是引用，不是对象本身。可变对象可以原地修改，
 不可变对象不能原地修改。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/03_collections_copy.py</code></p>
+<!-- 对应源码：python/python_interview_practice/03_collections_copy.py -->
 
 ## 对象引用
 

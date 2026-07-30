@@ -3,7 +3,7 @@
 测量 Python 内存时，要先说明测量范围。`sys.getsizeof()` 只看对象本身，`tracemalloc` 跟踪
 Python 分配，RSS 则查看整个进程。三种结果不能直接当成同一个数字。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/15_performance_and_memory.py</code></p>
+<!-- 对应源码：python/python_interview_practice/15_performance_and_memory.py -->
 
 ## tracemalloc 跟踪 Python 分配
 

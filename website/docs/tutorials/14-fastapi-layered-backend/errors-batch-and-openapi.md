@@ -6,7 +6,7 @@ HTTP 状态码表示请求成功或失败的类型，响应体提供具体信息
 FastAPI 可以根据路由和 Pydantic 模型生成 OpenAPI 文档。代码中仍要明确写出错误响应、分页含义和
 批量并发上限。
 
-<p class="source-note">对应源码：<code>python/backend_interview/main.py</code>、<code>python/backend_interview/api.py</code>、<code>python/backend_interview/service.py</code></p>
+<!-- 对应源码：python/backend_interview/main.py、python/backend_interview/api.py、python/backend_interview/service.py -->
 
 ## 在 HTTP 边界统一映射异常
 

@@ -3,7 +3,7 @@
 生成器按需产生数据，不必一次保存全部结果。垃圾回收器负责处理已经无法访问的对象。RSS 表示操作系统
 看到的进程驻留内存。三个概念都与内存有关，但数值不能直接互相替代。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/15_performance_and_memory.py</code></p>
+<!-- 对应源码：python/python_interview_practice/15_performance_and_memory.py -->
 
 ## 列表会立即保存全部结果
 

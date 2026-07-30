@@ -5,7 +5,7 @@
 
 数据库连接、文件描述符和下游服务容量都有限，不能因为创建 Task 很便宜就无限创建。
 
-<p class="source-note">对应源码：<code>python/backend_interview/async_patterns.py</code>、<code>python/backend_interview/service.py</code></p>
+<!-- 对应源码：python/backend_interview/async_patterns.py、python/backend_interview/service.py -->
 
 ## Semaphore 限制在途数量
 

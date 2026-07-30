@@ -2,7 +2,7 @@
 
 字典使用 key 保存和查找 value，类型名是 `dict`。它适合保存姓名到分数、配置名到配置值等对应数据。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/01_basic_types.py</code></p>
+<!-- 对应源码：python/python_interview_practice/01_basic_types.py -->
 
 ## 字典的创建和读取
 

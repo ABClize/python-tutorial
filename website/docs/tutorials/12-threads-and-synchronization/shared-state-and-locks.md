@@ -3,7 +3,7 @@
 同一进程中的线程可以访问同一个对象。多个线程同时执行“读取、判断、写入”时，最终结果可能随执行
 顺序变化。这种错误叫竞争条件。`Lock` 会让同一时刻只有一个线程进入受保护的代码。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/07_concurrency.py</code>、<code>python/interview_exercises/concurrency.py</code></p>
+<!-- 对应源码：python/python_interview_practice/07_concurrency.py、python/interview_exercises/concurrency.py -->
 
 ## 竞争条件
 

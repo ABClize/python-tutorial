@@ -5,7 +5,7 @@ Single-flight 会把相同键的并发请求合并成一次实际加载。竞争
 
 三种方式处理的不是同一种问题。混用会产生重复流量、遗漏错误或错误取消。
 
-<p class="source-note">对应源码：<code>python/backend_interview/async_patterns.py</code>、<code>python/backend_interview/service.py</code></p>
+<!-- 对应源码：python/backend_interview/async_patterns.py、python/backend_interview/service.py -->
 
 ## 缓存未命中的惊群
 

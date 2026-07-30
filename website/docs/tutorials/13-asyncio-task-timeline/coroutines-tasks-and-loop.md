@@ -3,7 +3,7 @@
 协程是可以在等待时暂停的函数调用。Task 把协程登记到事件循环中。事件循环负责运行可执行的 Task，
 并在它等待 I/O 时切换到其他 Task。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/13_asyncio_concurrency.py</code></p>
+<!-- 对应源码：python/python_interview_practice/13_asyncio_concurrency.py -->
 
 ## 三个基本概念
 

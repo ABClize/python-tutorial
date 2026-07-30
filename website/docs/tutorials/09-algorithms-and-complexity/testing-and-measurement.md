@@ -3,7 +3,7 @@
 复杂度分析说明数据增大时耗时怎样增长。测试检查函数结果是否符合要求。实际测量告诉我们代码在当前
 机器上运行了多久。三种方法用途不同，不能互相替代。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/09_practice_questions.py</code></p>
+<!-- 对应源码：python/python_interview_practice/09_practice_questions.py -->
 
 ## 根据输入和结果写测试
 

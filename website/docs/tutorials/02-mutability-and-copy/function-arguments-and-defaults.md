@@ -3,7 +3,7 @@
 调用函数时，传入的对象会交给形参名使用。Python 不会自动复制这个对象。因此，函数可以修改传入的
 列表，可变默认参数也可能在多次调用之间保留内容。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/03_collections_copy.py</code></p>
+<!-- 对应源码：python/python_interview_practice/03_collections_copy.py -->
 
 ## 函数参数与对象引用
 

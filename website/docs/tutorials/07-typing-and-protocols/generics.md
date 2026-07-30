@@ -3,7 +3,7 @@
 泛型用于让多个位置使用同一种类型。例如，一个函数接收整数序列时返回整数，接收字符串序列时返回
 字符串。`TypeVar` 表示这次调用中需要保持一致的类型。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/11_typing_protocols.py</code></p>
+<!-- 对应源码：python/python_interview_practice/11_typing_protocols.py -->
 
 ## TypeVar 让输入和输出使用同一类型
 

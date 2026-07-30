@@ -3,7 +3,7 @@
 `heapq` 用于最小堆、Top-K 和优先队列。`bisect` 用于在有序列表中查找插入位置。两者都处理有序
 数据，但用途不同。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
+<!-- 对应源码：python/python_interview_practice/12_standard_library_patterns.py -->
 
 ## heapq 最小堆
 

@@ -2,7 +2,7 @@
 
 类是创建对象的模板。实例是根据类创建的具体对象。实例可以保存自己的属性，也可以调用类中定义的方法。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/05_oop_magic_methods.py</code></p>
+<!-- 对应源码：python/python_interview_practice/05_oop_magic_methods.py -->
 
 ## 定义类和创建实例
 

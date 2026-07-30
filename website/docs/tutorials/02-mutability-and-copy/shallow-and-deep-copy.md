@@ -3,7 +3,7 @@
 浅拷贝只创建新的外层对象，内部元素仍可能与原对象共享。深拷贝会继续复制内部的可变对象。
 嵌套列表最容易看出两者的区别。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/03_collections_copy.py</code></p>
+<!-- 对应源码：python/python_interview_practice/03_collections_copy.py -->
 
 ## 浅拷贝
 

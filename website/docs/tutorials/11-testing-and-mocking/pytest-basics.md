@@ -3,7 +3,7 @@
 pytest 是 Python 的测试运行器。它会查找测试文件，执行测试函数，并显示失败位置。普通测试不需要
 继承专用基类，写一个函数并使用 Python 自带的 `assert` 即可。
 
-<p class="source-note">对应源码：<code>python/tests/</code></p>
+<!-- 对应源码：python/tests/ -->
 
 ## 安装和运行
 

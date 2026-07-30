@@ -3,7 +3,7 @@
 `dataclass` 用于编写主要保存数据的类。它可以自动生成初始化、显示和比较方法。特殊方法则让自定义
 对象支持 `len()`、`print()`、加法和相等比较等 Python 语法。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/05_oop_magic_methods.py</code>、<code>python/python_interview_practice/10_data_model_descriptors.py</code></p>
+<!-- 对应源码：python/python_interview_practice/05_oop_magic_methods.py、python/python_interview_practice/10_data_model_descriptors.py -->
 
 ## `dataclass`
 

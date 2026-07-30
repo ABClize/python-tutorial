@@ -3,7 +3,7 @@
 栈按“后进先出”取数据，队列按“先进先出”取数据。括号匹配需要先处理最近加入的左括号，所以使用
 栈。广度优先搜索要按距离从近到远访问节点，所以使用队列。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/08_algorithms.py</code></p>
+<!-- 对应源码：python/python_interview_practice/08_algorithms.py -->
 
 ## 栈：后进先出
 

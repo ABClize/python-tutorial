@@ -5,7 +5,7 @@ Python 数据模型还规定了对象怎样参与打印、比较、运算和属�
 
 本章先讲类、实例、封装、组合与继承，再讲 `dataclass`、特殊方法、描述符和属性查找顺序。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/05_oop_magic_methods.py</code>、<code>python/python_interview_practice/10_data_model_descriptors.py</code></p>
+<!-- 对应源码：python/python_interview_practice/05_oop_magic_methods.py、python/python_interview_practice/10_data_model_descriptors.py -->
 
 ## 本章内容
 

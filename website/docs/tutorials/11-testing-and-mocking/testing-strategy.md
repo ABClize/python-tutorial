@@ -3,7 +3,7 @@
 单元测试检查一个函数或类。集成测试检查多个组件能否配合。API 测试通过 HTTP 调用接口。属性测试会
 生成多组输入，检查某条规则是否一直成立。不同测试层次解决不同问题。
 
-<p class="source-note">对应源码：<code>python/tests/</code>、<code>python/tests/backend/</code></p>
+<!-- 对应源码：python/tests/、python/tests/backend/ -->
 
 ## 测试层次
 

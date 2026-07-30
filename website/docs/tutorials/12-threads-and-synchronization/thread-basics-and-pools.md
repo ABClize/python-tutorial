@@ -1,13 +1,13 @@
-# 线程与线程池
+# 线程、线程池与进程池
 
 进程是一个正在运行的程序。线程是进程中的执行单元。同一进程里的线程共享大部分内存，但每个线程
 都有自己的执行位置。
 
 I/O 是 input/output（输入/输出）的缩写，包括网络、文件和数据库操作。I/O 操作经常需要等待外部
 结果，等待时可以运行其他线程。CPU 密集任务主要执行计算，增加线程通常不能让纯 Python 计算按核心
-数线性加速。
+数线性加速。这时可以让多个进程分别使用不同的 CPU 核心。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/07_concurrency.py</code>、<code>python/interview_exercises/concurrency.py</code></p>
+<!-- 对应源码：python/python_interview_practice/07_concurrency.py、python/interview_exercises/concurrency.py -->
 
 ## I/O 密集与 CPU 密集
 
@@ -128,6 +128,69 @@ print(result)
 ```
 
 结果顺序仍与输入 `[3, 1, 4, 2]` 一致，不受各线程实际完成顺序影响。
+
+## ProcessPoolExecutor
+
+`ProcessPoolExecutor` 使用多个进程执行任务。每个进程有独立的 Python 解释器，可以绕过 GIL 对纯
+Python CPU 计算的限制。进程之间也不共享普通 Python 变量：任务参数和返回值会经过序列化传递，
+子进程修改自己的列表或字典，不会直接改到主进程中的同一个对象。
+
+下面计算从 `0` 到 `limit - 1` 的平方和。计算量故意保持很小，便于直接运行。请把代码保存为
+`.py` 文件并从终端运行；`ProcessPoolExecutor` 不适合直接粘贴到交互式解释器中执行：
+
+```python
+from concurrent.futures import ProcessPoolExecutor
+
+
+def sum_squares(limit: int) -> tuple[int, int]:
+    total = sum(number * number for number in range(limit))
+    return limit, total
+
+
+def process_pool_example(
+    limits: tuple[int, ...],
+) -> list[tuple[int, int]]:
+    with ProcessPoolExecutor(max_workers=2) as executor:
+        return list(executor.map(sum_squares, limits))
+
+
+def main() -> None:
+    limits = (20_000, 10_000, 15_000)
+    print(process_pool_example(limits))
+
+
+if __name__ == "__main__":
+    main()
+```
+
+运行结果：
+
+```text
+[(20000, 2666466670000), (10000, 333283335000), (15000, 1124887502500)]
+```
+
+这里有四个必须注意的规则：
+
+- `sum_squares()` 定义在模块顶层，不要换成局部函数或 lambda；
+- 参数和返回值使用 `int`、`tuple` 等可以序列化的数据，进程之间传递任务和结果需要序列化；
+- 用 `if __name__ == "__main__":` 保护启动入口，避免子进程导入主模块时再次创建进程池；
+- `with ProcessPoolExecutor(...)` 会在退出时调用关闭逻辑，并等待已提交的任务完成。
+
+`executor.map()` 可以并行执行任务，但仍按输入顺序产生结果。因此上面的结果顺序始终对应
+`(20_000, 10_000, 15_000)`，不是任务的实际完成顺序。
+
+## 线程池还是进程池
+
+| 场景 | 常见选择 | 原因 |
+| --- | --- | --- |
+| 网络、文件、数据库等 I/O 密集任务 | 线程池 | 线程启动和数据传递开销较小，等待时可以运行其他线程 |
+| 纯 Python CPU 密集任务 | 进程池 | 多个解释器可以利用多个 CPU 核心 |
+| 计算量很小的任务 | 顺序执行 | 创建进程和传递数据的开销可能超过并行收益 |
+
+进程池不是“更快的线程池”。启动工作进程需要时间，任务参数和结果也要序列化并在进程间传递。任务
+越小、数据越大，这些额外开销越明显。上面的代码用于演示调用方式，不是性能基准。
+
+如果底层计算库会主动释放 GIL，线程也可能适合 CPU 计算。实际项目应使用真实数据测量后再决定。
 
 ## submit 与 Future
 

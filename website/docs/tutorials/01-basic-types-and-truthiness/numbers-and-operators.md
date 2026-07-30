@@ -3,7 +3,7 @@
 Python 使用运算符完成计算和判断。算术运算符处理数字，比较运算符得到 `True` 或 `False`，
 逻辑运算符组合多个条件。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/01_basic_types.py</code></p>
+<!-- 对应源码：python/python_interview_practice/01_basic_types.py -->
 
 ## 数值运算
 

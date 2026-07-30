@@ -5,7 +5,7 @@
 
 本章先讲四种基础容器，再讲推导式、排序、保序去重以及 `collections` 中的常用工具。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/01_basic_types.py</code>、<code>python/python_interview_practice/03_collections_copy.py</code>、<code>python/interview_exercises/collections.py</code></p>
+<!-- 对应源码：python/python_interview_practice/01_basic_types.py、python/python_interview_practice/03_collections_copy.py、python/interview_exercises/collections.py -->
 
 ## 本章内容
 

@@ -3,7 +3,7 @@
 列表和元组都能按顺序保存多个值。列表可以修改，类型名是 `list`；元组不能替换元素，类型名是
 `tuple`。两者都支持索引、切片和解包。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/01_basic_types.py</code></p>
+<!-- 对应源码：python/python_interview_practice/01_basic_types.py -->
 
 ## 列表的创建和访问
 

@@ -6,7 +6,7 @@
 短暂网络故障可以重试。参数错误、权限拒绝和永久业务失败通常不应重试。有副作用的操作只有具备幂等
 保证后才能安全重放。
 
-<p class="source-note">对应源码：<code>python/backend_interview/async_patterns.py</code>、<code>python/backend_interview/repository.py</code>、<code>python/backend_interview/service.py</code></p>
+<!-- 对应源码：python/backend_interview/async_patterns.py、python/backend_interview/repository.py、python/backend_interview/service.py -->
 
 ## 先判断是否应该重试
 

@@ -2,7 +2,7 @@
 
 函数把一段操作放在一起，并给它一个名字。调用函数时可以传入参数，函数也可以返回结果。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/02_functions_scope.py</code></p>
+<!-- 对应源码：python/python_interview_practice/02_functions_scope.py -->
 
 ## 定义和调用函数
 

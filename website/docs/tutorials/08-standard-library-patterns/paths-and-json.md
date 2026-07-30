@@ -1,9 +1,9 @@
-# Python pathlib 与 JSON 文件读写
+# Python pathlib、JSON 与 CSV 文件读写
 
 `pathlib` 用于创建、拼接和读写文件路径。`json` 用于把 Python 基础数据转换成 JSON 文本，也可以
-把 JSON 文本解析成 Python 对象。配置文件和数据文件经常同时使用这两个模块。
+把 JSON 文本解析成 Python 对象。`csv` 用于读写按行排列的表格文本。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
+<!-- 对应源码：python/python_interview_practice/12_standard_library_patterns.py -->
 
 ## pathlib 路径对象
 
@@ -176,7 +176,98 @@ JSON 不会自动保存 `datetime`、`Decimal`、`Path` 或自定义类。编码
 
 外部 JSON 成功解码只说明语法有效，不代表字段完整、类型正确或数值范围合理。使用数据前仍要检查。
 
-## 路径与 JSON 注意事项
+## 使用 DictWriter 写入 CSV
+
+CSV 的第一行通常是列名，后面每一行是一条记录。`csv.DictWriter` 可以按字典字段写入。下面把两条
+学习记录写进临时文件：
+
+```python
+import csv
+from pathlib import Path
+from tempfile import TemporaryDirectory
+
+records = [
+    {"topic": "Python", "hours": 3},
+    {"topic": "SQL", "hours": 2},
+]
+
+with TemporaryDirectory() as directory:
+    path = Path(directory) / "study.csv"
+
+    with path.open(
+        "w",
+        newline="",
+        encoding="utf-8",
+    ) as file:
+        writer = csv.DictWriter(
+            file,
+            fieldnames=["topic", "hours"],
+        )
+        writer.writeheader()
+        writer.writerows(records)
+
+    with path.open(
+        newline="",
+        encoding="utf-8",
+    ) as file:
+        loaded_rows = list(csv.DictReader(file))
+
+print(loaded_rows)
+```
+
+`fieldnames` 决定列名和列顺序。`writeheader()` 写入表头，`writerows()` 写入多条记录。字段中含有
+逗号、引号或换行时，`csv` 模块会按 CSV 规则添加引号，不要自己用 `",".join(...)` 拼接。
+
+## 使用 DictReader 读取 CSV
+
+上面的代码接着使用 `csv.DictReader` 读取文件。它默认使用第一行作为字典的 key。
+
+运行结果：
+
+```text
+[{'topic': 'Python', 'hours': '3'}, {'topic': 'SQL', 'hours': '2'}]
+```
+
+CSV 文件保存的是文本。虽然写入前的 `hours` 是整数，读取后得到的 `"3"` 和 `"2"` 仍然是字符串。
+需要计算时，要自己转换类型：
+
+```python
+converted_rows = [
+    {
+        "topic": row["topic"],
+        "hours": int(row["hours"]),
+    }
+    for row in loaded_rows
+]
+
+print(converted_rows)
+```
+
+运行结果：
+
+```text
+[{'topic': 'Python', 'hours': 3}, {'topic': 'SQL', 'hours': 2}]
+```
+
+外部 CSV 可能有空值、缺列或非法数字。调用 `int()` 前，应根据数据要求检查并处理这些情况。
+
+## 为什么要写 newline="" 和 encoding
+
+使用 `csv` 模块打开文件时，推荐这样写：
+
+```python
+with path.open(
+    "w",
+    newline="",
+    encoding="utf-8",
+) as file:
+    ...
+```
+
+`newline=""` 把换行处理交给 `csv` 模块，避免文本层再次修改换行，也能正确处理带换行的字段。
+`encoding="utf-8"` 明确文件编码，包含中文时不会依赖操作系统默认编码。读和写应使用相同编码。
+
+## 路径、JSON 与 CSV 注意事项
 
 - 文本文件显式指定编码。
 - 不要假定当前工作目录总在某个位置，应用应通过配置指定数据根目录。
@@ -184,3 +275,5 @@ JSON 不会自动保存 `datetime`、`Decimal`、`Path` 或自定义类。编码
 - 用户提供的路径要防止越过允许目录。
 - JSON 不是 Python 对象序列化格式，不保存方法和共享引用。
 - 解码外部 JSON 后仍要执行运行时校验。
+- 读写 CSV 时使用 `newline=""`，不要手工拼接带逗号的字段。
+- CSV 读取结果默认是文本，数字、日期和布尔值需要显式转换和校验。

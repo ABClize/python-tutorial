@@ -3,7 +3,7 @@
 测试隔离是指每个测试都能单独运行，不依赖其他测试的顺序和残留数据。依赖注入是把仓储、支付或通知
 对象从外部传给业务代码，而不是在业务函数内部直接创建。测试时可以传入简单的替代实现。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/14_testing_and_mocking.py</code></p>
+<!-- 对应源码：python/python_interview_practice/14_testing_and_mocking.py -->
 
 ## 常见状态污染
 

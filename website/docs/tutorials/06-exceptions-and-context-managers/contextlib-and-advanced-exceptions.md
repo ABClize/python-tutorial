@@ -3,7 +3,7 @@
 标准库 `contextlib` 提供了一组上下文管理工具。它可以把生成器函数变成上下文管理器，也可以管理
 数量不固定的资源。Python 3.11 还提供了 `ExceptionGroup`，用于一次保存多个异常。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/06_exceptions_context.py</code></p>
+<!-- 对应源码：python/python_interview_practice/06_exceptions_context.py -->
 
 ## 使用 @contextmanager
 

@@ -5,7 +5,7 @@ Python 变量保存的是对象的引用。两个变量可以引用同一个对�
 
 复制对象时，还要区分浅拷贝和深拷贝。本章从引用和可变性讲起，再说明函数参数、默认值、哈希和复制方式。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/03_collections_copy.py</code></p>
+<!-- 对应源码：python/python_interview_practice/03_collections_copy.py -->
 
 ## 本章内容
 

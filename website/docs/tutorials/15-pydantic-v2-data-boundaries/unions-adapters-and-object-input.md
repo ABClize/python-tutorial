@@ -4,7 +4,7 @@
 `BaseModel` 外壳的任意类型，`RootModel` 为顶层列表等值定义模型，`from_attributes` 从对象属性
 读取数据。
 
-<p class="source-note">对应源码：<code>python/backend_interview/schemas.py</code>、<code>python/backend_interview/pydantic_patterns.py</code></p>
+<!-- 对应源码：python/backend_interview/schemas.py、python/backend_interview/pydantic_patterns.py -->
 
 ## 普通联合的问题
 

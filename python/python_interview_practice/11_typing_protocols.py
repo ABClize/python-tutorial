@@ -1,4 +1,4 @@
-"""Python 3.11 类型标注：泛型、Protocol、Callable 与 TypeVar。
+"""Python 3.11 枚举与类型标注：Enum、泛型、Protocol、Callable 与 TypeVar。
 
 类型标注的主要价值是帮助 IDE、pyright、mypy 等工具在运行前发现问题。
 CPython 默认不会因为参数标注错误而阻止函数运行，因此面试时要区分：
@@ -13,6 +13,7 @@ CPython 默认不会因为参数标注错误而阻止函数运行，因此面试
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable, Iterator, Sequence
+from enum import Enum, StrEnum, auto
 from functools import wraps
 from typing import (
     Any,
@@ -36,6 +37,20 @@ def title(text: str) -> None:
 
 T = TypeVar("T")
 NumberT = TypeVar("NumberT", int, float)
+
+
+class ReviewStatus(Enum):
+    """普通 Enum：成员与底层字符串值是不同对象。"""
+
+    PENDING = "pending"
+    APPROVED = "approved"
+
+
+class Command(StrEnum):
+    """StrEnum：成员通常可以用在接收字符串的地方。"""
+
+    START = auto()
+    STOP = auto()
 
 
 class Stack(Generic[T]):
@@ -228,6 +243,24 @@ def annotation_name(annotation: Any) -> str:
     return getattr(annotation, "__name__", str(annotation))
 
 
+def enum_demo() -> None:
+    title("Enum 与 StrEnum")
+
+    current_status: ReviewStatus = ReviewStatus.APPROVED
+    print("普通 Enum:", current_status)
+    print("name/value:", current_status.name, current_status.value)
+    print(
+        "遍历 Enum:",
+        [(status.name, status.value) for status in ReviewStatus],
+    )
+    print("普通 Enum 不等于字符串:", current_status == "approved")
+
+    command: Command = Command.START
+    print("StrEnum + auto:", command)
+    print("name/value:", command.name, command.value)
+    print("StrEnum 可以和字符串比较:", command == "start")
+
+
 def generic_demo() -> None:
     title("Generic 与 TypeVar")
 
@@ -300,6 +333,7 @@ def modern_typing_demo() -> None:
 
 
 def main() -> None:
+    enum_demo()
     generic_demo()
     protocol_demo()
     callable_demo()

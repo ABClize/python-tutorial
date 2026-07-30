@@ -3,7 +3,7 @@
 大多数代码使用参数标注、返回值标注和联合类型就够了。只有返回类型随输入变化，或者要设计泛型生产者
 和消费者时，才需要 `overload`、协变和逆变。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/11_typing_protocols.py</code></p>
+<!-- 对应源码：python/python_interview_practice/11_typing_protocols.py -->
 
 ## overload 描述输入与返回关系
 

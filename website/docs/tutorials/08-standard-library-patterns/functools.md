@@ -3,7 +3,7 @@
 `functools` 提供一组操作函数的工具。它可以缓存函数结果、预先固定部分参数、累计处理序列，还可以
 根据第一个参数的类型选择不同实现。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
+<!-- 对应源码：python/python_interview_practice/12_standard_library_patterns.py -->
 
 ## cache 与 lru_cache
 

@@ -3,7 +3,7 @@
 Python 常见的检查方式有三种。`assert` 检查程序内部必须成立的条件。LBYL 先检查条件，再执行操作。
 EAFP 先执行操作，失败后再捕获异常。三种方式不能随意互换。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/06_exceptions_context.py</code></p>
+<!-- 对应源码：python/python_interview_practice/06_exceptions_context.py -->
 
 ## assert 检查内部不变量
 

@@ -3,7 +3,7 @@
 动态规划用于处理重复子问题。它把已经算出的结果保存起来，下次直接使用。处理列表和字符串时，也常用
 双指针、计数表和统一格式后的 key 来减少重复工作。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/08_algorithms.py</code>、<code>python/python_interview_practice/09_practice_questions.py</code></p>
+<!-- 对应源码：python/python_interview_practice/08_algorithms.py、python/python_interview_practice/09_practice_questions.py -->
 
 ## 从斐波那契数理解重复子问题
 

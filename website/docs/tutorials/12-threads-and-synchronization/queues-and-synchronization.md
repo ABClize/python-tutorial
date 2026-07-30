@@ -3,7 +3,7 @@
 `queue.Queue` 是线程安全队列。生产者负责放入任务，消费者负责取出任务。队列内部已经处理并发
 访问，生产者和消费者不必共同修改普通列表。
 
-<p class="source-note">对应源码：<code>python/interview_exercises/concurrency.py</code></p>
+<!-- 对应源码：python/interview_exercises/concurrency.py -->
 
 ## 生产者与消费者
 

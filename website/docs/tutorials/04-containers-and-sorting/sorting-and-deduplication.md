@@ -3,7 +3,7 @@
 排序会按照规则重新排列元素。`sorted()` 返回新列表，`list.sort()` 修改原列表。复杂数据可以用
 `key` 指定排序依据。去重时还要决定是否保留原来的顺序。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/03_collections_copy.py</code>、<code>python/interview_exercises/collections.py</code></p>
+<!-- 对应源码：python/python_interview_practice/03_collections_copy.py、python/interview_exercises/collections.py -->
 
 ## `sorted()` 和 `list.sort()`
 

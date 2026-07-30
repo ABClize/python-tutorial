@@ -6,7 +6,7 @@
 lifespan 是应用从启动到关闭的整个生命周期。中间件是在每个请求前后都会执行的一层代码。这三种工具
 管理的时间范围不同。
 
-<p class="source-note">对应源码：<code>python/backend_interview/dependencies.py</code>、<code>python/backend_interview/main.py</code></p>
+<!-- 对应源码：python/backend_interview/dependencies.py、python/backend_interview/main.py -->
 
 ## 路由器上的公共依赖
 

@@ -3,7 +3,7 @@
 `timeit` 用于重复测量一小段 Python 代码。“程序很慢”还不够具体。先判断是单次请求慢、批处理完成
 得少、输入变大后耗时上升，还是外部接口偶尔超时，再选择测量方法。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/15_performance_and_memory.py</code></p>
+<!-- 对应源码：python/python_interview_practice/15_performance_and_memory.py -->
 
 ## 先确定要测什么
 

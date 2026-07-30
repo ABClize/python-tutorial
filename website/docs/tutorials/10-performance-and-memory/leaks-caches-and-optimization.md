@@ -3,7 +3,7 @@
 内存泄漏通常表现为：程序运行越久，占用的内存越多，而且不会回落。常见原因不是垃圾回收器失效，而是
 列表、缓存、队列、未完成任务或监听器仍然引用着对象。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/15_performance_and_memory.py</code></p>
+<!-- 对应源码：python/python_interview_practice/15_performance_and_memory.py -->
 
 ## 无界容器会随运行时间增长
 

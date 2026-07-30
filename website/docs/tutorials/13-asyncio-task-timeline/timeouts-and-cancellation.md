@@ -3,7 +3,7 @@
 超时限制一次等待最多持续多久。取消表示调用方要求 Task 停止。Task 通常在下一个 `await` 处收到
 取消，并抛出 `CancelledError`。退出前仍要在 `finally` 中释放资源。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/13_asyncio_concurrency.py</code></p>
+<!-- 对应源码：python/python_interview_practice/13_asyncio_concurrency.py -->
 
 ## asyncio.timeout
 

@@ -3,7 +3,7 @@
 生成器是一种迭代器。它按需产生数据，不必一次把所有结果放进内存。`yield` 返回一个值并暂停函数，
 `next()` 让函数继续执行。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/04_iterators_generators.py</code></p>
+<!-- 对应源码：python/python_interview_practice/04_iterators_generators.py -->
 
 ## 生成器函数
 

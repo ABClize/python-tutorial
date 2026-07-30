@@ -5,7 +5,7 @@
 
 本章先讲大 O 复杂度，再用查找、栈、队列、广度优先搜索和动态规划等例子练习。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/08_algorithms.py</code>、<code>python/python_interview_practice/09_practice_questions.py</code></p>
+<!-- 对应源码：python/python_interview_practice/08_algorithms.py、python/python_interview_practice/09_practice_questions.py -->
 
 ## 本章内容
 

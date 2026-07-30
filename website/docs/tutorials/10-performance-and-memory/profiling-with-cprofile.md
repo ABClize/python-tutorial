@@ -3,7 +3,7 @@
 `cProfile` 用于统计 Python 函数的调用次数和耗时。程序包含多层函数调用时，它可以指出时间主要花在
 哪个函数中，而不只是告诉我们“整体很慢”。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/15_performance_and_memory.py</code></p>
+<!-- 对应源码：python/python_interview_practice/15_performance_and_memory.py -->
 
 ## 从命令行分析脚本
 

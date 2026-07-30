@@ -3,7 +3,7 @@
 几个示例运行正确，不代表算法对所有输入都正确。检查循环时，可以找出一个“每轮结束后都成立”的
 条件。这个条件叫作循环不变量。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/08_algorithms.py</code></p>
+<!-- 对应源码：python/python_interview_practice/08_algorithms.py -->
 
 ## 两数之和：保存已经见过的信息
 

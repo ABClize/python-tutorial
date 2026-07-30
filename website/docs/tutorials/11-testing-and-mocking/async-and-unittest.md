@@ -3,7 +3,7 @@
 异步测试用于检查 `async def` 定义的协程函数。测试必须 `await` 被测协程，并在结束前处理子任务、
 异常和资源清理。pytest 也能运行大多数标准库 `unittest.TestCase`。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/14_testing_and_mocking.py</code>、<code>python/tests/backend/</code></p>
+<!-- 对应源码：python/python_interview_practice/14_testing_and_mocking.py、python/tests/backend/ -->
 
 ## pytest-asyncio
 

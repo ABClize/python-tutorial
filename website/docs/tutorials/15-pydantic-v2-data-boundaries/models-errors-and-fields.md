@@ -5,7 +5,7 @@
 
 普通 Python 类型标注不会自动检查运行时输入。Pydantic 模型会执行这一步。
 
-<p class="source-note">对应源码：<code>python/backend_interview/schemas.py</code></p>
+<!-- 对应源码：python/backend_interview/schemas.py -->
 
 > 运行直接导入 `backend_interview` 的例子前，请先在仓库根目录执行 `cd python`。
 

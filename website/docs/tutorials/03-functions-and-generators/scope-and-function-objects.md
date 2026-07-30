@@ -3,7 +3,7 @@
 作用域决定一个名字可以在哪些位置使用，也决定 Python 按什么顺序查找名字。函数本身也是对象，
 可以赋给变量、作为参数传入，或者由另一个函数返回。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/02_functions_scope.py</code></p>
+<!-- 对应源码：python/python_interview_practice/02_functions_scope.py -->
 
 ## 函数的作用域
 

@@ -3,7 +3,7 @@
 FastAPI 是用于编写 HTTP API 的 Python Web 框架。仓库中的订单 API 把路由、输入模型、业务服务、
 领域对象、数据仓储和外部服务分别放在不同模块中。本章按一次请求的执行顺序介绍这些代码。
 
-<p class="source-note">对应源码：<code>python/backend_interview/</code></p>
+<!-- 对应源码：python/backend_interview/ -->
 
 ## 本章内容
 

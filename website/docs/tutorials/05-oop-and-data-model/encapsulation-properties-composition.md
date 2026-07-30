@@ -3,7 +3,7 @@
 封装把对象的内部状态和操作状态的方法放在一起。单下划线表示内部属性，`property` 可以在属性赋值时
 校验数据，组合则让一个对象使用另一个对象的功能。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/05_oop_magic_methods.py</code></p>
+<!-- 对应源码：python/python_interview_practice/05_oop_magic_methods.py -->
 
 ## 封装与命名约定
 
@@ -18,9 +18,7 @@ class Account:
         self._balance += amount
 ```
 
-外部代码技术上仍能访问 `_balance`，但调用者应把它视为非公开实现。
-
-外部代码仍然可以访问 `_balance`，但不应依赖这个内部实现。
+外部代码技术上仍能访问 `_balance`，但调用者应把它视为非公开实现，不应依赖这个属性名。
 
 双下划线会触发名称改写。下面查看实例实际保存的属性名：
 

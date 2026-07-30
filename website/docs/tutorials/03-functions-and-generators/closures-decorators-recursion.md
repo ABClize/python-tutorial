@@ -3,7 +3,7 @@
 闭包是能够记住外层变量的函数。装饰器用一个函数包装另一个函数。递归则是函数调用自身。
 这三种写法都以普通函数为基础。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/02_functions_scope.py</code></p>
+<!-- 对应源码：python/python_interview_practice/02_functions_scope.py -->
 
 ## 闭包
 

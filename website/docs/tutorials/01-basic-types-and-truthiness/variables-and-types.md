@@ -2,7 +2,7 @@
 
 变量是程序中使用的名字。赋值把一个值交给变量名。值有自己的类型，不同类型支持的操作也不同。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/01_basic_types.py</code></p>
+<!-- 对应源码：python/python_interview_practice/01_basic_types.py -->
 
 ## 变量赋值
 
@@ -227,6 +227,129 @@ True
 
 `isinstance()` 会考虑继承关系，`type(value) is SomeType` 只检查实际类型是否完全相同。普通类型判断
 通常优先使用 `isinstance()`。
+
+## 常用内置函数
+
+内置函数不需要导入，可以直接调用。下面这些函数经常用于数字、字符串和容器：
+
+| 函数 | 作用 |
+| --- | --- |
+| `len(value)` | 返回字符串或容器中的元素数量 |
+| `sum(values)` | 计算一组数值的总和 |
+| `min(values)` | 返回最小值 |
+| `max(values)` | 返回最大值 |
+| `abs(number)` | 返回绝对值 |
+| `round(number, digits)` | 按指定小数位数舍入 |
+| `any(values)` | 只要有一个元素为真，就返回 `True` |
+| `all(values)` | 所有元素都为真时，返回 `True` |
+
+下面对同一组数字做统计和舍入：
+
+```python
+numbers = [-3, 7, 2]
+
+print(len(numbers))
+print(sum(numbers))
+print(min(numbers))
+print(max(numbers))
+print(abs(numbers[0]))
+print(round(3.14159, 2))
+```
+
+运行结果：
+
+```text
+3
+6
+-3
+7
+3
+3.14
+```
+
+`len()` 得到元素数量。`sum()` 把三个数相加。`min()` 和 `max()` 分别取最小值与最大值。
+`abs(-3)` 得到 `3`，`round(3.14159, 2)` 保留两位小数。
+
+`round()` 遇到正好位于两个结果中间的值时，会选择偶数一侧：
+
+```python
+print(round(2.5))
+print(round(3.5))
+```
+
+运行结果：
+
+```text
+2
+4
+```
+
+浮点数本身是近似值，因此部分小数的舍入结果可能与十进制直觉不同。金额计算通常使用
+`decimal.Decimal`。
+
+### `any()` 与 `all()`
+
+`any()` 常用于判断“是否至少有一个满足条件”，`all()` 常用于判断“是否全部满足条件”：
+
+```python
+scores = [82, 91, 55]
+
+print(any(score >= 90 for score in scores))
+print(all(score >= 60 for score in scores))
+print(any([]))
+print(all([]))
+```
+
+运行结果：
+
+```text
+True
+False
+False
+True
+```
+
+列表中有一个分数不低于 `90`，所以第一行是 `True`。并非所有分数都及格，所以第二行是 `False`。
+空可迭代对象没有任何真值元素，因此 `any([])` 为 `False`；它也没有任何反例，因此
+`all([])` 为 `True`。
+
+### `map()` 与 `filter()`
+
+`map()` 对每个元素调用函数，`filter()` 只保留让判断函数返回真值的元素：
+
+```python
+def square(number: int) -> int:
+    return number * number
+
+
+def is_even(number: int) -> bool:
+    return number % 2 == 0
+
+
+numbers = [1, 2, 3, 4]
+
+print(list(map(square, numbers)))
+print(list(filter(is_even, numbers)))
+```
+
+运行结果：
+
+```text
+[1, 4, 9, 16]
+[2, 4]
+```
+
+`map()` 和 `filter()` 返回迭代器，示例使用 `list()` 一次取出全部结果。
+
+简单的转换或筛选通常使用推导式，更容易直接看出规则：
+
+```python
+squares = [number * number for number in numbers]
+even_numbers = [number for number in numbers if number % 2 == 0]
+```
+
+已经有 `square`、`is_even` 这类命名函数时，`map()` 和 `filter()` 也很清楚。只为它们临时编写复杂
+`lambda` 时，推导式通常更容易阅读。
 
 ## 类型转换
 

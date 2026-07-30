@@ -3,7 +3,7 @@
 `patch` 会在测试期间临时替换一个名字，`monkeypatch` 可以临时修改属性、环境变量和字典。
 `side_effect` 用来让 Mock 抛出异常或依次返回不同结果。测试结束后，这些修改都应恢复。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/14_testing_and_mocking.py</code></p>
+<!-- 对应源码：python/python_interview_practice/14_testing_and_mocking.py -->
 
 ## patch 替换名字
 

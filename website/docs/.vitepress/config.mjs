@@ -172,7 +172,7 @@ const tutorialSections = [
             link: "/tutorials/07-typing-and-protocols/typing-basics",
           },
           {
-            text: "Literal 与 TypedDict",
+            text: "Enum、Literal 与 TypedDict",
             link: "/tutorials/07-typing-and-protocols/literal-and-typeddict",
           },
           {
@@ -195,11 +195,11 @@ const tutorialSections = [
         collapsed: true,
         items: [
           {
-            text: "模块、包与 import",
+            text: "模块、命令行参数与 uv",
             link: "/tutorials/08-standard-library-patterns/modules-and-imports",
           },
           {
-            text: "pathlib 与 JSON 文件",
+            text: "pathlib、JSON 与 CSV 文件",
             link: "/tutorials/08-standard-library-patterns/paths-and-json",
           },
           {
@@ -211,7 +211,7 @@ const tutorialSections = [
             link: "/tutorials/08-standard-library-patterns/datetime",
           },
           {
-            text: "Decimal 精确小数",
+            text: "Decimal 与数值工具",
             link: "/tutorials/08-standard-library-patterns/decimal",
           },
           {
@@ -227,7 +227,7 @@ const tutorialSections = [
             link: "/tutorials/08-standard-library-patterns/functools",
           },
           {
-            text: "临时文件与模块选择",
+            text: "tempfile、logging 与工具选择",
             link: "/tutorials/08-standard-library-patterns/tempfile-and-guide",
           },
         ],
@@ -332,12 +332,12 @@ const tutorialSections = [
     text: "并发模型",
     items: [
       {
-        text: "12 线程、线程池与同步",
+        text: "12 线程、线程池、进程池与同步",
         link: "/tutorials/12-threads-and-synchronization",
         collapsed: true,
         items: [
           {
-            text: "线程与线程池",
+            text: "线程、线程池与进程池",
             link: "/tutorials/12-threads-and-synchronization/thread-basics-and-pools",
           },
           {

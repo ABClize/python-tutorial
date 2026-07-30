@@ -3,7 +3,7 @@
 异常表示代码在运行时无法继续完成当前操作。转换失败、文件不存在、索引越界和除数为零都会产生
 异常。能够处理错误的代码使用 `try` 和 `except` 捕获异常；不能处理时，就让异常继续向上传播。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/06_exceptions_context.py</code></p>
+<!-- 对应源码：python/python_interview_practice/06_exceptions_context.py -->
 
 ## 语法错误与运行时异常
 

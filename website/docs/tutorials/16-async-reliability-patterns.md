@@ -3,7 +3,7 @@
 异步可靠性是指程序遇到慢响应、临时故障、流量突增或任务取消时，仍能及时结束并保持数据正确。
 常用做法包括超时、有限重试、并发限制、有界队列、幂等处理和资源清理。
 
-<p class="source-note">对应源码：<code>python/backend_interview/async_patterns.py</code>、<code>python/backend_interview/service.py</code>、<code>python/backend_interview/repository.py</code></p>
+<!-- 对应源码：python/backend_interview/async_patterns.py、python/backend_interview/service.py、python/backend_interview/repository.py -->
 
 ## 本章内容
 

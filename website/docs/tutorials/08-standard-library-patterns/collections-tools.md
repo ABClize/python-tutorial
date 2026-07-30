@@ -3,7 +3,7 @@
 标准库 `collections` 提供几种专用容器。`Counter` 用于计数，`defaultdict` 自动创建默认值，
 `deque` 适合从两端添加和删除元素，`ChainMap` 按顺序查找多个映射。
 
-<p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
+<!-- 对应源码：python/python_interview_practice/12_standard_library_patterns.py -->
 
 ## Counter 统计次数
 
