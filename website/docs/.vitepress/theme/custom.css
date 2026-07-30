@@ -246,6 +246,10 @@ body {
   line-height: 1.333;
 }
 
+.vp-doc h2 .header-anchor {
+  top: 0;
+}
+
 .vp-doc h3 {
   margin-top: 28px;
   color: var(--tutorial-heading-3);
@@ -335,6 +339,11 @@ body {
 .vp-doc div[class*="language-"] pre {
   padding-top: 36px;
   background: transparent;
+}
+
+.vp-doc div[class*="language-"] pre:focus-visible {
+  outline: none;
+  box-shadow: inset 3px 0 var(--vp-c-brand-1);
 }
 
 .vp-doc div[class*="language-"] code {
