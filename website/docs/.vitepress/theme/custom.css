@@ -182,12 +182,26 @@ body {
   color: var(--tutorial-heading-1);
 }
 
-.VPDoc.has-aside .content-container {
-  max-width: 780px;
+.VPSidebar .VPSidebarItem .text {
+  padding-block: 3px;
+  font-size: 14px;
+  line-height: 21px;
 }
 
-.VPDoc:not(.has-aside) .content-container {
-  max-width: 780px;
+.VPSidebar .VPSidebarItem.level-0 {
+  padding-bottom: 20px;
+}
+
+.VPSidebar .VPSidebarItem.collapsed.level-0 {
+  padding-bottom: 8px;
+}
+
+.VPDoc.VPDoc.has-aside .content-container {
+  max-width: 720px;
+}
+
+.VPDoc.VPDoc:not(.has-aside) .content-container {
+  max-width: 720px;
   margin-inline: auto;
 }
 
@@ -216,34 +230,35 @@ body {
 .vp-doc h1 {
   margin-bottom: 20px;
   color: var(--tutorial-heading-1);
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.333;
   letter-spacing: 0;
 }
 
 .vp-doc h2 {
-  margin-top: 44px;
+  margin-top: 40px;
   border-top: 0;
   padding-top: 0;
   color: var(--tutorial-heading-2);
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1.35;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.333;
 }
 
 .vp-doc h3 {
-  margin-top: 32px;
+  margin-top: 28px;
   color: var(--tutorial-heading-3);
-  font-size: 19px;
-  font-weight: 700;
-  line-height: 1.4;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.555;
 }
 
 .vp-doc h4 {
   color: var(--tutorial-heading-4);
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
+  line-height: 1.5;
 }
 
 .vp-doc h5 {
@@ -256,7 +271,8 @@ body {
 
 .vp-doc p,
 .vp-doc li {
-  line-height: 1.75;
+  font-size: 16px;
+  line-height: 1.625;
 }
 
 .vp-doc a {
@@ -283,8 +299,9 @@ body {
   background: var(--tutorial-inline-code-bg);
   box-shadow: none;
   color: var(--tutorial-heading-1);
-  font-size: 0.88em;
+  font-size: 0.85em;
   font-weight: 500;
+  line-height: 1.5;
   padding: 0.08em 0.3em;
 }
 
@@ -320,6 +337,11 @@ body {
   background: transparent;
 }
 
+.vp-doc div[class*="language-"] code {
+  font-size: 13.5px;
+  line-height: 21px;
+}
+
 .vp-doc table {
   display: table;
   width: 100%;
@@ -337,6 +359,8 @@ body {
   border-right: 1px solid var(--vp-c-divider);
   border-bottom: 1px solid var(--vp-c-divider);
   padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.55;
 }
 
 .vp-doc th {
@@ -895,24 +919,26 @@ body {
 
 @media (max-width: 640px) {
   .vp-doc h1 {
-    font-size: 24px;
+    font-size: 26px;
     line-height: 1.35;
   }
 
   .vp-doc h2 {
-    margin-top: 36px;
+    margin-top: 32px;
     padding-top: 0;
-    font-size: 20px;
+    font-size: 21px;
+    line-height: 1.4;
   }
 
   .vp-doc h3 {
-    margin-top: 25px;
+    margin-top: 24px;
     font-size: 17px;
+    line-height: 1.5;
   }
 
   .vp-doc p,
   .vp-doc li {
-    line-height: 1.72;
+    line-height: 1.625;
   }
 
   .vp-doc div[class*="language-"] {
