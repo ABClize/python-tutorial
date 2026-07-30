@@ -1,7 +1,11 @@
 # 线程与线程池
 
-线程是进程中的执行单元。I/O 任务等待网络、磁盘或数据库时，其他线程可以继续运行；纯 Python 计算
-主要消耗 CPU，增加线程通常不会按核心数线性加速。
+进程是一个正在运行的程序实例，线程是进程中的执行单元。同一进程里的线程共享大部分内存，但各自
+保存当前执行到哪里。
+
+I/O 是 input/output（输入/输出）的缩写，包括网络收发、磁盘读写和数据库查询。这类任务经常花时间
+等待外部结果，等待期间其他线程可以继续运行。CPU 是执行计算指令的处理器；纯 Python 计算主要占用
+CPU，增加线程通常不会按核心数线性加速。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/07_concurrency.py</code>、<code>python/interview_exercises/concurrency.py</code></p>
 

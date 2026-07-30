@@ -195,24 +195,40 @@ const tutorialSections = [
         collapsed: true,
         items: [
           {
-            text: "模块、路径与 JSON",
-            link: "/tutorials/08-standard-library-patterns/modules-paths-and-json",
+            text: "模块、包与 import",
+            link: "/tutorials/08-standard-library-patterns/modules-and-imports",
+          },
+          {
+            text: "pathlib 与 JSON 文件",
+            link: "/tutorials/08-standard-library-patterns/paths-and-json",
           },
           {
             text: "collections 工具",
             link: "/tutorials/08-standard-library-patterns/collections-tools",
           },
           {
-            text: "日期时间与精确小数",
-            link: "/tutorials/08-standard-library-patterns/datetime-and-decimal",
+            text: "日期、时间与时区",
+            link: "/tutorials/08-standard-library-patterns/datetime",
           },
           {
-            text: "itertools、堆与二分",
-            link: "/tutorials/08-standard-library-patterns/itertools-heap-and-bisect",
+            text: "Decimal 精确小数",
+            link: "/tutorials/08-standard-library-patterns/decimal",
           },
           {
-            text: "functools、临时文件与选择指南",
-            link: "/tutorials/08-standard-library-patterns/functools-tempfile-and-guide",
+            text: "itertools 惰性迭代",
+            link: "/tutorials/08-standard-library-patterns/itertools",
+          },
+          {
+            text: "heapq 与 bisect",
+            link: "/tutorials/08-standard-library-patterns/heapq-and-bisect",
+          },
+          {
+            text: "functools 函数工具",
+            link: "/tutorials/08-standard-library-patterns/functools",
+          },
+          {
+            text: "临时文件与模块选择",
+            link: "/tutorials/08-standard-library-patterns/tempfile-and-guide",
           },
         ],
       },
@@ -471,7 +487,7 @@ export default defineConfig({
       ...tutorialSections,
     ],
     outline: {
-      level: "deep",
+      level: [2, 3],
       label: "文章大纲",
     },
     docFooter: {

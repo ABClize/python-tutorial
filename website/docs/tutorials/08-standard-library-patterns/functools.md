@@ -1,7 +1,7 @@
-# Python functools、tempfile 与工具选择
+# Python functools 函数工具
 
-`functools` 提供缓存、参数固定和单分派等函数工具，`tempfile` 安全创建临时文件与目录。本页也整理
-常见问题与标准库模块的对应关系。
+`functools` 提供缓存、参数固定、归约和单分派等函数工具。它们可以在不修改原函数的情况下，改变函数
+的调用方式或复用计算结果。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
 
@@ -121,54 +121,3 @@ print(normalize(2.5))
 
 它只根据第一个参数分派，适合同一个操作支持多个彼此独立类型的情况。业务规则分派通常更适合显式对象
 接口或映射。
-
-## tempfile 临时目录
-
-测试和中间处理不要手工使用固定临时文件名：
-
-```python
-from pathlib import Path
-from tempfile import TemporaryDirectory
-
-with TemporaryDirectory() as directory:
-    root = Path(directory)
-    path = root / "result.txt"
-    path.write_text("完成", encoding="utf-8")
-    print(path.read_text(encoding="utf-8"))
-```
-
-运行结果：
-
-```text
-完成
-```
-
-离开 `with` 后临时目录及其内容被清理。需要保留结果时，应在退出前复制到长期目录。
-
-## 常见需求与标准库
-
-| 问题 | 优先考虑 |
-| --- | --- |
-| 路径拼接和文件状态 | `pathlib` |
-| JSON 数据交换 | `json` |
-| 频次统计 | `collections.Counter` |
-| 按 key 收集值 | `collections.defaultdict` |
-| 队列和最近记录 | `collections.deque` |
-| 多层配置查找 | `collections.ChainMap` |
-| 时间点、时区和时长 | `datetime`、`zoneinfo` |
-| 十进制计算 | `decimal` |
-| 惰性迭代组合 | `itertools` |
-| Top-K 和优先队列 | `heapq` |
-| 有序列表边界 | `bisect` |
-| 缓存和参数适配 | `functools` |
-| 临时文件和目录 | `tempfile` |
-
-## 标准库使用注意事项
-
-- 标准库提供通用能力，不会自动完成业务校验。
-- 惰性迭代器通常只能消费一次。
-- `sys.getsizeof()` 只给出浅层大小。
-- `heapq` 的内部列表是堆，不是已排序列表。
-- `bisect` 只适用于按同一规则排序的数据。
-- 无界缓存和无界队列会造成内存持续增长。
-- 优先检查标准库和项目已有实现，需求超出边界时再比较第三方包。

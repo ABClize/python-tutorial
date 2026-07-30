@@ -10,13 +10,21 @@ Python 安装完成后会同时提供一组标准库。路径处理、JSON 编�
 
 ## 本章内容
 
-- [模块、路径与 JSON](./08-standard-library-patterns/modules-paths-and-json)：
-  组织和导入 Python 模块，跨平台处理路径，并在程序之间交换基础数据。
+- [模块、包与 import](./08-standard-library-patterns/modules-and-imports)：
+  组织 Python 代码，理解模块执行时机、包结构和导入路径。
+- [路径与 JSON 文件读写](./08-standard-library-patterns/paths-and-json)：
+  使用 pathlib 处理路径，并用 JSON 保存和读取基础数据。
 - [collections 常用容器工具](./08-standard-library-patterns/collections-tools)：
   使用 Counter、defaultdict、deque、ChainMap 和 namedtuple 处理常见容器模式。
-- [日期时间与 Decimal](./08-standard-library-patterns/datetime-and-decimal)：
-  正确表示时间点、时区、时长和需要明确十进制舍入的数值。
-- [itertools、heapq 与 bisect](./08-standard-library-patterns/itertools-heap-and-bisect)：
-  惰性组合迭代器、查找 Top-K，并维护有序序列。
-- [functools、tempfile 与工具选择](./08-standard-library-patterns/functools-tempfile-and-guide)：
-  缓存函数、固定参数、按类型分派，并安全创建临时文件。
+- [日期时间与时区](./08-standard-library-patterns/datetime)：
+  正确表示时间点、时区和时长。
+- [Decimal 精确十进制计算](./08-standard-library-patterns/decimal)：
+  避免二进制浮点误差并明确舍入规则。
+- [itertools 惰性迭代工具](./08-standard-library-patterns/itertools)：
+  截取、连接、累计、组合和分组迭代器。
+- [heapq 与 bisect](./08-standard-library-patterns/heapq-and-bisect)：
+  维护优先级、查找 Top-K 和有序列表边界。
+- [functools 函数工具](./08-standard-library-patterns/functools)：
+  缓存函数、固定参数、归约和按类型分派。
+- [tempfile 与工具选择](./08-standard-library-patterns/tempfile-and-guide)：
+  安全创建临时文件，并按常见需求选择标准库模块。

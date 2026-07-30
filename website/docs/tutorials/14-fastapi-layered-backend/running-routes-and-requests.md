@@ -1,7 +1,8 @@
 # 启动应用、认识路由与请求参数
 
-FastAPI 应用接收 HTTP 请求，再把路径、请求头、查询参数和 JSON 请求体转换成 Python 值。理解这层转换
-之后，路由函数的每一个参数从哪里来，就不会再显得神秘。
+FastAPI 应用接收 HTTP 请求，再把路径、请求头、查询参数和 JSON 请求体转换成 Python 值。HTTP 是
+客户端与服务器交换请求和响应时使用的协议；JSON 是一种用字符串、数字、布尔值、数组和对象表示
+结构化数据的文本格式。理解这层转换之后，路由函数的每一个参数从哪里来，就不会再显得神秘。
 
 <p class="source-note">对应源码：<code>python/backend_interview/main.py</code>、<code>python/backend_interview/api.py</code></p>
 
@@ -15,8 +16,9 @@ uv sync --group dev
 uv run uvicorn backend_interview.main:app --reload
 ```
 
-`backend_interview.main:app` 的含义是：导入 `backend_interview/main.py`，找到其中名为 `app` 的 ASGI
-应用。`--reload` 会在源码变化时重启开发服务器，只适合本地开发。
+ASGI 是 Python Web 服务器与异步 Web 应用之间的调用规范。`backend_interview.main:app` 的含义是：
+导入 `backend_interview/main.py`，找到其中名为 `app` 的 ASGI 应用。`--reload` 会在源码变化时重启
+开发服务器，只适合本地开发。
 
 启动后可以访问：
 

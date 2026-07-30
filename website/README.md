@@ -8,7 +8,7 @@
 ```text
 website/
 ├── docs/
-│   ├── tutorials/                 # 16 个章目录与 80 篇中文子教程
+│   ├── tutorials/                 # 16 个章目录与 84 篇中文子教程
 │   ├── .vitepress/components/     # Vue/Plotly 可视化
 │   ├── .vitepress/theme/          # 文档主题和少量样式
 │   └── index.md                   # 教程目录
