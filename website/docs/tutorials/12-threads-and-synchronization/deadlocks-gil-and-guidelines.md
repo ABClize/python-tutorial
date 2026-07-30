@@ -1,11 +1,13 @@
 # 死锁、GIL 与线程使用原则
 
-线程共享资源时不仅可能丢失更新，还可能互相等待。GIL 也不等于业务代码不需要锁，它主要影响的是
-CPython 执行 Python 字节码的方式。
+死锁是多个线程互相等待资源，导致所有线程都无法继续。GIL 是 CPython 的全局解释器锁，它限制同一
+时刻执行 Python 字节码的线程数量。GIL 不会自动保护业务数据，修改共享状态时仍可能需要锁。
 
 <p class="source-note">对应源码：<code>python/interview_exercises/concurrency.py</code>、<code>python/python_interview_practice/07_concurrency.py</code></p>
 
 ## 死锁怎样发生
+
+下面的时间线展示两把锁以相反顺序获取时的等待关系：
 
 ```text
 线程 A：持有 account_a_lock，等待 account_b_lock

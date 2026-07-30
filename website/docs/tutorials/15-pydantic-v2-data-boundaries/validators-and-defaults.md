@@ -1,7 +1,9 @@
 # 字段校验器、模型校验器与默认值
 
-`Field` 适合长度、范围和正则等通用约束。有些规则需要查看解析后的值，或比较多个字段，这时才需要
-validator。validator 应保持快速、确定，并且只依赖当前输入。
+validator 是自定义校验函数。字段校验器处理一个字段，模型校验器可以比较多个字段。长度、范围和
+正则等通用规则优先写在 `Field` 中。
+
+validator 应快速、确定，只依赖当前输入。数据库查询和网络请求应放在业务服务中。
 
 <p class="source-note">对应源码：<code>python/backend_interview/schemas.py</code>、<code>python/backend_interview/pydantic_patterns.py</code></p>
 
@@ -78,6 +80,8 @@ def normalize_tags(
         ↓ after：规范化和去重
 ["python", "api"]
 ```
+
+这张流程图说明 before validator 处理原始字符串，after validator 处理已经解析好的列表。
 
 ## Field 能表达的规则不要改写成 validator
 
@@ -225,4 +229,4 @@ class Event(BaseModel):
 | 商品、库存、权限 | 服务或网关 |
 | 唯一性、版本冲突 | 仓储和数据库 |
 
-越靠近数据边界的规则越通用、越局部；需要外部状态和并发保证的规则越应远离 Pydantic 模型。
+Pydantic 只处理当前输入能判断的通用规则。需要外部状态或并发保证的规则应放到业务服务或仓储。

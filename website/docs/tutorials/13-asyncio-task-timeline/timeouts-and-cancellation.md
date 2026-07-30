@@ -1,11 +1,13 @@
 # 超时与取消
 
-超时为等待建立时间上限，取消让调用方要求 Task 停止。二者都依赖协程在 await 点响应，并在退出前
-释放资源。
+超时限制一次等待最多持续多久。取消表示调用方要求 Task 停止。Task 通常在下一个 `await` 处收到
+取消，并抛出 `CancelledError`。退出前仍要在 `finally` 中释放资源。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/13_asyncio_concurrency.py</code></p>
 
 ## asyncio.timeout
+
+下面为代码块中的等待设置 0.1 秒上限：
 
 ```python
 async def main() -> None:
@@ -27,6 +29,8 @@ A 开始
 可以包围多次 await，让它们共享一个时间上限。
 
 ## asyncio.wait_for
+
+下面只限制一个 awaitable 的等待时间：
 
 ```python
 result = await asyncio.wait_for(
@@ -61,6 +65,8 @@ async def resource_operation(delay: float) -> str:
 正常返回、普通异常和取消都会进入 `finally`。
 
 ## 主动取消 Task
+
+下面创建一个长任务，随后调用 `cancel()` 请求停止：
 
 ```python
 async def worker() -> None:

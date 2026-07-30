@@ -1,7 +1,7 @@
 # 测试替身与 Mock
 
-测试替身代替真实外部依赖。不同替身强调的能力不同：有的保存状态，有的只返回固定值，有的用于验证
-调用参数。
+测试替身是在测试中代替真实依赖的对象。例如，可以用内存仓储代替数据库，用 Mock 代替支付客户端。
+替身可以返回固定值、保存状态，也可以记录调用参数。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/14_testing_and_mocking.py</code></p>
 
@@ -17,6 +17,8 @@
 一个对象可能同时具有多种特征。选择替身时先判断测试关注最终状态，还是发给外部系统的命令。
 
 ## Fake 示例
+
+下面用内存列表实现一个可以保存和查询数据的 Fake 仓储：
 
 ```python
 class FakeUserRepository:
@@ -50,6 +52,8 @@ Fake 保存有意义的状态，适合结果导向的测试。
 
 ## Mock 的基本用法
 
+下面创建一个支付客户端 Mock，并预先设置返回值：
+
 ```python
 from unittest.mock import Mock
 
@@ -80,7 +84,11 @@ print(inventory.reserve("PYTHON-BOOK", 2))
 True
 ```
 
+`return_value` 是 Mock 每次被调用时返回的固定值。
+
 ## 验证调用
+
+下面检查支付方法是否只调用一次，以及调用参数是否正确：
 
 ```python
 sender.send.assert_called_once_with(
@@ -101,6 +109,8 @@ sender.send.assert_called_once_with(
 `assert_called_with()` 只检查最后一次调用，不能代替 `assert_called_once_with()`。
 
 ## 使用 spec
+
+下面让 Mock 只提供真实接口中已经声明的属性：
 
 ```python
 from unittest.mock import Mock

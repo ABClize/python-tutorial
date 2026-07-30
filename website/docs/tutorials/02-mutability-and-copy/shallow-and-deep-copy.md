@@ -1,6 +1,7 @@
 # Python 浅拷贝与深拷贝
 
-复制一个普通列表很容易，复制嵌套列表却常常出现意外。浅拷贝只创建新的外层容器，深拷贝还会递归处理内部对象。本页会画清楚两种拷贝之后的引用关系，并说明修改会传播到哪里。
+浅拷贝只创建新的外层对象，内部元素仍可能与原对象共享。深拷贝会继续复制内部的可变对象。
+嵌套列表最容易看出两者的区别。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/03_collections_copy.py</code></p>
 
@@ -25,6 +26,8 @@ copied = copy.copy(original)
 ```
 
 ### 一层列表
+
+下面复制一个只包含字符串的列表，再向副本追加元素：
 
 ```python
 original = ["Python", "SQL"]
@@ -52,13 +55,14 @@ original ──> ["Python", "SQL"]
 copied   ──> ["Python", "SQL", "Git"]
 ```
 
-向 `copied` 追加元素只修改新列表，不会修改 `original`。
+两个列表的内容不同，`original is copied` 也是 `False`。向 `copied` 追加元素只修改新列表，
+不会修改 `original`。
 
 如果列表元素都是整数、字符串等不可变对象，浅拷贝通常已经能够满足独立修改外层列表的需要。
 
 ## 嵌套对象的浅拷贝
 
-嵌套列表包含外层列表和内层列表。浅拷贝只复制最外层：
+嵌套列表包含外层列表和内层列表。下面检查浅拷贝后的对象身份：
 
 ```python
 original = [["Python", "SQL"], ["Git"]]
@@ -93,7 +97,7 @@ copied   ──> outer list B ─┬──> ["Python", "SQL"]
                            └──> ["Git"]
 ```
 
-修改共享的内层列表时，两边都会看到变化：
+因为内层列表仍然共享，所以修改内层列表时，两边都会看到变化：
 
 ```python
 original = [["Python", "SQL"], ["Git"]]
@@ -115,6 +119,8 @@ print(copied)
 `original[0]` 和 `copied[0]` 是同一个列表，`append()` 修改的正是这个共享对象。
 
 ### 替换元素不会传播
+
+如果替换外层列表中的一个元素，另一个外层列表不会跟着替换：
 
 ```python
 original = [["Python", "SQL"], ["Git"]]
@@ -161,6 +167,8 @@ copied = copy.deepcopy(original)
 
 ### 实例
 
+下面深拷贝嵌套列表，再修改原对象中的第一个内层列表：
+
 ```python
 import copy
 
@@ -182,7 +190,8 @@ print(original[0] is copied[0])
 False
 ```
 
-深拷贝创建了新的外层列表，也创建了新的内层列表。修改原对象中的内层列表不会传播到副本。
+原对象中多了 `"FastAPI"`，副本没有变化，两个内层列表也不是同一个对象。深拷贝创建了新的外层列表，
+也创建了新的内层列表。
 
 ### 深拷贝不是简单复制所有对象
 

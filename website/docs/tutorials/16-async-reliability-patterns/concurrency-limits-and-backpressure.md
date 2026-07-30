@@ -1,11 +1,15 @@
 # 并发限制与背压
 
-异步代码能轻易创建大量 Task，但数据库连接、文件描述符和下游服务容量都是有限的。Semaphore 限制
-正在执行的数量，有界 Queue 则进一步限制等待中的积压。
+并发限制控制同一时刻正在执行的任务数量。背压表示下游处理不过来时，上游必须减速、等待或拒绝新
+任务。`Semaphore` 限制运行中的任务，有界 `Queue` 限制等待中的任务。
+
+数据库连接、文件描述符和下游服务容量都有限，不能因为创建 Task 很便宜就无限创建。
 
 <p class="source-note">对应源码：<code>python/backend_interview/async_patterns.py</code>、<code>python/backend_interview/service.py</code></p>
 
 ## Semaphore 限制在途数量
+
+下面让最多 10 个商品查询同时调用下游：
 
 ```python
 semaphore = asyncio.Semaphore(10)
@@ -99,6 +103,8 @@ Semaphore：
 
 ## Queue 把生产和消费分开
 
+下面用 Queue 保存尚未处理的任务，由固定数量的 worker 消费：
+
 ```python
 queue: asyncio.Queue[str | None] = (
     asyncio.Queue(maxsize=100)
@@ -180,7 +186,7 @@ async def queue_worker(
 
 锁和 Semaphore 的作用范围由它们实际共享的范围决定，名称叫“global”也不能让进程内对象自动跨机器。
 
-## 容量边界的组合
+## 同时限制执行量和积压量
 
 一个常见组合是：
 

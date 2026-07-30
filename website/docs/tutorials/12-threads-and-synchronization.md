@@ -1,7 +1,7 @@
 # Python 线程、线程池与同步
 
-线程可以让多个 I/O 等待重叠，但同一进程中的线程会共享内存。使用线程既要管理任务结果和线程生命
-周期，也要处理共享状态、锁、队列与死锁。
+线程是进程中的执行单元。同一进程里的线程共享内存，可以在一个线程等待网络或文件时运行其他线程。
+共享内存也会带来竞争条件，因此还要学习锁、线程安全队列和死锁。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/07_concurrency.py</code>、<code>python/interview_exercises/concurrency.py</code></p>
 

@@ -1,13 +1,13 @@
 # Python 模块、包与 import
 
-模块用于组织 Python 代码。把相关的函数、类和常量放进模块与包，可以避免所有代码堆在一个文件中，
-也能让不同文件复用同一份实现。
+一个 `.py` 文件就是一个模块。包是由多个模块组成的目录。使用模块和包，可以把函数、类和常量分开
+保存，并在其他文件中通过 `import` 复用。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
 
 ## 模块与 import
 
-一个 `.py` 文件就是一个 Python 模块。假设 `price.py` 包含：
+先创建一个 `price.py` 文件，内容如下：
 
 ```python
 TAX_RATE = 0.06
@@ -17,7 +17,7 @@ def add_tax(price: float) -> float:
     return price * (1 + TAX_RATE)
 ```
 
-导入整个模块：
+然后在另一个文件中导入整个模块：
 
 ```python
 import price
@@ -94,5 +94,5 @@ from shop.price import add_tax
 from .price import add_tax
 ```
 
-应用代码优先使用清晰的绝对导入；相对导入适合表达同一个包内部的关系。导入失败时，应先检查运行入口、
-当前工作目录、包结构和 `sys.path`，不要在业务代码中随意追加绝对路径。
+应用代码优先使用清晰的绝对导入；同一个包内部也可以使用相对导入。导入失败时，先检查运行入口、当前
+工作目录、包结构和 `sys.path`，不要在业务代码中随意追加绝对路径。

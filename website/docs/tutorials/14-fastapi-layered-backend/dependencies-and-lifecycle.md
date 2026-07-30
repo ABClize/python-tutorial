@@ -1,8 +1,10 @@
 # 依赖注入、应用生命周期与中间件
 
-一个路由通常需要配置、数据库仓储、外部服务客户端和认证信息。如果路径函数自己创建这些对象，资源
-生命周期会混乱，测试也难以替换。FastAPI 的依赖系统负责“当前请求需要什么”，lifespan 负责“应用
-进程启动和关闭时要做什么”。
+依赖注入是把路由需要的对象交给它，而不是在路由函数中直接创建。FastAPI 使用 `Depends` 声明依赖，
+例如认证信息、仓储和外部服务客户端。
+
+lifespan 是应用从启动到关闭的整个生命周期。中间件是在每个请求前后都会执行的一层代码。这三种工具
+管理的时间范围不同。
 
 <p class="source-note">对应源码：<code>python/backend_interview/dependencies.py</code>、<code>python/backend_interview/main.py</code></p>
 

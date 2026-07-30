@@ -1,7 +1,7 @@
 # 异常、参数化与 fixture
 
-失败行为也是函数契约的一部分。pytest 可以验证异常类型和消息，参数化可以让同一规则运行多组数据，
-fixture 则负责重复的准备与清理。
+函数除了返回正常结果，也可能按规定抛出异常。`pytest.raises()` 用来检查异常。参数化让同一个测试
+运行多组数据。fixture 是 pytest 提供测试数据和清理资源的机制。
 
 <p class="source-note">对应源码：<code>python/tests/</code></p>
 
@@ -117,6 +117,8 @@ def test_price_count(sample_prices: list[int]) -> None:
 简单数据直接写在测试中更清楚。
 
 ## 使用 yield 清理
+
+下面的 fixture 在测试前创建资源，并在测试结束后执行清理：
 
 ```python
 from collections.abc import Iterator

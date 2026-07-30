@@ -1,13 +1,14 @@
 # Python dataclass 与特殊方法
 
-很多类需要初始化、打印、比较和参与运算。dataclass 能生成常见样板代码，特殊方法则把自定义对象接入 len()、print()、加法、相等比较等 Python 语法。
+`dataclass` 用于编写主要保存数据的类。它可以自动生成初始化、显示和比较方法。特殊方法则让自定义
+对象支持 `len()`、`print()`、加法和相等比较等 Python 语法。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/05_oop_magic_methods.py</code>、<code>python/python_interview_practice/10_data_model_descriptors.py</code></p>
 
 ## `dataclass`
 
 主要用于保存数据的类往往需要重复编写 `__init__()`、`__repr__()` 和 `__eq__()`。
-`@dataclass` 可以生成这些方法：
+`@dataclass` 可以生成这些方法。下面定义学生数据：
 
 ```python
 from dataclasses import dataclass, field
@@ -32,9 +33,10 @@ Student(name='小林', score=82, skills=[])
 True
 ```
 
-`default_factory=list` 为每个实例调用一次 list，避免共享可变默认值。
+第一行是自动生成的显示形式。第二行是 `True`，因为两个实例的字段值相同。
+`default_factory=list` 会为每个实例调用一次 `list()`，避免共享可变默认值。
 
-需要初始化后处理时可以定义 `__post_init__()`：
+需要初始化后处理时可以定义 `__post_init__()`。下面生成一个用于降序排列分数的隐藏字段：
 
 ```python
 from dataclasses import dataclass, field
@@ -67,7 +69,7 @@ dataclass 不会自动校验外部输入，也不会默认成为不可变对象�
 
 ## 特殊方法与 Python 语法
 
-双下划线特殊方法通常由语法或内置函数触发：
+双下划线特殊方法通常由语法或内置函数触发。下面让购物车支持长度、迭代、成员判断和下标读取：
 
 ```python
 class Cart:
@@ -104,6 +106,8 @@ True
 3
 ```
 
+四行输出分别来自 `__len__()`、`__iter__()`、`__contains__()` 和 `__getitem__()`。
+
 | Python 写法 | 相关特殊方法 |
 | --- | --- |
 | `len(obj)` | `obj.__len__()` |
@@ -119,7 +123,7 @@ True
 
 ## `__repr__()` 和 `__str__()`
 
-`__repr__()` 面向开发者，目标是明确、无歧义；`__str__()` 面向最终用户：
+`__repr__()` 面向开发者，目标是明确、无歧义；`__str__()` 面向最终用户。下面为二维向量定义两种文本：
 
 ```python
 class Vector2D:
@@ -151,7 +155,7 @@ Vector2D(3, 4)
 
 ## 运算符重载与 `NotImplemented`
 
-特殊方法可以让对象参与运算：
+特殊方法可以让对象参与运算。下面用 `__add__()` 实现两个二维向量相加：
 
 ```python
 from __future__ import annotations
@@ -180,13 +184,16 @@ print(Vector2D(1, 2) + Vector2D(3, 4))
 Vector2D(4, 6)
 ```
 
+两个向量的横坐标和纵坐标分别相加，所以结果是 `Vector2D(4, 6)`。
+
 不支持某种操作数时应返回 `NotImplemented`，让 Python 尝试另一个操作数的反向方法；双方都不支持
 时，Python 再抛出 `TypeError`。`NotImplemented` 是特殊单例，不是异常类，也不同于
 `NotImplementedError`。
 
 ## 相等与哈希
 
-定义值相等时，应同时考虑对象是否可变以及是否需要放进 set 或作为 dict key：
+定义值相等时，应同时考虑对象是否可变，以及对象是否需要放进 set 或作为 dict key。下面让坐标按
+`x` 和 `y` 比较：
 
 ```python
 class Coordinate:
@@ -217,7 +224,8 @@ True
 1
 ```
 
-相等对象必须具有相同哈希值。上例只有在坐标不会改变时才安全；对象放入 set 后再改变参与哈希的字段，
+两个坐标相等，并且在 set 中只保留一个。相等对象必须具有相同哈希值。上例只有在坐标不会改变时才安全；
+对象放入 set 后再改变参与哈希的字段，
 容器将无法可靠找到它。可变值对象通常应保持不可哈希。
 
 只定义 `__eq__()` 时，Python 通常会把 `__hash__` 设为 `None`，防止错误地使用基于身份的哈希。

@@ -1,13 +1,13 @@
 # Python tempfile 与标准库工具选择
 
-`tempfile` 用来安全创建临时文件与目录。本页也整理常见问题与标准库模块的对应关系，便于从需求找到
-合适工具。
+`tempfile` 用于安全创建临时文件和临时目录。系统会生成不重复的名称，退出上下文管理器时还能自动
+清理。页面后半部分列出常见需求对应的标准库模块。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
 
 ## tempfile 临时目录
 
-测试和中间处理不要手工使用固定临时文件名：
+测试和中间处理不要手工使用固定临时文件名。下面创建一个临时目录，在其中写入并读取文件：
 
 ```python
 from pathlib import Path
@@ -28,7 +28,7 @@ with TemporaryDirectory() as directory:
 
 离开 `with` 后临时目录及其内容被清理。需要保留结果时，应在退出前复制到长期目录。
 
-## 常见需求与标准库
+## 常见需求对应的标准库
 
 | 问题 | 优先考虑 |
 | --- | --- |
@@ -54,4 +54,4 @@ with TemporaryDirectory() as directory:
 - `heapq` 的内部列表是堆，不是已排序列表。
 - `bisect` 只适用于按同一规则排序的数据。
 - 无界缓存和无界队列会造成内存持续增长。
-- 优先检查标准库和项目已有实现，需求超出边界时再比较第三方包。
+- 先检查标准库和项目已有实现；功能确实不够时，再比较第三方包。

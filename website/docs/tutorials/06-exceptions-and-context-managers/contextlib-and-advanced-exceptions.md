@@ -1,13 +1,14 @@
 # Python contextlib 与高级异常
 
-标准库 `contextlib` 可以用函数创建上下文管理器，也提供处理可选资源、动态资源数量和窄范围异常忽略的
-工具。Python 3.11 的 `ExceptionGroup` 则用于同时报告多个独立失败。
+标准库 `contextlib` 提供了一组上下文管理工具。它可以把生成器函数变成上下文管理器，也可以管理
+数量不固定的资源。Python 3.11 还提供了 `ExceptionGroup`，用于一次保存多个异常。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/06_exceptions_context.py</code></p>
 
 ## 使用 @contextmanager
 
-进入和退出逻辑较短时，可以使用 `contextlib.contextmanager`：
+进入和退出逻辑较短时，可以使用 `contextlib.contextmanager`。下面的示例在进入代码块时打印“获取
+资源”，在离开时打印“释放资源”：
 
 ```python
 from contextlib import contextmanager
@@ -34,7 +35,8 @@ with managed_resource("数据库连接") as resource:
 释放资源：数据库连接
 ```
 
-`yield` 之前相当于进入逻辑，yield 的值绑定到 `as` 后面的变量，`finally` 中的代码负责退出。被
+输出顺序说明：先获取资源，再执行 `with` 代码块，最后释放资源。`yield` 之前是进入逻辑，`yield`
+的值绑定到 `as` 后面的变量，`finally` 中的代码负责退出。被
 `@contextmanager` 装饰的生成器在一次上下文进入中必须恰好 yield 一次。
 
 ## suppress：忽略一种已知异常
@@ -66,7 +68,8 @@ print("清理完成")
 
 ## closing 与 nullcontext
 
-`closing(obj)` 在退出时调用 `obj.close()`，适合实现了 `close()` 但没有上下文协议的对象：
+`closing(obj)` 在退出时调用 `obj.close()`。下面的 `LegacyResource` 有 `close()` 方法，但没有实现
+`__enter__()` 和 `__exit__()`：
 
 ```python
 from contextlib import closing
@@ -94,8 +97,7 @@ False
 True
 ```
 
-`nullcontext(value)` 不增加进入和退出行为，适合统一“调用方已传入资源”和“函数自行创建资源”两种
-路径：
+`nullcontext(value)` 不增加进入和退出行为。下面的示例把已有的 `StringIO` 直接交给 `with` 使用：
 
 ```python
 from contextlib import nullcontext
@@ -117,7 +119,7 @@ Python
 
 ## ExitStack 动态管理多个资源
 
-资源数量在运行时才确定时，可以使用 `ExitStack`：
+资源数量在运行时才确定时，可以使用 `ExitStack`。下面的示例根据 `paths` 列表打开两个文件：
 
 ```python
 from contextlib import ExitStack
@@ -151,7 +153,8 @@ print(contents)
 
 ## ExceptionGroup
 
-Python 3.11 的 `ExceptionGroup` 可以携带多个独立异常：
+Python 3.11 的 `ExceptionGroup` 可以携带多个独立异常。下面的异常组同时保存一个值错误和一个超时
+错误：
 
 ```python
 try:
@@ -180,7 +183,7 @@ except* TimeoutError as errors:
 
 ## contextlib 使用注意事项
 
-- 上下文管理器应明确资源所有权，避免重复关闭或无人关闭。
+- 要说明资源由谁关闭，避免重复关闭或无人关闭。
 - `@contextmanager` 的清理逻辑放在 `finally` 中。
 - `suppress()` 的范围和异常类型保持最小。
 - 动态资源使用 `ExitStack`，固定资源使用普通 `with`。

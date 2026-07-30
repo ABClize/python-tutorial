@@ -1,12 +1,13 @@
 # Python 生成器与 itertools
 
-生成器按需产生数据，不必一次把所有结果放进内存。理解 yield 如何暂停函数、next() 如何恢复执行之后，就能自然看懂生成器表达式、yield from 和 itertools 中的惰性工具。
+生成器是一种迭代器。它按需产生数据，不必一次把所有结果放进内存。`yield` 返回一个值并暂停函数，
+`next()` 让函数继续执行。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/04_iterators_generators.py</code></p>
 
 ## 生成器函数
 
-函数体中出现 `yield`，它就是生成器函数：
+函数体中出现 `yield`，它就是生成器函数。下面依次产生平方数：
 
 ```python
 def squares(limit: int):
@@ -28,15 +29,15 @@ print(list(generator))
 [4, 9]
 ```
 
-调用 `squares(4)` 只创建生成器对象。第一次 `next()` 才开始执行函数体，运行到 `yield` 后返回一个
-值并暂停；下一次 `next()` 从暂停位置继续。
+调用 `squares(4)` 只创建生成器对象，不会马上运行函数体。第一次 `next()` 得到 `0`，第二次得到
+`1`。每次运行到 `yield` 后，函数都会暂停；下一次 `next()` 从暂停位置继续。
 
 生成器本身就是迭代器。前两个值已经被 `next()` 消费，因此后面的 `list(generator)` 只能取得剩余的
 `4` 和 `9`。
 
 ## 生成器如何暂停和继续
 
-无限斐波那契数列无法预先做成完整列表，但可以按需计算：
+无限斐波那契数列没有结束位置，不能预先做成完整列表，但可以按需计算：
 
 ```python
 def fibonacci():
@@ -71,7 +72,7 @@ print(list(islice(fibonacci(), 7)))
 
 ## 生成器表达式
 
-把列表推导式的方括号换成圆括号，可以得到生成器表达式：
+把列表推导式的方括号换成圆括号，可以得到生成器表达式。下面产生 `0` 到 `4` 的平方：
 
 ```python
 squares = (number * number for number in range(5))
@@ -86,6 +87,8 @@ print(sum(squares))
 <generator object <genexpr> at 0x...>
 30
 ```
+
+打印生成器对象时看不到所有数据。`sum()` 消费它后得到 `0 + 1 + 4 + 9 + 16 = 30`。
 
 生成器表达式不会立即保存全部结果。`sum()`、`max()`、`any()` 等只需要顺序消费数据的函数经常可以
 直接接收生成器表达式：
@@ -106,7 +109,7 @@ print(total)
 
 ## `yield from`
 
-一个生成器要逐个转发另一个可迭代对象的元素时，可以使用 `yield from`：
+一个生成器要逐个转发另一个可迭代对象的元素时，可以使用 `yield from`。下面把多个列表展平：
 
 ```python
 def flatten(groups: list[list[int]]):
@@ -128,7 +131,7 @@ print(list(flatten([[1, 2], [3], [4, 5]])))
 
 ## `send()`、`throw()` 和 `close()`
 
-生成器暂停在 `yield` 时，`send(value)` 可以把值送回生成器：
+生成器暂停在 `yield` 时，`send(value)` 可以把值送回生成器。下面的生成器会累加收到的数字：
 
 ```python
 def accumulator():
@@ -163,7 +166,7 @@ print(generator.send(4))
 
 ## `itertools` 常用工具
 
-标准库 `itertools` 提供惰性迭代工具：
+标准库 `itertools` 提供惰性迭代工具。下面演示连接、切片和相邻配对：
 
 ```python
 from itertools import chain, islice, pairwise

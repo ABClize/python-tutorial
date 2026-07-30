@@ -1,11 +1,13 @@
 # Python Decimal 精确十进制计算
 
-十进制数包含精度和舍入规则。需要按照十进制规则计算金额等数据时，`Decimal` 可以避免二进制浮点
-近似值带来的误差。
+`Decimal` 用于精确的十进制计算。金额、税率等数据需要按十进制规则计算时，使用 `Decimal` 可以
+避免 `float` 的二进制近似误差，并明确指定舍入方式。
 
 <p class="source-note">章节源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code>；相关标准库：<code>decimal</code></p>
 
 ## float 的十进制误差
+
+先看一个常见的浮点数结果：
 
 ```python
 print(0.1 + 0.2)
@@ -20,6 +22,8 @@ print(0.1 + 0.2)
 float 使用二进制浮点数，很多十进制小数不能精确表示。这不是 Python 特有问题。
 
 ## Decimal 精确十进制计算
+
+下面把金额写成字符串，再交给 `Decimal`：
 
 ```python
 from decimal import Decimal
@@ -52,6 +56,8 @@ print(Decimal(0.1))
 
 ## 指定舍入规则
 
+下面把 `10.005` 按四舍五入规则保留两位小数：
+
 ```python
 from decimal import Decimal, ROUND_HALF_UP
 
@@ -76,4 +82,4 @@ print(rounded)
 
 - Decimal 通常从字符串或整数构造。
 - 不要混合 Decimal 和 float 计算。
-- 金额模型还需要明确币种、最小单位和舍入规则。
+- 金额还要同时记录币种、最小单位和舍入规则。

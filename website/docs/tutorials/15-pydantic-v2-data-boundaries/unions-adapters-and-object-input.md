@@ -1,7 +1,8 @@
 # 联合类型、TypeAdapter 与对象输入
 
-有些 JSON 字段允许几种不同结构，有些输入的顶层就是列表，还有些数据来自普通 Python 对象。Pydantic
-为这些情况提供判别联合、TypeAdapter、RootModel 和 `from_attributes`。
+联合类型表示一个值可以属于多种类型。判别联合根据固定标记选择模型。`TypeAdapter` 可以校验没有
+`BaseModel` 外壳的任意类型，`RootModel` 为顶层列表等值定义模型，`from_attributes` 从对象属性
+读取数据。
 
 <p class="source-note">对应源码：<code>python/backend_interview/schemas.py</code>、<code>python/backend_interview/pydantic_patterns.py</code></p>
 

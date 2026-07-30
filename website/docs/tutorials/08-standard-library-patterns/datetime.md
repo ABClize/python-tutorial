@@ -1,13 +1,13 @@
 # Python datetime 与时区
 
-日期时间看似是普通数值，实际包含时区和日历规则。使用专用类型可以避免手工切割字符串，也能正确
-处理跨日、闰年和时区转换。
+`datetime` 模块用于表示日期、时间和时间间隔。它能处理跨日、闰年和时间加减。需要跨时区转换时，
+还要配合 `zoneinfo` 使用。
 
 <p class="source-note">章节源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code>；相关标准库：<code>datetime</code>、<code>zoneinfo</code></p>
 
 ## 日期、时间与时长
 
-标准库中的常用类型：
+标准库中最常用的四种类型如下：
 
 | 类型 | 表示内容 |
 | --- | --- |
@@ -15,6 +15,8 @@
 | `time` | 一天中的时间 |
 | `datetime` | 日期和时间 |
 | `timedelta` | 两个时间点之间的时长 |
+
+下面的示例从 UTC 时间 9:00 开始，加上 90 分钟：
 
 ```python
 from datetime import UTC, datetime, timedelta
@@ -57,6 +59,8 @@ None
 
 ## zoneinfo 转换时区
 
+下面把 UTC 时间转换为上海时间：
+
 ```python
 from datetime import UTC, datetime
 from zoneinfo import ZoneInfo
@@ -95,7 +99,8 @@ print(value.strftime("%Y年%m月%d日 %H:%M"))
 2026年07月30日 09:00
 ```
 
-`strftime()` 用于展示，`strptime()` 按指定格式解析。输入来自接口时，应明确接受哪些格式和时区。
+`strftime()` 把时间格式化成字符串，`strptime()` 按指定格式解析字符串。接口接收时间时，要写清楚
+允许的格式和时区。
 
 ## 使用注意事项
 

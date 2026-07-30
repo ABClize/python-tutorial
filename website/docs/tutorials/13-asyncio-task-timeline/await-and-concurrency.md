@@ -1,11 +1,11 @@
 # await 与并发等待
 
-`await` 等待一个 awaitable 的结果。等待对象尚未完成时，当前协程暂停并把控制权还给事件循环，其他
-可运行 Task 才能继续。
+`await` 用来等待协程、Task 等可等待对象。可等待对象也叫 awaitable。结果尚未准备好时，当前协程
+暂停，并把执行权交还事件循环。事件循环随后可以运行其他 Task。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/13_asyncio_concurrency.py</code></p>
 
-## await 是切换边界
+## await 会暂停当前协程
 
 异步函数中仍然可以写阻塞代码：
 
@@ -40,6 +40,8 @@ result = await asyncio.to_thread(
 
 ## 顺序 await
 
+下面连续等待两个操作，第二个操作会在第一个完成后才开始：
+
 ```python
 async def serial() -> list[str]:
     first = await fetch("A", 0.2)
@@ -50,6 +52,8 @@ async def serial() -> list[str]:
 第二个调用要等第一个返回后才开始，总时间约为 0.3 秒。
 
 ## 并发等待
+
+下面先创建两个 Task，再一起等待结果：
 
 ```python
 async def concurrent() -> list[str]:
@@ -80,6 +84,8 @@ A 完成
 实际完成顺序: ['C', 'B', 'A']
 gather 返回顺序: ['A:完成', 'B:完成', 'C:完成']
 ```
+
+任务可以按 C、B、A 的顺序完成，但 `gather()` 仍按 A、B、C 的传入顺序返回结果。
 
 ## 异步不等于并行计算
 

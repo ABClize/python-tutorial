@@ -1,7 +1,7 @@
 # 协程、Task 与事件循环
 
-asyncio 中，协程描述一段可以暂停的工作，Task 把协程交给事件循环调度，事件循环在可运行任务和等待
-结果之间切换。
+协程是可以在等待时暂停的函数调用。Task 把协程登记到事件循环中。事件循环负责运行可执行的 Task，
+并在它等待 I/O 时切换到其他 Task。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/13_asyncio_concurrency.py</code></p>
 
@@ -38,6 +38,8 @@ coroutine
 `RuntimeWarning: coroutine was never awaited`。
 
 ## asyncio.run
+
+下面用 `asyncio.run()` 创建事件循环并运行入口协程：
 
 ```python
 import asyncio
@@ -79,6 +81,8 @@ A 的结果
 `await main()`，不要嵌套调用 `asyncio.run()`。
 
 ## 创建 Task
+
+下面把两个协程包装成 Task，让它们都进入调度：
 
 ```python
 async def main() -> None:

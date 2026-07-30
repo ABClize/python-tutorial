@@ -1,12 +1,13 @@
 # Python 集合、并集交集与推导式
 
-集合只保留不重复的元素，特别适合成员判断、去重和集合运算。推导式则提供了一种从已有可迭代对象构造新容器的紧凑写法。本页还会用 enumerate() 和 zip() 处理索引与并行数据。
+集合只保存不重复的元素，类型名是 `set`。它适合成员判断、去重和集合运算。推导式可以根据已有数据
+快速创建 list、dict 或 set。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/01_basic_types.py</code></p>
 
 ## 集合的创建和成员判断
 
-set 保存不重复的可哈希元素：
+set 保存不重复的可哈希元素。下面的 `"Python"` 写了两次，但集合只保留一份：
 
 ```python
 skills = {"Python", "SQL", "Python"}
@@ -22,7 +23,8 @@ print("Python" in skills)
 True
 ```
 
-集合的显示和遍历顺序不应作为业务规则。示例用 `sorted()` 只是为了得到稳定输出。
+输出中只有两个技能，成员判断得到 `True`。集合的显示和遍历顺序不应作为业务规则。
+示例用 `sorted()` 只是为了得到稳定输出。
 
 空集合必须写成 `set()`，因为 `{}` 表示空 dict：
 
@@ -60,7 +62,7 @@ print(sorted(skills))
 
 ## 集合运算
 
-集合可以直接表示并集、交集、差集和包含关系：
+集合可以直接表示并集、交集、差集和包含关系。下面比较“必备技能”和“候选人技能”：
 
 ```python
 required = {"Python", "SQL"}
@@ -94,7 +96,7 @@ True
 
 ## `enumerate()` 和 `zip()`
 
-遍历时同时需要位置和值，使用 `enumerate()`：
+遍历时同时需要位置和值，使用 `enumerate()`。下面从 `1` 开始给姓名编号：
 
 ```python
 names = ["小林", "小周"]
@@ -110,7 +112,7 @@ for position, name in enumerate(names, start=1):
 2 小周
 ```
 
-并行遍历多个可迭代对象，使用 `zip()`：
+并行遍历多个可迭代对象，使用 `zip()`。下面把姓名和分数按位置配对：
 
 ```python
 names = ["小林", "小周"]
@@ -132,7 +134,7 @@ for name, score in zip(names, scores, strict=True):
 
 ## 列表、字典和集合推导式
 
-列表推导式把简单的遍历、过滤和变换写在一个表达式中：
+列表推导式把简单的遍历、过滤和变换写在一个表达式中。下面筛选及格分数，并给每个分数加 `5`：
 
 ```python
 scores = [55, 82, 91]
@@ -150,6 +152,8 @@ print(bonus_scores)
 [82, 91]
 [60, 87, 96]
 ```
+
+`passed` 只保留 `82` 和 `91`。`bonus_scores` 对三个分数都加 `5`，但最高不超过 `100`。
 
 dict 和 set 也支持推导式：
 

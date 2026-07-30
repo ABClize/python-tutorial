@@ -1,13 +1,13 @@
 # Python functools 函数工具
 
-`functools` 提供缓存、参数固定、归约和单分派等函数工具。它们可以在不修改原函数的情况下，改变函数
-的调用方式或复用计算结果。
+`functools` 提供一组操作函数的工具。它可以缓存函数结果、预先固定部分参数、累计处理序列，还可以
+根据第一个参数的类型选择不同实现。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
 
 ## cache 与 lru_cache
 
-缓存可以避免对相同参数重复计算：
+缓存可以避免对相同参数重复计算。下面的递归斐波那契函数会保存已经算过的结果：
 
 ```python
 from functools import cache
@@ -43,6 +43,8 @@ print(fibonacci.cache_info().currsize)
 `cache_clear()` 清空缓存，`cache_info()` 查看命中、未命中和当前条目数。
 
 ## partial 固定部分参数
+
+`partial()` 可以预先填写一部分参数。下面先固定税率，再重复计算不同价格：
 
 ```python
 from functools import partial
@@ -84,7 +86,7 @@ print(reduce(mul, [1, 2, 3, 4], 1))
 
 ## singledispatch
 
-`singledispatch` 根据第一个参数的运行时类型选择实现：
+`singledispatch` 根据第一个参数的运行时类型选择实现。下面为整数和列表分别注册处理函数：
 
 ```python
 from functools import singledispatch

@@ -1,11 +1,13 @@
 # Python 主动抛出与自定义异常
 
-函数发现参数、状态或业务规则不成立时，可以使用 `raise` 主动终止当前操作。异常类型和消息共同构成
-函数的失败接口，调用方可以据此选择恢复方式。
+`raise` 用于主动抛出异常。函数发现参数错误、状态不正确或业务规则不成立时，可以立即停止当前操作，
+并告诉调用方发生了什么错误。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/06_exceptions_context.py</code></p>
 
 ## 使用 raise 主动抛出异常
+
+下面的取款函数检查金额。金额不大于 0 或超过余额时，函数会抛出异常：
 
 ```python
 def withdraw(balance: int, amount: int) -> int:
@@ -25,7 +27,9 @@ print(withdraw(100, 30))
 70
 ```
 
-异常类型应尽量表达失败原因：
+调用 `withdraw(100, 30)` 返回 `70`，因为金额合法。传入非法金额时，代码不会执行到 `return`。
+
+异常类型应尽量说明失败原因：
 
 | 异常 | 常见含义 |
 | --- | --- |
@@ -58,7 +62,7 @@ def parse_port(text: str) -> int:
 
 ## 自定义异常
 
-自定义异常通常继承 `Exception` 或语义接近的内置异常：
+自定义异常通常继承 `Exception` 或含义接近的内置异常。下面定义一个专门表示年龄超出范围的异常：
 
 ```python
 class InvalidAgeError(ValueError):
@@ -93,6 +97,8 @@ for value in [20, -1, "18"]:
 年龄类型错误： 年龄必须是整数
 ```
 
+三个输入分别走正常返回、`InvalidAgeError` 和 `TypeError` 三条路径。
+
 ## bool 是 int 的子类
 
 Python 中 `bool` 是 `int` 的子类：
@@ -119,7 +125,7 @@ if isinstance(age, bool) or not isinstance(age, int):
 
 这属于额外业务约束，不是 `isinstance(value, int)` 的默认行为。
 
-## 建立异常层次
+## 定义一组相关异常
 
 同一业务领域可以使用一个公共父异常：
 
@@ -136,12 +142,12 @@ class OrderStateError(OrderError):
     """订单状态不允许当前操作。"""
 ```
 
-调用方可以捕获具体子类，也可以在统一边界捕获 `OrderError`。异常层次不宜过深；只有调用方确实需要
+调用方可以捕获具体子类，也可以统一捕获 `OrderError`。异常层次不宜过深；只有调用方确实需要
 区分处理方式时，才值得新增子类。
 
 ## 异常链
 
-跨抽象边界转换异常时，使用 `raise ... from ...` 保留原始原因：
+把底层异常转换成更容易理解的异常时，使用 `raise ... from ...` 保留原始原因：
 
 ```python
 class ConfigError(Exception):

@@ -1,13 +1,14 @@
 # Python 描述符、属性查找与 __slots__
 
-访问 obj.name 看起来只是读取一个字段，背后却可能经过描述符、实例字典、类属性和 __getattr__。本页按真实查找顺序解释这些机制，并说明 __slots__ 怎样限制实例可拥有的属性。
+描述符是控制属性读取、赋值或删除的对象。读取 `obj.name` 时，Python 还可能检查实例字典、类属性和
+`__getattr__()`。`__slots__` 则可以声明实例允许使用的属性。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/10_data_model_descriptors.py</code></p>
 
 ## 描述符
 
-描述符是定义了 `__get__()`、`__set__()` 或 `__delete__()` 的对象。它放在类属性上，可以复用属性
-访问逻辑：
+描述符定义 `__get__()`、`__set__()` 或 `__delete__()`。它放在类属性上，可以复用属性访问规则。
+下面用一个描述符校验工资和奖金都不能为负数：
 
 ```python
 class NonNegativeNumber:
@@ -47,15 +48,17 @@ print(employee.salary, employee.bonus)
 12000 2000
 ```
 
+创建实例时，两个赋值都会经过 `__set__()`。结果是 `12000 2000`。
 `__set_name__()` 在创建 `Employee` 类时收到属性名，使同一个描述符类能够用于 `salary` 和
-`bonus`。property 本身也是描述符。
+`bonus`。`property` 本身也是描述符。
 
 ## 数据描述符与非数据描述符
 
 - 定义了 `__set__()` 或 `__delete__()` 的对象是数据描述符；
 - 只定义 `__get__()` 的对象是非数据描述符。
 
-数据描述符优先于同名实例属性。非数据描述符可以被同名实例属性遮蔽：
+数据描述符优先于同名实例属性。非数据描述符可以被同名实例属性遮蔽。下面先读取非数据描述符，
+再给实例设置同名属性：
 
 ```python
 class DisplayName:
@@ -98,7 +101,7 @@ Profile<Ada>
 3. 类及基类中的普通属性和非数据描述符；
 4. 常规查找失败后调用 `__getattr__()`。
 
-`__getattr__()` 可以为缺失属性提供动态值：
+`__getattr__()` 可以为缺失属性提供动态值。下面优先读取用户覆盖值，否则读取默认值：
 
 ```python
 class Settings:
@@ -132,7 +135,7 @@ light
 
 ## `__slots__`
 
-类可以使用 `__slots__` 声明允许的实例属性：
+类可以使用 `__slots__` 声明允许的实例属性。下面的 `Point` 只声明 `x` 和 `y`：
 
 ```python
 class Point:

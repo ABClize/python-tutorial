@@ -1,12 +1,13 @@
 # Python 作用域与函数对象
 
-函数内部出现的名字从哪里查找，离开函数后局部变量为什么会消失，这些都由作用域规则决定。与此同时，函数本身也是对象，可以赋值、传参和作为返回值。本页把这两个概念连起来理解。
+作用域决定一个名字可以在哪些位置使用，也决定 Python 按什么顺序查找名字。函数本身也是对象，
+可以赋给变量、作为参数传入，或者由另一个函数返回。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/02_functions_scope.py</code></p>
 
 ## 函数的作用域
 
-在函数内创建的名字通常是局部变量：
+在函数内创建的名字通常是局部变量。下面在模块和函数内各定义一个 `message`：
 
 ```python
 message = "模块变量"
@@ -27,6 +28,8 @@ print(message)
 局部变量
 模块变量
 ```
+
+函数内打印“局部变量”，函数外打印“模块变量”。两个同名变量位于不同作用域。
 
 Python 查找名字时遵循 LEGB 顺序：
 
@@ -58,7 +61,7 @@ print(read_count())
 
 ## `global` 和 `nonlocal`
 
-`global` 表示要重新绑定模块级变量：
+`global` 表示要重新绑定模块级变量。下面让函数修改模块中的计数器：
 
 ```python
 request_count = 0
@@ -79,7 +82,7 @@ print(request_count)
 1
 ```
 
-`nonlocal` 用于重新绑定最近一层外部函数中的变量：
+`nonlocal` 用于重新绑定最近一层外部函数中的变量。下面的计数函数会保留并修改 `count`：
 
 ```python
 def make_counter():
@@ -110,7 +113,8 @@ print(counter(3))
 
 ## 函数是一等对象
 
-Python 函数可以赋给变量、放进容器、作为参数传入，也可以由另一个函数返回：
+Python 函数可以赋给变量、放进容器、作为参数传入，也可以由另一个函数返回。下面把同一个函数用于
+直接调用和参数传递：
 
 ```python
 def add_tax(price: float) -> float:
@@ -136,7 +140,7 @@ print(apply_rule(200, add_tax))
 `formatter = add_tax` 没有圆括号，表示保存函数对象；`add_tax(100)` 才是调用函数。排序的 `key`、
 事件回调、中间件和装饰器都依赖这一特性。
 
-`lambda` 可以创建只包含一个表达式的匿名函数：
+`lambda` 可以创建只包含一个表达式的匿名函数。下面按分数对学生排序：
 
 ```python
 students = [

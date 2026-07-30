@@ -1,13 +1,13 @@
 # 测量 Python 内存
 
-“一个对象占多少内存”没有唯一答案。可以只看容器本身，也可以计算它引用的所有对象；还要考虑对象
-是否共享，以及内存由 Python 分配器还是原生扩展申请。测量时必须说明口径。
+测量 Python 内存时，要先说明测量范围。`sys.getsizeof()` 只看对象本身，`tracemalloc` 跟踪
+Python 分配，RSS 则查看整个进程。三种结果不能直接当成同一个数字。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/15_performance_and_memory.py</code></p>
 
 ## tracemalloc 跟踪 Python 分配
 
-`tracemalloc` 能记录 Python 内存分配的位置，并比较两次快照：
+`tracemalloc` 能记录 Python 在哪些代码行分配了内存。下面在创建一万条记录前后各拍一次快照：
 
 ```python
 import tracemalloc
@@ -46,7 +46,7 @@ for stat in differences[:5]:
 输出会包含文件、行号、大小变化和对象块数量。具体数字依赖 Python 版本和当前环境，不应写成固定
 答案。
 
-## 当前值、峰值和快照解决不同问题
+## 当前值、峰值和快照各看什么
 
 追踪开始后，可以读取：
 
@@ -85,7 +85,7 @@ def allocate_records(count: int) -> list[dict[str, object]]:
 
 ## getsizeof 只看浅层大小
 
-`sys.getsizeof()` 返回对象本身的浅层大小：
+`sys.getsizeof()` 返回对象本身的浅层大小。下面比较列表和列表中第一个整数的大小：
 
 ```python
 import sys
@@ -109,7 +109,7 @@ True
 因此下面两句话含义不同：
 
 - “列表容器本身的浅层大小”可以用 `getsizeof()` 估算；
-- “这批业务数据让进程增加了多少内存”需要结合快照、共享关系和进程指标。
+- “这批数据让进程增加了多少内存”需要结合快照、对象共享情况和进程指标。
 
 简单地递归相加所有 `getsizeof()` 也可能重复计算共享对象，并遗漏 C 扩展中的原生分配。
 

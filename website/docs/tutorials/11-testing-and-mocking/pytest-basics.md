@@ -1,7 +1,7 @@
 # pytest 基础
 
-pytest 是 Python 测试运行器。它负责发现测试、执行测试并显示失败原因，普通测试通常只需要函数和
-Python 自带的 `assert`。
+pytest 是 Python 的测试运行器。它会查找测试文件，执行测试函数，并显示失败位置。普通测试不需要
+继承专用基类，写一个函数并使用 Python 自带的 `assert` 即可。
 
 <p class="source-note">对应源码：<code>python/tests/</code></p>
 

@@ -1,11 +1,13 @@
 # Python heapq 与 bisect
 
-`heapq` 用来维护最小堆、Top-K 和优先队列，`bisect` 在有序列表中查找边界。它们都依赖明确的顺序
-规则，但一个维护局部最小值，另一个维护有序列表的插入位置。
+`heapq` 用于最小堆、Top-K 和优先队列。`bisect` 用于在有序列表中查找插入位置。两者都处理有序
+数据，但用途不同。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
 
 ## heapq 最小堆
+
+下面把普通列表原地转换成最小堆，再依次弹出三个最小值：
 
 ```python
 import heapq
@@ -28,6 +30,8 @@ print([heapq.heappop(numbers) for _ in range(3)])
 `heappush()` 和 `heappop()` 是 O(log n)。
 
 ## Top-K
+
+下面从四位候选人中找出分数最高的两位：
 
 ```python
 import heapq
@@ -84,7 +88,11 @@ while queue:
 补测试
 ```
 
-## bisect 查找有序边界
+优先级 `1` 先执行。两个优先级为 `2` 的任务再按照加入队列的先后顺序执行。
+
+## bisect 查找插入位置
+
+下面分别查找 `80` 左侧和右侧的插入位置：
 
 ```python
 from bisect import bisect_left, bisect_right
@@ -124,7 +132,7 @@ print(scores)
 二分查找位置是 O(log n)，但 list 中间插入要移动元素，整个 `insort()` 仍是 O(n)。输入必须始终按
 同一规则排序。
 
-## 选择工具
+## 怎样选择工具
 
 | 需求 | 工具 |
 | --- | --- |

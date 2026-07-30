@@ -1,11 +1,13 @@
 # 队列与线程同步工具
 
-`queue.Queue` 是线程安全队列。生产者把任务放入队列，消费者取出并处理，双方不需要直接共同修改任务
-列表。
+`queue.Queue` 是线程安全队列。生产者负责放入任务，消费者负责取出任务。队列内部已经处理并发
+访问，生产者和消费者不必共同修改普通列表。
 
 <p class="source-note">对应源码：<code>python/interview_exercises/concurrency.py</code></p>
 
 ## 生产者与消费者
+
+下面创建一个生产者线程和一个消费者线程，通过 Queue 传递任务：
 
 ```python
 from queue import Queue

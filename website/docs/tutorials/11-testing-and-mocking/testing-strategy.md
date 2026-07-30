@@ -1,7 +1,7 @@
 # 测试层次与项目实践
 
-不同测试回答不同问题。快速单元测试检查业务规则，集成和 API 测试检查组件连接，属性测试检查大量输入
-下仍成立的不变量。
+单元测试检查一个函数或类。集成测试检查多个组件能否配合。API 测试通过 HTTP 调用接口。属性测试会
+生成多组输入，检查某条规则是否一直成立。不同测试层次解决不同问题。
 
 <p class="source-note">对应源码：<code>python/tests/</code>、<code>python/tests/backend/</code></p>
 
@@ -17,6 +17,8 @@
 全部依赖都 Mock 会漏掉真实集成错误；所有测试都启动完整系统又会慢且难定位。应根据风险组合层次。
 
 ## FastAPI 接口测试
+
+下面使用 `TestClient` 调用应用的健康检查接口：
 
 ```python
 from fastapi import FastAPI
@@ -39,13 +41,15 @@ def test_health() -> None:
     assert response.json() == {"status": "ok"}
 ```
 
-API 测试还应根据契约检查错误结构、认证、请求头、幂等性和依赖覆盖。应用有 lifespan 资源时，使用
-上下文管理器让启动和关闭逻辑真正执行：
+API 测试还应检查错误结构、认证、请求头、幂等性和依赖覆盖。应用有 lifespan 资源时，应把
+`TestClient` 放进上下文管理器。这样启动和关闭代码都会执行：
 
 ```python
 with TestClient(app) as client:
     response = client.get("/health")
 ```
+
+离开 `with` 代码块时，测试客户端会执行应用的关闭流程。
 
 ## Hypothesis 属性测试
 
@@ -67,6 +71,8 @@ def test_sort_preserves_length(values: list[int]) -> None:
 属性测试不替代有名字的业务样例。错误消息、权限和关键边界仍适合用明确示例表达。
 
 ## 覆盖率
+
+下面的命令运行测试，并统计哪些源码行被执行：
 
 ```bash
 uv run pytest --cov --cov-report=term-missing

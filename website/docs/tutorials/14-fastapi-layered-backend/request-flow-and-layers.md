@@ -1,11 +1,13 @@
 # 一次请求如何穿过各层
 
-分层的目的不是增加文件数量，而是让不同类型的规则各有明确位置。创建订单最适合观察这种分工：请求
-需要先通过 HTTP 边界，再完成商品和库存查询，构造领域对象，最后保存并返回。
+分层是把不同职责放到不同模块。API 层处理 HTTP，Schema 处理输入输出结构，服务层组织业务步骤，
+领域对象保存业务规则，仓储负责数据存取，网关负责调用外部系统。
+
+创建订单时，请求依次经过这些模块。每一层只处理自己的工作，再把结果交给下一层。
 
 <p class="source-note">对应源码：<code>python/backend_interview/api.py</code>、<code>python/backend_interview/schemas.py</code>、<code>python/backend_interview/service.py</code>、<code>python/backend_interview/domain.py</code></p>
 
-## 创建订单的完整路径
+## 创建订单的执行顺序
 
 一次 `POST /orders` 大致经过：
 

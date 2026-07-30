@@ -1,11 +1,13 @@
 # Python Protocol、Callable 与 ParamSpec
 
-Protocol 描述对象需要具备的能力，Callable 描述可调用对象的参数和返回值。它们适合定义依赖边界、
-高阶函数和装饰器，而不要求所有实现继承同一个基类。
+`Protocol` 说明对象必须提供哪些属性和方法。`Callable` 说明一个可调用对象接收什么参数、返回什么
+结果。实现类不必继承同一个基类，只要提供所需成员即可。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/11_typing_protocols.py</code></p>
 
 ## Protocol 与结构化类型
+
+下面的 `welcome()` 只要求通知器提供 `send()` 方法：
 
 ```python
 from typing import Protocol
@@ -40,14 +42,14 @@ Protocol 适合：
 
 - 依赖注入中的仓储、网关和通知器；
 - 多个第三方类型共有的最小能力；
-- 测试 Fake 与生产实现共享的边界。
+- 测试 Fake 与生产实现使用同一组方法。
 
 协议只声明调用方真正使用的成员。接口过大时，每个实现和测试替身都被迫提供无关方法。
 
 ## runtime_checkable
 
-Protocol 默认主要供静态检查。需要有限的 `isinstance()` 检查时，可以添加
-`@runtime_checkable`：
+`Protocol` 默认主要供静态检查。需要使用 `isinstance()` 检查成员是否存在时，可以添加
+`@runtime_checkable`。下面的协议要求对象有 `name` 属性和 `describe()` 方法：
 
 ```python
 from typing import Protocol, runtime_checkable
@@ -81,6 +83,8 @@ True
 
 ## Callable 描述可调用对象
 
+下面的 `apply_rule()` 接收一个价格和一个计算价格的函数：
+
 ```python
 from collections.abc import Callable
 
@@ -112,6 +116,8 @@ print(apply_rule(100.0, lambda value: value - 10))
 
 ## 可调用对象
 
+类实现 `__call__()` 后，实例也可以像函数一样调用：
+
 ```python
 class Multiplier:
     def __init__(self, factor: int) -> None:
@@ -135,7 +141,8 @@ print(double(5))
 
 ## ParamSpec 保留调用签名
 
-装饰器要转发任意参数，并保留原函数签名：
+装饰器要转发任意参数，并保留原函数签名，可以使用 `ParamSpec`。下面的装饰器在调用后打印函数名和
+返回值：
 
 ```python
 from collections.abc import Callable

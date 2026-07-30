@@ -1,13 +1,13 @@
 # Python 重载、型变与运行时标注
 
-基础类型标注能够覆盖大多数业务代码。函数的返回类型确实由输入类型决定，或者设计泛型生产者和消费者
-时，才需要 overload 和型变等工具。
+大多数代码使用参数标注、返回值标注和联合类型就够了。只有返回类型随输入变化，或者要设计泛型生产者
+和消费者时，才需要 `overload`、协变和逆变。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/11_typing_protocols.py</code></p>
 
 ## overload 描述输入与返回关系
 
-下面的 `strip_value()` 保留输入的 str 或 bytes 类型：
+下面的 `strip_value()` 接收 `str` 时返回 `str`，接收 `bytes` 时返回 `bytes`：
 
 ```python
 from typing import overload
@@ -53,7 +53,7 @@ overload 不会创建多个运行时函数，也不适合隐藏职责完全不�
 
 ## 协变、逆变与不变
 
-泛型类型参数的变化规则取决于接口如何使用值：
+型变决定“某个子类型容器能不能当作父类型容器使用”。规则取决于接口是读取值还是写入值：
 
 - 只产生值的只读接口通常可以协变；
 - 只接收值的消费者接口通常可以逆变；
@@ -81,6 +81,8 @@ Dog 的约定。
 `covariant=True` 或 `contravariant=True`。
 
 ## 逆变消费者示例
+
+下面的序列化器只接收值，不返回原值，因此它是一个消费者：
 
 ```python
 from typing import Protocol, TypeVar
@@ -119,7 +121,7 @@ print(dump_integer(42, ObjectSerializer()))
 ## 运行时读取类型标注
 
 函数和类的标注通常保存在 `__annotations__` 中。需要解析延迟标注和前向引用时，应使用
-`typing.get_type_hints()`：
+`typing.get_type_hints()`。下面读取 `greet()` 的参数和返回值标注：
 
 ```python
 from typing import get_type_hints
@@ -143,7 +145,7 @@ print(get_type_hints(greet))
 
 ## cast 只影响静态检查
 
-`typing.cast()` 不会转换运行时对象：
+`typing.cast()` 不会转换运行时对象。下面把静态类型为 `object` 的值告诉检查器“按 `str` 使用”：
 
 ```python
 from typing import cast

@@ -1,12 +1,13 @@
 # Python 继承、MRO 与抽象基类
 
-继承允许子类复用并改写父类行为，但多重继承会带来方法查找顺序问题。MRO 规定了查找路径，super() 沿着这条路径继续调用，抽象基类则用来声明子类必须实现的能力。
+继承让子类使用父类的属性和方法，也允许子类重写方法。MRO 是方法解析顺序，规定多重继承时按什么顺序
+查找。抽象基类用来声明子类必须实现的方法。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/05_oop_magic_methods.py</code>、<code>python/python_interview_practice/10_data_model_descriptors.py</code></p>
 
 ## 继承和方法重写
 
-继承用于表达子类是父类的一种，并且能够遵守父类的行为约定：
+继承用于表达“子类是父类的一种”。下面的 `Dog` 继承 `Animal`，并重写 `speak()`：
 
 ```python
 class Animal:
@@ -34,7 +35,9 @@ Lucky：汪汪
 True
 ```
 
-子类可以重写父类方法。需要继续执行父类初始化或方法时使用 `super()`：
+`dog.speak()` 调用子类方法，`isinstance()` 说明 `dog` 也是 `Animal` 的实例。
+
+需要继续执行父类初始化或方法时使用 `super()`：
 
 ```python
 class TrainedDog(Dog):
@@ -60,7 +63,7 @@ Lucky：汪汪，会握手
 
 ## MRO 与 `super()`
 
-多继承中，Python 按方法解析顺序 MRO 查找属性：
+多继承中，Python 按 MRO 查找属性。下面构造一个菱形继承结构：
 
 ```python
 class Root:
@@ -94,12 +97,13 @@ print(Diamond().trace())
 ['Diamond', 'Left', 'Right', 'Root']
 ```
 
-`super()` 表示沿当前 MRO 继续查找下一个实现，并不简单等于“调用直接父类”。合作式多继承要求各层
+第一行直接显示 MRO。第二行说明每个 `trace()` 都按照同一顺序调用下一个实现。
+`super()` 表示沿当前 MRO 继续查找，并不简单等于“调用直接父类”。合作式多继承要求各层
 方法使用兼容签名，并继续调用 `super()`。
 
 ## 抽象基类
 
-抽象基类可以声明子类必须实现的方法：
+抽象基类可以声明子类必须实现的方法。下面要求所有存储类都实现 `save()`：
 
 ```python
 from abc import ABC, abstractmethod
@@ -130,5 +134,6 @@ print(storage.values)
 ['Python']
 ```
 
-带未实现抽象方法的类不能实例化。抽象基类强调显式继承关系；只关心对象是否具有某组方法时，还可以
+`MemoryStorage` 实现 `save()`，所以可以创建实例并保存 `"Python"`。带未实现抽象方法的类不能实例化。
+抽象基类强调显式继承关系；只关心对象是否具有某组方法时，还可以
 使用结构化类型 `Protocol`，见[类型标注与 Protocol](../07-typing-and-protocols)。

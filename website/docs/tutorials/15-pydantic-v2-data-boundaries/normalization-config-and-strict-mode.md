@@ -1,7 +1,9 @@
 # 输入规范化、模型配置与严格模式
 
-外部输入经常带有多余空格、大小写差异或字符串形式的数字。是否自动整理和转换，应该由数据边界明确
-决定，而不是散落在业务代码中的许多 `strip()` 和 `int()`。
+规范化是把等价输入转换成统一形式，例如去掉空格或把 SKU 转成大写。`ConfigDict` 用来配置整个
+Pydantic 模型。严格模式会拒绝原本可能被自动转换的类型。
+
+这些规则应集中写在输入模型中，避免业务代码到处调用 `strip()` 和 `int()`。
 
 <p class="source-note">对应源码：<code>python/backend_interview/schemas.py</code>、<code>python/backend_interview/pydantic_patterns.py</code></p>
 
@@ -100,6 +102,8 @@ class CreateOrderRequest(BaseModel):
 
 ## 默认模式会解析部分类型
 
+下面演示默认模式把字符串数字转换成整数：
+
 ```python
 from pydantic import BaseModel
 
@@ -127,6 +131,8 @@ print(metric.value)
 `"twelve"` 仍不能变成整数。
 
 ## 严格模式拒绝隐式转换
+
+下面开启严格模式，让整数字段只接受真正的整数：
 
 ```python
 from pydantic import BaseModel, ConfigDict
@@ -193,9 +199,9 @@ event = Event.model_validate_json(
 
 校验顺序也是数据契约的一部分：原始输入处理、类型解析、字段校验和模型级校验各自看到的数据不同。
 
-## 怎样选择边界策略
+## 根据输入来源选择模式
 
-可以从输入来源出发：
+选择前先看输入从哪里来：
 
 | 输入来源 | 常见选择 |
 | --- | --- |

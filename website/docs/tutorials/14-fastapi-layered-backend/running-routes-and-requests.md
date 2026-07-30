@@ -1,8 +1,11 @@
 # 启动应用、认识路由与请求参数
 
-FastAPI 应用接收 HTTP 请求，再把路径、请求头、查询参数和 JSON 请求体转换成 Python 值。HTTP 是
-客户端与服务器交换请求和响应时使用的协议；JSON 是一种用字符串、数字、布尔值、数组和对象表示
-结构化数据的文本格式。理解这层转换之后，路由函数的每一个参数从哪里来，就不会再显得神秘。
+路由把“HTTP 方法和 URL 路径”对应到一个 Python 函数。例如，`POST /orders` 会调用创建订单的
+路径函数。FastAPI 会把路径参数、查询参数、请求头和 JSON 请求体转换成函数参数，并把返回值转换成
+HTTP 响应。
+
+HTTP 是客户端与服务器交换请求和响应的协议。JSON 是表示对象、数组、字符串、数字、布尔值和
+`null` 的文本格式。
 
 <p class="source-note">对应源码：<code>python/backend_interview/main.py</code>、<code>python/backend_interview/api.py</code></p>
 
@@ -136,6 +139,8 @@ limit: Annotated[int, Query(ge=1, le=100)] = 20
 `limit=500` 都无法通过约束。
 
 ## 调用创建订单接口
+
+下面使用 curl 发送包含请求头和 JSON 请求体的创建请求：
 
 ```bash
 curl -X POST http://127.0.0.1:8000/orders \

@@ -1,13 +1,14 @@
 # Python 文件与上下文管理器
 
-文件、连接和锁都需要在使用后释放。上下文管理器把资源的进入和退出规则放在同一个结构中，`with`
-代码块无论正常结束还是抛出异常，都会调用退出逻辑。
+上下文管理器用于自动释放资源。文件、连接和锁使用完后都要释放。把它们放进 `with` 代码块后，无论
+代码正常结束还是抛出异常，Python 都会调用退出逻辑。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/06_exceptions_context.py</code></p>
 
 ## 手动关闭文件
 
-不使用上下文管理器时，需要通过 `finally` 保证关闭：
+不使用上下文管理器时，需要通过 `finally` 保证关闭。下面的示例读取内存文件，然后检查文件是否已经
+关闭：
 
 ```python
 from io import StringIO
@@ -32,6 +33,8 @@ True
 如果只在正常路径调用 `close()`，读取或处理过程抛出异常时就可能跳过清理。
 
 ## 使用 with 管理文件
+
+同一段文件读取代码可以改用 `with`：
 
 ```python
 from io import StringIO
@@ -64,7 +67,8 @@ with open("scores.txt", encoding="utf-8") as file:
 
 ## pathlib 读写小文件
 
-`Path.read_text()` 和 `write_text()` 内部会正确打开和关闭文件：
+`Path.read_text()` 和 `write_text()` 会自动打开和关闭文件。下面的示例写入两个分数，再把它们读
+回来：
 
 ```python
 from pathlib import Path
@@ -98,7 +102,7 @@ with path.open(encoding="utf-8") as file:
 
 ## 同时管理多个资源
 
-资源数量固定时，可以在同一个 `with` 中列出：
+资源数量固定时，可以在同一个 `with` 中列出。下面的示例同时打开输入文件和输出文件：
 
 ```python
 with (
@@ -113,7 +117,7 @@ with (
 
 ## 上下文管理协议
 
-对象实现 `__enter__()` 和 `__exit__()` 后，可以用于 `with`：
+对象实现 `__enter__()` 和 `__exit__()` 后，就可以用于 `with`。下面的 `Timer` 记录代码块运行时间：
 
 ```python
 from time import perf_counter

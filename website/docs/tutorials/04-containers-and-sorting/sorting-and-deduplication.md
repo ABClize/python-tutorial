@@ -1,12 +1,13 @@
 # Python 排序与保序去重
 
-排序不仅要知道升序和降序，还要分清 sorted() 返回新列表与 list.sort() 原地修改的差别。对于复杂记录，可以用 key 指定排序依据；需要去重时，还要明确是否保留原顺序。
+排序会按照规则重新排列元素。`sorted()` 返回新列表，`list.sort()` 修改原列表。复杂数据可以用
+`key` 指定排序依据。去重时还要决定是否保留原来的顺序。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/03_collections_copy.py</code>、<code>python/interview_exercises/collections.py</code></p>
 
 ## `sorted()` 和 `list.sort()`
 
-`sorted()` 接收任意可迭代对象，返回新的 list，不修改原数据：
+`sorted()` 接收任意可迭代对象，返回新的 list，不修改原数据。下面按分数降序排列：
 
 ```python
 scores = [82, 55, 91]
@@ -23,7 +24,8 @@ print(scores)
 [82, 55, 91]
 ```
 
-`list.sort()` 只用于 list，原地排序并返回 `None`：
+`ordered` 是降序的新列表，`scores` 保持原顺序。`list.sort()` 只用于 list，原地排序并返回
+`None`：
 
 ```python
 scores = [82, 55, 91]
@@ -44,7 +46,7 @@ None
 
 ## 使用 `key` 指定排序依据
 
-复杂数据需要明确“按什么排序”：
+复杂数据需要明确“按什么排序”。下面先按分数降序，再按姓名升序：
 
 ```python
 students = [
@@ -75,6 +77,8 @@ for student in ordered:
 1. 先按分数降序，负号把较高分数变成较小的排序键；
 2. 分数相同时按姓名升序。
 
+输出中小周分数最高，排在第一。小林和小陈同为 `88` 分，再按姓名排列。
+
 `operator.itemgetter()` 和 `operator.attrgetter()` 也可用于简单字段排序：
 
 ```python
@@ -93,7 +97,8 @@ print(sorted(records, key=itemgetter(1), reverse=True))
 
 ## 稳定排序
 
-Python 的排序是稳定的：两个元素的排序键相同时，保留它们在原输入中的相对顺序。
+Python 的排序是稳定的：两个元素的排序键相同时，保留它们在原输入中的相对顺序。下面只按第二个元素
+排序：
 
 ```python
 records = [
@@ -131,7 +136,7 @@ print(unique_items)
 [3, 1, 2]
 ```
 
-显式 `seen` 集合便于加入更多处理：
+结果保留 `3`、`1`、`2` 第一次出现的顺序。显式 `seen` 集合便于加入更多处理：
 
 ```python
 def unique_in_order(items):

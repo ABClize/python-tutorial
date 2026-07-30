@@ -1,11 +1,13 @@
 # Python collections 常用容器工具
 
-标准库 `collections` 为计数、分组、队列、配置查找和轻量记录提供专用容器。使用这些工具可以直接表达
-数据处理意图，避免反复编写同样的字典和列表逻辑。
+标准库 `collections` 提供几种专用容器。`Counter` 用于计数，`defaultdict` 自动创建默认值，
+`deque` 适合从两端添加和删除元素，`ChainMap` 按顺序查找多个映射。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
 
 ## Counter 统计次数
+
+下面的示例统计列表中每个主题出现了多少次：
 
 ```python
 from collections import Counter
@@ -31,6 +33,8 @@ Counter({'Python': 3, 'SQL': 2, 'Git': 1})
 Counter 是 dict 子类，缺少元素时返回 `0`，不会抛出 `KeyError`。
 
 ## Counter 运算
+
+两个 `Counter` 可以相加，也可以按 key 取较小或较大的计数：
 
 ```python
 from collections import Counter
@@ -58,6 +62,8 @@ Counter({'b': 4, 'a': 3})
 Counter 保留首次遇到元素的顺序；计数相同时，显示顺序也会受这个顺序影响。
 
 ## defaultdict 自动创建默认值
+
+下面按姓名收集多个分数。第一次遇到姓名时，`defaultdict(list)` 会自动创建空列表：
 
 ```python
 from collections import defaultdict
@@ -133,7 +139,9 @@ print(list(recent))
 
 超过最大长度时，另一端最旧的元素自动移除。
 
-## ChainMap 表达查找优先级
+## ChainMap 按顺序查找多个映射
+
+下面按照“命令行、环境变量、默认值”的顺序查找配置：
 
 ```python
 from collections import ChainMap
@@ -161,6 +169,8 @@ light
 
 ## namedtuple 轻量记录
 
+下面定义一个有 `x`、`y` 两个字段的不可变记录：
+
 ```python
 from collections import namedtuple
 
@@ -183,7 +193,7 @@ Point(x=3, y=4)
 `namedtuple` 保留 tuple 的索引和解包能力，同时增加字段名。新代码需要类型标注、默认值和方法时，也可以
 使用 `typing.NamedTuple` 或 `@dataclass(frozen=True)`。
 
-## 选择容器工具
+## 怎样选择容器工具
 
 | 需求 | 工具 |
 | --- | --- |
@@ -194,4 +204,4 @@ Point(x=3, y=4)
 | 多层配置查找 | `ChainMap` |
 | 轻量不可变记录 | `namedtuple` |
 
-专用容器能减少样板代码，但仍需理解缺失 key、副作用、顺序和容量边界。
+这些工具能减少重复代码，但仍要注意 key 不存在时的行为、元素顺序和容器容量。

@@ -1,13 +1,13 @@
 # 使用 cProfile 定位热点
 
-当程序包含多层函数调用时，只对入口计时只能知道“整体慢”，无法知道时间花在哪里。`cProfile`
-会记录函数调用次数和耗时，帮助找到值得继续检查的调用链。
+`cProfile` 用于统计 Python 函数的调用次数和耗时。程序包含多层函数调用时，它可以指出时间主要花在
+哪个函数中，而不只是告诉我们“整体很慢”。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/15_performance_and_memory.py</code></p>
 
 ## 从命令行分析脚本
 
-在仓库的 `python/` 目录运行：
+下面的命令分析仓库中的性能示例。请在 `python/` 目录运行：
 
 ```bash
 uv run python -m cProfile -s cumulative \
@@ -28,7 +28,7 @@ uv run python -m cProfile -s cumulative \
 同一个函数可能显示成 `200/1` 这样的调用数，通常表示有递归调用：前面是总调用数，后面是原始调用
 数。
 
-## 怎样读 profile
+## 怎样阅读输出
 
 可以按下面的顺序查看：
 
@@ -131,7 +131,7 @@ stats.strip_dirs().sort_stats("cumulative").print_stats(20)
 
 ## 热点不一定在 Python 计算中
 
-`cProfile` 很适合分析 Python 函数调用，但下面几种情况需要其他证据：
+`cProfile` 适合分析 Python 函数调用，但下面几种情况要换用其他工具：
 
 - 等待数据库或 HTTP 请求：结合链路追踪、慢查询和依赖延迟；
 - 等待锁或连接池：观察等待时间和并发数量；
@@ -139,7 +139,7 @@ stats.strip_dirs().sort_stats("cumulative").print_stats(20)
 - 多进程任务：每个进程需要分别采集或使用支持多进程的工具；
 - 线上偶发长尾：离线单进程 profile 不一定能复现。
 
-先根据现象选择工具。CPU 调用热点、外部等待和并发排队不是同一种问题。
+先根据现象选择工具。CPU 计算、外部等待和并发排队是三种不同问题。
 
 ## 从热点到修改
 

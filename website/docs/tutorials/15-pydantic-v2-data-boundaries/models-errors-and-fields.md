@@ -1,7 +1,9 @@
 # 模型、校验错误与字段约束
 
-Python 类型标注通常只帮助编辑器和静态检查器，并不会在运行时自动拒绝错误数据。Pydantic 模型会真正
-读取输入、转换允许的类型，并在不符合约束时给出结构化错误。
+`BaseModel` 是 Pydantic 的模型基类。字段写在类型标注中，Pydantic 会在运行时读取输入、执行允许的
+类型转换，并检查字段约束。校验失败时会抛出 `ValidationError`。
+
+普通 Python 类型标注不会自动检查运行时输入。Pydantic 模型会执行这一步。
 
 <p class="source-note">对应源码：<code>python/backend_interview/schemas.py</code></p>
 

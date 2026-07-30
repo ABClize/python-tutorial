@@ -1,13 +1,13 @@
 # Python 类型标注基础
 
-Python 是动态类型语言，变量名可以在运行时绑定不同类型的对象。类型标注用于描述预期类型，静态检查器
-可以在代码运行前发现一部分不一致调用。
+Python 是动态类型语言，同一个变量名可以在运行时指向不同类型的对象。类型标注写出程序期望的类型，
+让编辑器和 Mypy 在运行前发现一部分错误。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/11_typing_protocols.py</code></p>
 
 ## 函数参数与返回值
 
-参数标注写在参数名后，返回值标注写在 `->` 后：
+参数标注写在参数名后，返回值标注写在 `->` 后。下面的函数接收单价和数量，返回总价：
 
 ```python
 def calculate_total(price: float, quantity: int) -> float:
@@ -27,7 +27,7 @@ print(total)
 这里表示 `price` 预期是 float，`quantity` 预期是 int，函数预期返回 float。输出中的小数误差来自
 二进制浮点表示，与类型标注无关。
 
-没有返回值的函数通常标注为 `-> None`：
+没有返回值的函数通常标注为 `-> None`。例如，下面的函数只打印消息：
 
 ```python
 def show_message(message: str) -> None:
@@ -45,7 +45,7 @@ names: list[str] = []
 
 ## 类型标注不会自动校验
 
-CPython 默认不会因为实参不符合标注而拒绝调用：
+CPython 默认不会因为实参不符合标注而拒绝调用。下面故意把整数传给标注为 `str` 的参数：
 
 ```python
 def repeat(text: str, count: int) -> str:
@@ -77,7 +77,7 @@ Pydantic 或其他运行时校验。
 
 ## 内置容器类型
 
-Python 3.9+ 可以直接给内置容器加类型参数：
+Python 3.9+ 可以直接给内置容器加类型参数。下面分别标注整数列表和由二元组组成的列表：
 
 ```python
 def average(scores: list[int]) -> float:
@@ -102,9 +102,10 @@ def score_by_name(
 
 `tuple[int, ...]` 中的省略号表示任意数量的 int。
 
-## 参数优先使用所需的最小接口
+## 参数只要求实际需要的操作
 
-函数只读取参数时，可以标注抽象接口：
+函数只读取参数时，不一定要把参数写成 `list`。下面的 `total()` 只需要遍历，`first()` 还需要按下标
+读取：
 
 ```python
 from collections.abc import Iterable, Sequence
@@ -122,12 +123,12 @@ def first(values: Sequence[str]) -> str:
 - `Sequence[str]` 表示有顺序、支持长度和整数索引的只读接口；
 - `list[str]` 明确要求 list，并允许函数使用列表的可变操作。
 
-参数标注越接近函数真正需要的能力，调用方可选择的实现越多。返回类型通常应更具体，让调用方知道得到
-什么对象。
+这样，`total()` 可以接收列表、元组或生成器；`first()` 可以接收列表、元组或字符串序列。返回类型
+通常应写得更具体，让调用方知道会得到什么对象。
 
 ## 联合类型
 
-竖线 `|` 表示多种可能类型：
+竖线 `|` 表示多种可能类型。下面的函数既接收字符串，也接收整数：
 
 ```python
 def normalize_id(value: str | int) -> str:
@@ -172,7 +173,7 @@ Python 3.10 之前常写 `Optional[int]`，它等价于 `int | None`，并不表
 
 ## 类型缩窄
 
-联合类型在使用前通常需要缩窄：
+联合类型在使用前通常要先判断具体类型。下面的函数遇到字符串时返回长度，遇到整数时直接返回原值：
 
 ```python
 def length_or_value(value: str | int) -> int:

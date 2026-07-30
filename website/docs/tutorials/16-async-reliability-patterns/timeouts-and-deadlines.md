@@ -1,11 +1,15 @@
 # 超时与截止时间
 
-异步调用如果没有时间边界，某个很慢的下游就可能长期占住连接、Task 和请求上下文。超时回答“这段等待
-最多允许多久”，截止时间则把整条调用链放进同一份时间预算。
+超时是某段等待允许使用的最长时长。截止时间是一个绝对时刻，表示整项工作最晚何时结束。超时适合
+限制单个操作，截止时间适合让整条调用链共用一份时间预算。
+
+没有时间限制的慢调用会长期占用连接、Task 和请求数据。
 
 <p class="source-note">对应源码：<code>python/backend_interview/async_patterns.py</code>、<code>python/backend_interview/service.py</code></p>
 
-## 一个没有时间边界的调用
+## 没有超时的调用
+
+下面的函数会一直等待下游返回，没有最长等待时间：
 
 ```python
 async def load_product(
@@ -97,6 +101,8 @@ async def fetch(client, url):
 
 ## 超时可以包围一组操作
 
+下面让多个步骤共同使用一个超时：
+
 ```python
 async def load_product_and_stock(
     product_id: str,
@@ -167,7 +173,7 @@ if remaining <= 0:
 单次尝试 timeout、整条调用 deadline 和客户端 timeout 应相互协调。客户端比服务端更早放弃时，服务端
 可能继续做无用工作；服务端预算远大于入口预算时，内部等待也无法兑现外部承诺。
 
-## 时间边界的基本规则
+## 超时与截止时间注意事项
 
 - 每个远程等待都应有上限；
 - 一组操作需要共同预算时，在外层设置 timeout；

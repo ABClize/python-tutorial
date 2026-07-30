@@ -1,7 +1,7 @@
 # 异步测试与 unittest
 
-异步测试需要真正 await 被测协程，并在测试结束前处理子任务、异常和资源清理。pytest 也可以直接运行
-大多数标准库 `unittest.TestCase`。
+异步测试用于检查 `async def` 定义的协程函数。测试必须 `await` 被测协程，并在结束前处理子任务、
+异常和资源清理。pytest 也能运行大多数标准库 `unittest.TestCase`。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/14_testing_and_mocking.py</code>、<code>python/tests/backend/</code></p>
 
@@ -39,6 +39,9 @@ async def test_async_result_explicit() -> None:
     assert result == 42
 ```
 
+两种写法都会等待 `fetch_value()` 完成。`asyncio_mode = "auto"` 只是省去了
+`@pytest.mark.asyncio` 标记。
+
 ## AsyncMock
 
 异步依赖必须返回可等待对象：
@@ -73,6 +76,8 @@ async def test_load_name() -> None:
 不要只验证内部 await 次数。实现可以重构，但对外的超时、取消和资源语义应保持稳定。
 
 ## unittest.TestCase
+
+下面的例子使用 `TestCase` 检查加法结果和异常：
 
 ```python
 import unittest

@@ -1,7 +1,10 @@
 # 重试、退避与幂等
 
-一次远程调用失败，可能是短暂网络波动，也可能是参数错误、权限拒绝或永久业务失败。只有能识别失败
-类型，并且操作可以安全重放时，重试才会提高成功率。
+重试是在调用失败后再次执行。退避是在下一次重试前等待一段时间。幂等表示同一个操作重复执行，不会
+重复产生副作用。
+
+短暂网络故障可以重试。参数错误、权限拒绝和永久业务失败通常不应重试。有副作用的操作只有具备幂等
+保证后才能安全重放。
 
 <p class="source-note">对应源码：<code>python/backend_interview/async_patterns.py</code>、<code>python/backend_interview/repository.py</code>、<code>python/backend_interview/service.py</code></p>
 
@@ -27,6 +30,8 @@
 重试不是通用异常处理。把所有异常都再执行一次，常常只是推迟失败并放大流量。
 
 ## 仓库中的 `retry_async()`
+
+下面的函数按指定次数重试异步操作，并在每次失败后等待：
 
 ```python
 async def retry_async(

@@ -1,13 +1,13 @@
 # Python itertools 惰性迭代工具
 
-`itertools` 用来组合惰性迭代步骤，可以减少手写循环。使用这些工具时，需要理解结果何时产生、是否
-只能消费一次，以及组合数量会怎样增长。
+`itertools` 提供处理迭代器的工具。它可以截取、连接、累计、配对、组合和分组数据。大多数函数按需
+产生结果，不会先把全部数据放进列表。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
 
 ## islice 与无限迭代器
 
-`count()` 产生无限序列，必须限制消费数量：
+`count()` 会一直产生数字，因此必须限制消费数量。下面用 `islice()` 只取前 5 个：
 
 ```python
 from itertools import count, islice
@@ -25,6 +25,8 @@ print(list(sequence))
 不要直接对无限迭代器调用 `list()`。
 
 ## chain、accumulate 与 pairwise
+
+下面分别演示连接多个序列、计算累计值和生成相邻元素对：
 
 ```python
 from itertools import accumulate, chain, pairwise
@@ -52,6 +54,8 @@ print(list(pairwise([10, 20, 35, 50])))
 
 ## combinations 与 product
 
+下面从三个字母中每次选两个，并计算颜色与尺码的笛卡尔积：
+
 ```python
 from itertools import combinations, product
 
@@ -69,6 +73,8 @@ print(list(product(["红", "蓝"], ["S", "M"])))
 组合数量可能增长很快。函数虽然惰性产生结果，但调用 `list()` 会把所有组合放入内存。
 
 ## groupby 只合并连续分组
+
+下面先按团队排序，再把同一团队的分数放到一组：
 
 ```python
 from itertools import groupby
@@ -97,7 +103,7 @@ B [75, 85]
 `groupby()` 遇到 key 改变就结束当前组。要把相同 key 的所有记录放在一起，通常先按相同 key 排序。
 每组的 `rows` 也是一次性迭代器，应在进入下一组前消费。
 
-## 选择工具
+## 怎样选择工具
 
 | 需求 | 工具 |
 | --- | --- |

@@ -1,11 +1,13 @@
 # Python Literal、类型别名与 TypedDict
 
-基础类型有时无法表达业务含义。类型别名可以给复杂类型命名，`Literal` 限制有限选项，`TypedDict`
-描述具有固定 key 结构的字典。
+普通的 `int`、`str` 和 `dict` 有时说明得不够具体。类型别名给复杂类型起名字，`Literal` 限制可选
+值，`TypedDict` 说明字典中有哪些 key。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/11_typing_protocols.py</code></p>
 
 ## 类型别名
+
+下面给用户编号和成绩表分别起一个类型名称：
 
 ```python
 from typing import TypeAlias
@@ -28,7 +30,7 @@ type ScoreMap = dict[str, int]
 
 ## NewType 区分业务标识
 
-底层都是 int 的用户 id 和订单 id 可以使用 `NewType` 区分：
+用户 id 和订单 id 在运行时都是整数，但不能混用。下面使用 `NewType` 区分它们：
 
 ```python
 from typing import NewType
@@ -54,6 +56,8 @@ user-1001
 行为；需要这些能力时应定义真正的值对象。
 
 ## Literal 限制有限值
+
+下面的排序函数只允许 `"asc"` 和 `"desc"` 两个排序方向：
 
 ```python
 from typing import Literal
@@ -81,6 +85,8 @@ print(sort_numbers([3, 1, 2], "desc"))
 方法、展示名称或运行时枚举时，可以使用 `Enum`。
 
 ## TypedDict 描述字典结构
+
+下面的 `CandidateRecord` 要求字典包含 `name` 和 `skills`，`years` 可以省略：
 
 ```python
 from typing import NotRequired, TypedDict
@@ -181,8 +187,8 @@ if has_experience(candidate):
 6
 ```
 
-检查器会相信 TypeGuard 的声明，因此实现必须真的保证目标结构。普通 `isinstance()` 和
-`is not None` 已经足够时，不必增加 TypeGuard。
+检查器会相信 `TypeGuard` 的声明，因此函数返回 `True` 时必须真的满足目标结构。普通
+`isinstance()` 和 `is not None` 已经够用时，不必增加 `TypeGuard`。
 
 ## 选择数据表示
 

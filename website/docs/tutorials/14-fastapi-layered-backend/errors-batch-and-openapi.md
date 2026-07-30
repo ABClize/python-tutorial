@@ -1,7 +1,10 @@
 # 错误响应、批量接口与 OpenAPI
 
-一个接口不仅要定义成功结果，还要定义失败时的状态码和响应结构。批量、分页等接口又会带来并发量和
-结果组织问题。FastAPI 可以生成契约，但前提是代码把这些边界明确写出来。
+HTTP 状态码表示请求成功或失败的类型，响应体提供具体信息。批量接口一次处理多条数据，分页接口只
+返回结果的一部分。OpenAPI 是描述接口路径、参数、响应和认证方式的标准格式。
+
+FastAPI 可以根据路由和 Pydantic 模型生成 OpenAPI 文档。代码中仍要明确写出错误响应、分页含义和
+批量并发上限。
 
 <p class="source-note">对应源码：<code>python/backend_interview/main.py</code>、<code>python/backend_interview/api.py</code>、<code>python/backend_interview/service.py</code></p>
 
@@ -63,6 +66,8 @@
 
 ## 分页接口
 
+下面用查询参数请求第一页订单，每页最多返回 20 条：
+
 ```bash
 curl \
   'http://127.0.0.1:8000/orders?offset=0&limit=20' \
@@ -80,8 +85,8 @@ curl \
 }
 ```
 
-`items` 是当前页，`total` 是符合条件的总数。客户端不能用 `items` 长度替代 `total`，因为最后一页
-之前它只表示本页大小。
+`items` 是当前页，`total` 是符合条件的总数。客户端不能用 `len(items)` 替代 `total`，
+`len(items)` 只表示当前请求返回了多少条。
 
 仓储的列表读取和总数查询互不依赖，服务层用 `asyncio.gather()` 并发等待。真实数据库还要保证排序
 稳定，否则翻页期间新增数据可能造成重复或遗漏。

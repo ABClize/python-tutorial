@@ -1,12 +1,12 @@
 # Python 函数定义、调用与参数
 
-函数把一段可以重复使用的操作命名起来。要正确调用函数，需要理解返回值、位置参数、关键字参数、默认参数，以及星号参数怎样收集额外输入。本页先把这些基础规则逐一讲清楚。
+函数把一段操作放在一起，并给它一个名字。调用函数时可以传入参数，函数也可以返回结果。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/02_functions_scope.py</code></p>
 
 ## 定义和调用函数
 
-使用 `def` 定义函数：
+使用 `def` 定义函数。下面定义一个计算折后价格的函数，再调用它：
 
 ```python
 def calculate_price(price: float, discount: float) -> float:
@@ -31,15 +31,15 @@ print(final_price)
 - 圆括号中的 `price` 和 `discount` 是形参；
 - 缩进代码是函数体，`return` 把结果返回给调用方。
 
-定义函数时不会执行函数体。只有运行 `calculate_price(100, 0.8)` 时，Python 才会把 `100` 和
-`0.8` 分别绑定到两个形参，然后执行函数体。
+调用时，`price` 得到 `100`，`discount` 得到 `0.8`。函数计算 `100 × 0.8` 并返回 `80.0`。
+只定义函数不会执行函数体；运行 `calculate_price(100, 0.8)` 时才会执行。
 
 函数应先定义再调用。函数名遵循变量命名规则，通常使用小写字母和下划线，例如
 `calculate_price()`、`find_user()`。
 
 ## 返回值与 `None`
 
-`return` 会立即结束当前函数，并把后面的值交给调用方：
+`return` 会立即结束当前函数，并把后面的值交给调用方。下面根据分数返回不同文本：
 
 ```python
 def classify_score(score: int) -> str:
@@ -58,6 +58,8 @@ print(classify_score(40))
 通过
 未通过
 ```
+
+`82` 对应“通过”，`40` 对应“未通过”。函数执行到 `return` 后立即结束。
 
 函数没有执行到显式的 `return` 时，返回值是 `None`：
 
@@ -82,7 +84,7 @@ None
 - `print()` 把内容写到标准输出，主要供人阅读；
 - `return` 把数据交给调用方，返回值可以继续计算、保存或测试。
 
-一个函数可以返回多个值：
+一个函数可以一次返回多个值。下面同时返回列表中的最小值和最大值：
 
 ```python
 def minimum_and_maximum(values: list[int]) -> tuple[int, int]:
@@ -103,7 +105,7 @@ print(smallest, largest)
 
 ## 位置参数和关键字参数
 
-调用函数时，实参可以按位置传递，也可以写出参数名：
+调用函数时，实参可以按位置传递，也可以写出参数名。下面两次调用使用不同写法：
 
 ```python
 def create_user(name: str, age: int, city: str) -> dict[str, object]:
@@ -142,7 +144,7 @@ example.com:443, SSL=True
 
 ## 默认参数
 
-形参可以提供默认值：
+形参可以提供默认值。调用时省略这个实参，就会使用默认值：
 
 ```python
 def greet(name: str, greeting: str = "你好") -> str:
@@ -186,7 +188,7 @@ print(add_tag("SQL"))
 
 ## 仅限位置和仅限关键字的参数
 
-参数列表中的 `/` 和 `*` 可以限制调用方式：
+参数列表中的 `/` 和 `*` 可以限制调用方式。下面的函数同时使用三种参数：
 
 ```python
 def format_user(
@@ -217,7 +219,7 @@ print(format_user(1001, "小林", active=False))
 
 ## `*args` 和 `**kwargs`
 
-`*args` 收集多余的位置参数，函数内得到 tuple：
+`*args` 收集多余的位置参数，函数内得到 tuple。下面的 `total()` 可以接收任意数量的价格：
 
 ```python
 def total(*prices: float) -> float:
@@ -235,7 +237,7 @@ print(total())
 0
 ```
 
-`**kwargs` 收集多余的关键字参数，函数内得到 dict：
+`**kwargs` 收集多余的关键字参数，函数内得到 dict。下面把额外资料放进用户字典：
 
 ```python
 def build_profile(name: str, **details: str) -> dict[str, str]:
@@ -252,7 +254,7 @@ print(profile)
 {'name': '小林', 'city': '杭州', 'skill': 'Python'}
 ```
 
-已有的序列和字典也可以在调用时解包：
+已有的序列和字典也可以在调用时解包。`*` 解包序列，`**` 解包字典：
 
 ```python
 def area(width: int, height: int) -> int:

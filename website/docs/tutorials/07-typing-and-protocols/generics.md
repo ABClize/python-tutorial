@@ -1,11 +1,13 @@
 # Python TypeVar、Generic 与 Self
 
-联合类型表示“可能是多种类型”，泛型则表达多个位置之间的类型关系。例如，传入整数序列时返回整数，
-传入字符串序列时返回字符串。
+泛型用于让多个位置使用同一种类型。例如，一个函数接收整数序列时返回整数，接收字符串序列时返回
+字符串。`TypeVar` 表示这次调用中需要保持一致的类型。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/11_typing_protocols.py</code></p>
 
-## TypeVar 表达输入输出关系
+## TypeVar 让输入和输出使用同一类型
+
+下面的 `first()` 返回序列中的第一个元素。返回类型与序列元素类型相同：
 
 ```python
 from collections.abc import Sequence
@@ -28,6 +30,8 @@ def first(items: Sequence[T]) -> T:
 如果返回类型写成 `object`，具体元素类型会丢失；写成 `Any` 则会放弃后续检查。
 
 ## 多个参数共享同一类型
+
+`TypeVar` 也可以让多个参数和返回值保持相同类型：
 
 ```python
 from typing import TypeVar
@@ -52,11 +56,11 @@ print(choose("左", "右", use_first=False))
 右
 ```
 
-TypeVar 的重点不是“某个未知类型”，而是同一调用中多个位置要保持一致关系。
+示例返回 `"右"`。在这次调用中，两个候选值和返回值都是 `str`。
 
 ## TypeVar 上界
 
-上界要求具体类型是某个父类型或其子类：
+上界要求具体类型是某个父类型或其子类。下面的函数只接收 `Animal` 及其子类：
 
 ```python
 from typing import TypeVar
@@ -113,6 +117,8 @@ print(clamp(3.75, 0.0, 3.0))
 
 ## Generic 自定义泛型类
 
+自定义类也可以保存元素类型。下面实现一个后进先出的泛型栈：
+
 ```python
 from collections.abc import Iterable, Iterator
 from typing import Generic, TypeVar
@@ -155,7 +161,7 @@ print(list(numbers))
 
 ## Self 表示当前实例类型
 
-返回当前实例的链式方法可以使用 `Self`：
+返回当前实例的链式方法可以使用 `Self`。下面的 `where()` 每次都返回当前查询对象：
 
 ```python
 from typing import Self
@@ -191,7 +197,7 @@ SELECT * FROM users WHERE active = true AND age >= 18
 
 ## 泛型使用注意事项
 
-- TypeVar 用于表达关系，不是所有联合类型都需要改成泛型。
+- `TypeVar` 用于让多个位置保持同一种类型，不是所有联合类型都需要改成泛型。
 - 泛型参数通常不会在运行时自动校验。
 - 空容器可能让检查器难以推断类型，可以显式写 `Stack[int]()`。
 - 输入和输出没有类型关联时，普通具体类型或联合类型更容易理解。

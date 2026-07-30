@@ -1,14 +1,19 @@
 # FastAPI 分层后端
 
-仓库中的订单 API 不只是几个路由示例。它把 HTTP 协议、输入校验、业务流程、领域规则、数据存取和外部
-服务分开放置，正好可以用来观察一个 FastAPI 请求从进入应用到生成响应的完整过程。
+FastAPI 是用于编写 HTTP API 的 Python Web 框架。仓库中的订单 API 把路由、输入模型、业务服务、
+领域对象、数据仓储和外部服务分别放在不同模块中。本章按一次请求的执行顺序介绍这些代码。
 
 <p class="source-note">对应源码：<code>python/backend_interview/</code></p>
 
 ## 本章内容
 
-- [启动应用、认识路由与请求参数](./14-fastapi-layered-backend/running-routes-and-requests)
-- [依赖注入、应用生命周期与中间件](./14-fastapi-layered-backend/dependencies-and-lifecycle)
-- [一次请求如何穿过各层](./14-fastapi-layered-backend/request-flow-and-layers)
-- [持久化、幂等与乐观锁](./14-fastapi-layered-backend/persistence-idempotency-and-locking)
-- [错误响应、批量接口与 OpenAPI](./14-fastapi-layered-backend/errors-batch-and-openapi)
+- [启动应用、认识路由与请求参数](./14-fastapi-layered-backend/running-routes-and-requests)：
+  启动服务，调用接口，并区分路径、查询、请求头和请求体参数。
+- [依赖注入、应用生命周期与中间件](./14-fastapi-layered-backend/dependencies-and-lifecycle)：
+  使用 `Depends` 提供对象，并管理请求级和应用级资源。
+- [一次请求如何穿过各层](./14-fastapi-layered-backend/request-flow-and-layers)：
+  查看 API、Schema、服务、领域、仓储和网关分别处理什么。
+- [持久化、幂等与乐观锁](./14-fastapi-layered-backend/persistence-idempotency-and-locking)：
+  防止重复创建和并发更新覆盖数据。
+- [错误响应、批量接口与 OpenAPI](./14-fastapi-layered-backend/errors-batch-and-openapi)：
+  统一错误结构，限制批量并发，并生成接口文档。

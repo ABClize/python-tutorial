@@ -1,11 +1,13 @@
 # 并发限制、队列与异步资源
 
-一次创建大量 Task 可能压垮连接池或下游服务。Semaphore 限制同时运行数量，有限 Queue 限制积压，
-异步迭代与上下文管理器则表达需要等待的数据流和资源生命周期。
+一次创建大量 Task 会同时占用内存、连接池和下游服务容量。`Semaphore` 限制正在执行的 Task 数量。
+有界 `Queue` 限制等待处理的任务数量。异步迭代器和异步上下文管理器用于处理需要等待的数据与资源。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/13_asyncio_concurrency.py</code>、<code>python/backend_interview/async_patterns.py</code></p>
 
 ## Semaphore
+
+下面把同时执行的异步任务限制为两个：
 
 ```python
 import asyncio
@@ -33,6 +35,8 @@ Semaphore 只限制临界区内并发，不限制等待获取它的 Task 数量�
 Queue 或分批读取。
 
 ## asyncio.Queue
+
+下面通过异步队列把生产者生成的数据交给消费者：
 
 ```python
 async def worker(

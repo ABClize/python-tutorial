@@ -1,13 +1,14 @@
 # Python pathlib 与 JSON 文件读写
 
-`pathlib` 用对象表示文件系统路径，`json` 负责基础数据的编码和解码。两者经常一起出现在配置读取、
-文件处理和接口数据交换中。
+`pathlib` 用于创建、拼接和读写文件路径。`json` 用于把 Python 基础数据转换成 JSON 文本，也可以
+把 JSON 文本解析成 Python 对象。配置文件和数据文件经常同时使用这两个模块。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/12_standard_library_patterns.py</code></p>
 
 ## pathlib 路径对象
 
-`pathlib` 用对象表示路径，`/` 运算符负责拼接：
+`pathlib` 用对象表示路径，`/` 运算符负责拼接。下面创建 `data/report.txt`，再读取文件名、后缀和
+父目录：
 
 ```python
 from pathlib import PurePosixPath
@@ -35,6 +36,8 @@ data
 `Path`，它会遵循当前操作系统的路径规则。
 
 ## 创建目录与读写文本
+
+下面在临时目录中创建 `output` 子目录，然后写入并读取文本：
 
 ```python
 from pathlib import Path
@@ -103,6 +106,8 @@ JSON 适合在程序、配置文件和 HTTP 接口之间传递基础数据：
 
 ## dumps 与 loads
 
+`dumps()` 把 Python 对象转换成 JSON 字符串，`loads()` 再把字符串解析回来：
+
 ```python
 import json
 
@@ -136,6 +141,8 @@ Python
 
 ## dump 与 load
 
+`dump()` 和 `load()` 直接操作文件对象。下面把两条学习记录写入临时 JSON 文件，再读回来：
+
 ```python
 import json
 from pathlib import Path
@@ -167,12 +174,12 @@ Python
 JSON 不会自动保存 `datetime`、`Decimal`、`Path` 或自定义类。编码前需要转换为字符串、数字、列表和
 字典，解码后也不会自动恢复原类型。
 
-外部 JSON 成功解码只说明语法有效，不代表字段完整、类型正确或数值范围合理，业务边界仍需验证。
+外部 JSON 成功解码只说明语法有效，不代表字段完整、类型正确或数值范围合理。使用数据前仍要检查。
 
 ## 路径与 JSON 注意事项
 
 - 文本文件显式指定编码。
-- 不要依赖当前工作目录恰好位于某处，应用应明确配置数据根目录。
+- 不要假定当前工作目录总在某个位置，应用应通过配置指定数据根目录。
 - `write_text()` 会覆盖文件，重要数据需要考虑临时文件和原子替换。
 - 用户提供的路径要防止越过允许目录。
 - JSON 不是 Python 对象序列化格式，不保存方法和共享引用。

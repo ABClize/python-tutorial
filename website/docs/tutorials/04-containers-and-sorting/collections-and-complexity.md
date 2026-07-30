@@ -1,12 +1,13 @@
 # Python collections 工具与容器复杂度
 
-内置容器能解决大多数问题，标准库 collections 又提供了计数、自动分组和双端队列等常见结构。选择结构时不仅要看写法是否方便，还要知道关键操作大致需要多少时间。
+标准库 `collections` 提供了一些专用容器。`Counter` 用于计数，`defaultdict` 用于自动创建默认值，
+`deque` 用于在两端快速添加或删除元素。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/03_collections_copy.py</code>、<code>python/interview_exercises/collections.py</code></p>
 
 ## `Counter`
 
-`collections.Counter` 是用于计数的 dict 子类：
+`collections.Counter` 是用于计数的 dict 子类。下面统计六个单词出现的次数：
 
 ```python
 from collections import Counter
@@ -28,12 +29,12 @@ print(counts.most_common(2))
 [('python', 3), ('go', 2)]
 ```
 
-普通 dict 读取缺失 key 会报错，而 Counter 对缺失元素返回计数 `0`。`most_common(n)` 返回频率最高的
-前 n 项。
+`"python"` 出现三次，未出现的 `"rust"` 返回 `0`。`most_common(2)` 返回出现次数最多的两项。
+普通 dict 读取缺失 key 会报错，而 `Counter` 对缺失元素返回计数 `0`。
 
 ## `defaultdict`
 
-`defaultdict` 在访问缺失 key 时调用工厂函数创建默认值：
+`defaultdict` 在访问缺失 key 时调用工厂函数创建默认值。下面按单词长度分组：
 
 ```python
 from collections import defaultdict
@@ -53,13 +54,15 @@ print(dict(groups))
 {2: ['go'], 6: ['python'], 4: ['java'], 3: ['sql']}
 ```
 
-它适合分组和累计。与 `dict.get()` 不同，读取缺失 key 会把新 key 真正写入 defaultdict，因此不应
-用无意的读取来探测是否存在。
+`defaultdict(list)` 会为每个新长度创建空列表，然后把单词加入对应列表。它适合分组和累计。
+
+与 `dict.get()` 不同，读取缺失 key 会把新 key 真正写入 `defaultdict`，因此不要用无意的读取来
+探测 key 是否存在。
 
 ## `deque`
 
 list 在末尾 `append()` 和 `pop()` 很快，但从头部插入或删除需要移动后续元素。双端队列
-`collections.deque` 支持两端高效操作：
+`collections.deque` 支持两端高效操作。下面从队列左侧取出第一个任务：
 
 ```python
 from collections import deque
@@ -78,6 +81,8 @@ print(list(queue))
 任务 1
 ['任务 2', '任务 3']
 ```
+
+`popleft()` 返回“任务 1”，队列中还剩后两个任务。
 
 固定长度的 deque 还可保存最近 n 项：
 
@@ -99,7 +104,7 @@ print(list(recent))
 
 ## 滑动窗口
 
-deque 配合当前总和可以在线计算移动平均值：
+deque 配合当前总和可以计算移动平均值。下面用长度为 `3` 的窗口处理五个数字：
 
 ```python
 from collections import deque
@@ -139,11 +144,12 @@ print(moving_average([1, 2, 3, 4, 5], 3))
 [2.0, 3.0, 4.0]
 ```
 
-每个元素最多入队和出队一次，时间复杂度为 O(n)，额外空间为 O(window_size)。
+三个窗口分别是 `[1, 2, 3]`、`[2, 3, 4]` 和 `[3, 4, 5]`，平均值为 `2.0`、`3.0`
+和 `4.0`。每个元素最多入队和出队一次，时间复杂度为 O(n)，额外空间为 O(window_size)。
 
 ## 常见操作的复杂度
 
-下面是平均或摊销复杂度，用于建立选择容器的基本直觉：
+下面列出常见操作的平均或摊销复杂度：
 
 | 操作 | 复杂度 |
 | --- | --- |

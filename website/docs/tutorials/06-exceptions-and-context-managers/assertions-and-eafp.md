@@ -1,11 +1,13 @@
 # Python assert、LBYL 与 EAFP
 
-错误处理不只有 `try`。`assert` 用于检查程序内部不变量，LBYL 表示操作前检查，EAFP 表示先执行再处理
-预期失败。三者解决的问题不同。
+Python 常见的检查方式有三种。`assert` 检查程序内部必须成立的条件。LBYL 先检查条件，再执行操作。
+EAFP 先执行操作，失败后再捕获异常。三种方式不能随意互换。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/06_exceptions_context.py</code></p>
 
 ## assert 检查内部不变量
+
+下面的函数用 `assert` 检查数量是否大于 0：
 
 ```python
 def average(total: int, count: int) -> float:
@@ -34,6 +36,8 @@ average(30, 0)
 AssertionError: 内部不变量：count 必须大于 0
 ```
 
+错误消息来自 `assert` 后面的字符串，便于定位哪个内部条件没有成立。
+
 ## assert 不能代替输入校验
 
 使用优化模式 `python -O` 时，assert 语句可能被移除。因此下面的代码不适合公开接口：
@@ -53,12 +57,14 @@ def withdraw(balance: int, amount: int) -> int:
     return balance - amount
 ```
 
-适合 assert 的情况是：如果条件不成立，说明程序内部逻辑已经出现缺陷，而不是用户提供了一个可能无效
-的输入。
+只有在“条件不成立就说明程序本身有错误”时，才适合使用 `assert`。用户输入不合法是正常失败，应使用
+`if` 和 `raise`。
 
 ## LBYL：操作前先检查
 
 LBYL 是 “Look Before You Leap” 的缩写：
+
+下面的代码先检查字典中有没有 `"score"`，然后再读取：
 
 ```python
 student = {"name": "小林", "score": 82}
@@ -83,6 +89,8 @@ print(score)
 
 EAFP 是 “Easier to Ask Forgiveness than Permission” 的缩写：
 
+下面的代码直接读取 `"score"`。key 不存在时，再捕获 `KeyError`：
+
 ```python
 student = {"name": "小林", "score": 82}
 
@@ -100,8 +108,8 @@ print(score)
 82
 ```
 
-Python 代码经常使用 EAFP。文件或共享状态可能在“检查”和“操作”之间变化，直接执行一次操作更能表达
-真实结果。
+Python 代码经常使用 EAFP。文件或共享状态可能在检查之后、操作之前发生变化。直接执行操作并处理实际
+错误，可以避免这段时间差。
 
 ## 选择 LBYL 还是 EAFP
 
@@ -131,6 +139,8 @@ print(score)
 0
 ```
 
+字典中没有 `"score"`，所以 `get()` 返回给定的默认值 `0`，也不会向字典中新增 key。
+
 ## 避免捕获过宽
 
 EAFP 不表示“所有异常都忽略”：
@@ -145,10 +155,10 @@ except Exception:
 这段代码还会把 `student` 类型错误、代码拼写错误等缺陷变成默认分数。只捕获真正代表预期失败的
 `KeyError` 更安全。
 
-## 错误处理的常见边界
+## 错误处理注意事项
 
 - 数据进入系统时校验外部输入。
-- 领域函数用明确异常表达业务规则失败。
-- 基础设施层把数据库和网络异常转换为调用方能理解的错误。
+- 业务函数用明确的异常表示规则检查失败。
+- 数据库和网络错误可以转换成调用方能理解的异常。
 - 请求或任务入口统一记录未处理异常。
 - 测试用 assert 验证结果，生产输入校验不用 assert。

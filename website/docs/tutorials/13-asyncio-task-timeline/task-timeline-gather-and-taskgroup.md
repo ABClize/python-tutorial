@@ -1,7 +1,7 @@
 # 任务时间线、gather 与 TaskGroup
 
-协程对象、可运行 Task 和等待中的 Task 是不同状态。理解时间线后，`gather()` 与 `TaskGroup` 的结果
-顺序和异常语义会更容易判断。
+调用异步函数会得到协程对象。把协程包装成 Task 后，事件循环才会调度它。Task 运行到 `await` 时
+可能暂停，等待完成后再继续。`gather()` 和 `TaskGroup` 都能组织多个 Task，但失败处理方式不同。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/13_asyncio_concurrency.py</code>、<code>python/backend_interview/async_patterns.py</code></p>
 
@@ -24,6 +24,8 @@
 
 ## gather 收集结果
 
+下面并发运行两个协程，并按传入顺序收集结果：
+
 ```python
 results = await asyncio.gather(
     operation_a(),
@@ -37,6 +39,8 @@ results = await asyncio.gather(
 兄弟任务生命周期管理器；需要一项失败就取消其余项时，TaskGroup 语义更明确。
 
 ## 把异常作为结果收集
+
+下面启用 `return_exceptions=True`，让异常出现在结果列表中：
 
 ```python
 async def divide(a: int, b: int) -> float:

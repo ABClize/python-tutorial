@@ -1,11 +1,11 @@
 # 线程与线程池
 
-进程是一个正在运行的程序实例，线程是进程中的执行单元。同一进程里的线程共享大部分内存，但各自
-保存当前执行到哪里。
+进程是一个正在运行的程序。线程是进程中的执行单元。同一进程里的线程共享大部分内存，但每个线程
+都有自己的执行位置。
 
-I/O 是 input/output（输入/输出）的缩写，包括网络收发、磁盘读写和数据库查询。这类任务经常花时间
-等待外部结果，等待期间其他线程可以继续运行。CPU 是执行计算指令的处理器；纯 Python 计算主要占用
-CPU，增加线程通常不会按核心数线性加速。
+I/O 是 input/output（输入/输出）的缩写，包括网络、文件和数据库操作。I/O 操作经常需要等待外部
+结果，等待时可以运行其他线程。CPU 密集任务主要执行计算，增加线程通常不能让纯 Python 计算按核心
+数线性加速。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/07_concurrency.py</code>、<code>python/interview_exercises/concurrency.py</code></p>
 
@@ -44,6 +44,8 @@ print(f"{perf_counter() - started_at:.1f} 秒")
 三次等待依次发生。线程不能缩短单次操作的 0.2 秒，但可以让等待重叠。
 
 ## 创建线程
+
+下面创建两个线程，启动后再等待它们结束：
 
 ```python
 from threading import Thread
@@ -125,6 +127,8 @@ print(result)
 [9, 1, 16, 4]
 ```
 
+结果顺序仍与输入 `[3, 1, 4, 2]` 一致，不受各线程实际完成顺序影响。
+
 ## submit 与 Future
 
 `submit()` 提交一个调用并立即返回 `Future`：
@@ -153,6 +157,8 @@ Future 表示将来可能得到的结果：
 Future 的等待超时不会终止已经运行的线程函数。长任务需要由函数自己检查停止信号。
 
 ## 按完成顺序处理
+
+下面使用 `as_completed()`，哪个任务先完成就先处理哪个结果：
 
 ```python
 from concurrent.futures import as_completed

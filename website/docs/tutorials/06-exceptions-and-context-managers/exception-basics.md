@@ -1,7 +1,7 @@
 # Python 异常基础：传播、捕获与清理
 
-异常是 Python 表达运行失败的标准机制。转换失败、文件不存在、索引越界和除数为零都会产生异常。
-调用方可以捕获自己能够处理的异常，无法处理的异常则继续向上传播。
+异常表示代码在运行时无法继续完成当前操作。转换失败、文件不存在、索引越界和除数为零都会产生
+异常。能够处理错误的代码使用 `try` 和 `except` 捕获异常；不能处理时，就让异常继续向上传播。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/06_exceptions_context.py</code></p>
 
@@ -16,7 +16,7 @@ if score >= 60
 
 解释器会在程序正常运行前报告 `SyntaxError`。
 
-异常发生在语法正确的代码执行期间：
+异常发生在语法正确的代码执行期间。下面四行代码会分别产生四种异常：
 
 ```python
 int("abc")                  # ValueError
@@ -30,7 +30,8 @@ int("abc")                  # ValueError
 
 ## 异常沿调用栈传播
 
-函数内部没有捕获异常时，异常会返回到调用它的上一层：
+函数内部没有捕获异常时，异常会传到调用它的上一层。下面的错误从 `parse_score()` 传到
+`load_score()`：
 
 ```python
 def parse_score(text: str) -> int:
@@ -58,7 +59,7 @@ ValueError: invalid literal for int() with base 10: 'abc'
 
 ## try 与 except
 
-`try` 中放置可能失败的操作，`except` 处理特定异常：
+`try` 中放置可能失败的操作，`except` 处理特定异常。下面的示例捕获整数转换失败：
 
 ```python
 raw_score = "abc"
@@ -98,7 +99,7 @@ invalid literal for int() with base 10: 'abc'
 
 ## 捕获多个异常
 
-不同异常需要不同处理时，使用多个 `except`：
+不同异常需要不同处理时，使用多个 `except`。下面的代码分别处理文件不存在和内容格式错误：
 
 ```python
 from pathlib import Path
@@ -151,7 +152,8 @@ except Exception:
 
 ## else 与 finally
 
-完整的异常结构还可以包含 `else` 和 `finally`：
+完整的异常结构还可以包含 `else` 和 `finally`。下面的转换会成功，因此执行 `else`；无论是否成功，
+`finally` 都会执行：
 
 ```python
 try:
@@ -186,12 +188,12 @@ finally:
 `finally` 在正常结束、捕获异常、继续抛出异常和函数返回时都会执行。不要在 `finally` 中使用
 `return`、`break` 或 `continue` 覆盖正在传播的异常或返回值。
 
-## 捕获异常的边界
+## 捕获异常的注意事项
 
 捕获异常后通常只有三种合理处理：
 
 - 恢复并继续，例如缺少可选配置时使用默认值；
-- 转换为当前抽象层更明确的异常；
+- 转换成当前代码更容易处理的异常；
 - 在程序入口或任务入口记录并向用户反馈。
 
 如果当前层不知道如何处理，允许异常继续传播通常比返回一个含义不明的空值更安全。

@@ -1,26 +1,26 @@
 # 复杂度基础
 
-算法解决的是一类问题，而不是某一组固定数据。下面两个函数都能判断列表里是否有重复值，但随着列表
-变长，它们需要做的工作并不一样。复杂度就是描述这种增长趋势的方法。
+复杂度用来说明：输入数据增大时，算法的运行时间和额外内存会怎样增长。两个函数可能得到同样结果，
+但数据越多，运行速度可能相差越大。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/08_algorithms.py</code></p>
 
-## 从输入、输出和约束开始
+## 先写清输入、输出和要求
 
-一个算法至少要说明三件事：
+分析算法前，至少先说明三件事：
 
 1. 接收什么输入；
 2. 返回什么结果；
 3. 输入需要满足什么条件。
 
-例如，二分查找的函数签名可以写成：
+例如，二分查找接收一个整数列表和一个目标值：
 
 ```python
 def binary_search(numbers: list[int], target: int) -> int:
     ...
 ```
 
-仅有签名还不够。它还依赖下面的约定：
+只有函数签名还不够。还要说明下面这些规则：
 
 - `numbers` 必须按升序排列；
 - 找到目标时返回一个有效下标；
@@ -30,7 +30,7 @@ def binary_search(numbers: list[int], target: int) -> int:
 “列表已经排序”是二分查找成立的前提。如果调用者传入 `[5, 1, 3]`，函数即使偶尔返回正确结果，
 也不能说明算法正确。
 
-## 输入规模 n 表示什么
+## 输入规模 n 是什么
 
 复杂度中的 `n` 表示输入规模。它不是固定指某种对象，需要根据问题解释：
 
@@ -42,8 +42,8 @@ def binary_search(numbers: list[int], target: int) -> int:
 | 遍历图 | 顶点数 `V` 和边数 `E` |
 | 处理矩阵 | 行数 `m` 和列数 `n` |
 
-只有先说明规模，`O(n)` 才有明确含义。合并两个长度不同的列表时，写成 `O(m + n)` 通常比笼统写
-`O(n)` 更准确。
+先说明 `n` 代表什么，`O(n)` 才有意义。合并两个长度不同的列表时，写成 `O(m + n)` 通常比笼统
+写成 `O(n)` 更准确。
 
 ## 大 O 描述增长速度
 
@@ -69,7 +69,7 @@ O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ) < O(n!)
 
 ## 比较 O(n²) 与 O(n)
 
-最直接的查重方法是比较每一对元素：
+最直接的查重方法是比较每一对元素。先看双重循环的写法：
 
 ```python
 def has_duplicate_slow(values: list[int]) -> bool:
@@ -139,6 +139,8 @@ False
 
 ### 固定次数操作：O(1)
 
+下面的函数只读取列表第一项：
+
 ```python
 def first(values: list[int]) -> int:
     return values[0]
@@ -148,6 +150,8 @@ def first(values: list[int]) -> int:
 输入约束，不会改变复杂度。
 
 ### 扫描一次：O(n)
+
+下面从左到右查找目标值，最坏情况下要扫描整个列表：
 
 ```python
 def contains(values: list[int], target: int) -> bool:
@@ -162,6 +166,8 @@ O(n)。
 
 ### 连续循环相加
 
+下面两个循环先后执行，各扫描一次列表：
+
 ```python
 for value in values:
     process(value)
@@ -173,6 +179,8 @@ for value in values:
 两个循环依次执行，工作量是 `n + n = 2n`，忽略常数后仍为 O(n)，不是 O(n²)。
 
 ### 独立的嵌套循环相乘
+
+下面的内层循环会为每个 `left` 元素完整执行一次：
 
 ```python
 for left in left_values:
@@ -194,6 +202,8 @@ n → n/2 → n/4 → n/8 → ... → 1
 一个数连续除以 2，约 `log₂n` 次后会降到 1，所以二分查找是 O(log n)。
 
 ### 排序后再扫描：O(n log n)
+
+下面先排序，再顺序处理排序结果：
 
 ```python
 ordered = sorted(values)

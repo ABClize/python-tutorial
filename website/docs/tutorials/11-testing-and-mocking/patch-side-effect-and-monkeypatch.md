@@ -1,7 +1,7 @@
 # patch、side_effect 与 monkeypatch
 
-依赖无法直接注入时，可以在测试期间替换被测代码实际读取的名字。替换必须有明确作用域，测试结束后
-恢复原对象。
+`patch` 会在测试期间临时替换一个名字，`monkeypatch` 可以临时修改属性、环境变量和字典。
+`side_effect` 用来让 Mock 抛出异常或依次返回不同结果。测试结束后，这些修改都应恢复。
 
 <p class="source-note">对应源码：<code>python/python_interview_practice/14_testing_and_mocking.py</code></p>
 
@@ -76,7 +76,11 @@ fixed-token
 real-token
 ```
 
+`with` 代码块内返回替换值，离开代码块后恢复原方法。
+
 ## side_effect 抛出异常
+
+下面让 Mock 在调用时抛出连接异常：
 
 ```python
 from unittest.mock import Mock
@@ -97,7 +101,11 @@ except TimeoutError as error:
 请求超时
 ```
 
+调用 `request()` 时没有返回普通值，而是抛出了设置好的 `TimeoutError`。
+
 ## side_effect 表示连续结果
+
+下面让同一个 Mock 的两次调用产生不同结果：
 
 ```python
 request = Mock(
@@ -127,6 +135,8 @@ print(request.call_count)
 列表耗尽后继续调用会抛出 `StopIteration`。
 
 ## side_effect 根据参数计算
+
+下面把函数交给 `side_effect`，根据每次传入的参数计算返回值：
 
 ```python
 def fake_shipping(weight_kg: float) -> int:

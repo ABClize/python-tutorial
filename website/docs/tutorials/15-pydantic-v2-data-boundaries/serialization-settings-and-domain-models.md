@@ -1,7 +1,9 @@
 # 序列化、配置读取与领域模型边界
 
-校验解决“输入怎样进入模型”，序列化解决“模型怎样离开程序”。配置读取也是一种输入边界：环境变量
-本质上是字符串，同样需要解析、范围校验和敏感信息保护。
+序列化是把 Pydantic 模型转换成字典或 JSON。`BaseSettings` 用相同的校验机制读取环境变量。领域
+对象则保存业务状态和业务规则，不必承担 HTTP 字段别名或 JSON 格式。
+
+输入时执行校验，输出时执行序列化。环境变量本质上也是外部字符串，同样需要解析和范围检查。
 
 <p class="source-note">对应源码：<code>python/backend_interview/schemas.py</code>、<code>python/backend_interview/pydantic_patterns.py</code>、<code>python/backend_interview/config.py</code></p>
 
@@ -70,6 +72,8 @@ def serialize_datetime(
 
 ## 三种导出目标
 
+下面分别导出 Python 字典、JSON 兼容字典和 JSON 字符串：
+
 ```python
 python_data = model.model_dump()
 json_ready = model.model_dump(mode="json")
@@ -85,6 +89,8 @@ json_text = model.model_dump_json()
 把模型交给另一个 Python 函数时通常使用普通字典；写入 JSON 列或发送 HTTP 时需要 JSON 兼容形式。
 
 ## `SecretStr` 只遮蔽展示
+
+下面使用 `SecretStr`，避免密码在日志和普通输出中直接显示：
 
 ```python
 from pydantic import SecretStr
@@ -239,7 +245,7 @@ Pydantic 模型校验成功，不表示一次业务操作必然可以执行。�
 
 迁移不能只批量替换名称。validator 模式、严格转换、配置键和序列化行为也要按 v2 语义重新测试。
 
-## 数据边界的检查清单
+## Pydantic 数据处理检查清单
 
 - 类型标注本身不会自动校验普通 Python 对象；
 - 默认模式会转换部分输入，严格边界需显式配置；
