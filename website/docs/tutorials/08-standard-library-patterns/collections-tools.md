@@ -34,7 +34,7 @@ Counter 是 dict 子类，缺少元素时返回 `0`，不会抛出 `KeyError`。
 
 ## Counter 运算
 
-两个 `Counter` 可以相加，也可以按 key 取较小或较大的计数：
+两个 `Counter` 可以相加，也可以对每个键取较小或较大的计数：
 
 ```python
 from collections import Counter
@@ -82,9 +82,9 @@ print(dict(scores))
 {'A': [90, 95], 'B': [80]}
 ```
 
-第一次访问缺失 key 时，`defaultdict` 调用 `list` 创建空列表，并把 key 写入字典。
+第一次访问缺失的键时，`defaultdict` 调用 `list` 创建空列表，并把这个键写入字典。
 
-`dict.get()` 只返回默认值，不会插入 key；`defaultdict` 的缺失读取会改变字典。只查询时使用 `get()`
+`dict.get()` 只返回默认值，不会插入键；`defaultdict` 读取缺失的键时会改变字典。只查询时使用 `get()`
 更合适。
 
 ## deque 双端队列
@@ -198,10 +198,10 @@ Point(x=3, y=4)
 | 需求 | 工具 |
 | --- | --- |
 | 统计频次 | `Counter` |
-| 按 key 收集多个值 | `defaultdict(list)` |
+| 按键收集多个值 | `defaultdict(list)` |
 | 先进先出或两端操作 | `deque` |
 | 固定长度最近记录 | `deque(maxlen=...)` |
 | 多层配置查找 | `ChainMap` |
 | 轻量不可变记录 | `namedtuple` |
 
-这些工具能减少重复代码，但仍要注意 key 不存在时的行为、元素顺序和容器容量。
+这些工具能减少重复代码，但仍要注意键不存在时的行为、元素顺序和容器容量。

@@ -89,7 +89,7 @@ print(score)
 
 EAFP 是 “Easier to Ask Forgiveness than Permission” 的缩写：
 
-下面的代码直接读取 `"score"`。key 不存在时，再捕获 `KeyError`：
+下面的代码直接读取 `"score"`。键不存在时，再捕获 `KeyError`：
 
 ```python
 student = {"name": "小林", "score": 82}
@@ -118,9 +118,9 @@ Python 代码经常使用 EAFP。文件或共享状态可能在检查之后、�
 | 场景 | 更直接的选择 |
 | --- | --- |
 | 条件本身决定业务流程 | LBYL |
-| 正常情况很常见，失败有明确异常 | EAFP |
-| dict 缺少 key 时使用默认值 | `dict.get()` |
-| 缺少 key 时还要创建容器 | `defaultdict` 或 `setdefault()` |
+| 操作通常成功，失败会以明确异常表示 | EAFP |
+| `dict` 缺少键时使用默认值 | `dict.get()` |
+| 缺少键时还要创建容器 | `defaultdict` 或 `setdefault()` |
 | 文件可能被并发删除 | 捕获实际文件操作异常 |
 | 需要避免昂贵或不可逆操作 | 操作前显式校验 |
 
@@ -139,7 +139,7 @@ print(score)
 0
 ```
 
-字典中没有 `"score"`，所以 `get()` 返回给定的默认值 `0`，也不会向字典中新增 key。
+字典中没有 `"score"`，所以 `get()` 返回给定的默认值 `0`，也不会向字典中新增键。
 
 ## 避免捕获过宽
 

@@ -100,7 +100,8 @@ print(values)
 - `dump_json()`；
 - `json_schema()`。
 
-TypeAdapter 会构建校验器和 Schema。反复使用时应复用同一个实例，不要在热路径中每次重建。
+TypeAdapter 会构建校验器和 JSON Schema。反复使用时应复用同一个实例，不要在频繁执行、对性能敏感的
+路径（热路径）中每次重建。
 
 ## 用 TypeAdapter 校验事件列表
 

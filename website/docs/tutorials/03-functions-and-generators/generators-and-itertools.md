@@ -1,7 +1,7 @@
 # Python 生成器与 itertools
 
-生成器是一种迭代器。它按需产生数据，不必一次把所有结果放进内存。`yield` 返回一个值并暂停函数，
-`next()` 让函数继续执行。
+生成器是一种迭代器。它按需产生数据，不必一次把所有结果放进内存。`yield` 产出一个值并暂停生成器
+函数，`next()` 让它从暂停处继续执行。
 
 <!-- 对应源码：python/python_interview_practice/04_iterators_generators.py -->
 

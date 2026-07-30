@@ -7,8 +7,8 @@
 
 ## pathlib 路径对象
 
-`pathlib` 用对象表示路径，`/` 运算符负责拼接。下面创建 `data/report.txt`，再读取文件名、后缀和
-父目录：
+`pathlib` 用对象表示路径，`/` 运算符负责拼接。下面构造一个表示 `data/report.txt` 的纯路径对象
+（不会实际创建文件），再读取它的文件名、后缀和父目录：
 
 ```python
 from pathlib import PurePosixPath
@@ -77,7 +77,7 @@ print(lines)
 | `glob()` / `rglob()` | 按模式查找 |
 | `read_text()` / `write_text()` | 一次性读写文本 |
 | `open()` | 以文件对象方式打开 |
-| `resolve()` | 得到规范化绝对路径 |
+| `resolve()` | 得到解析后的绝对路径，并处理 `.`、`..` 和符号链接 |
 | `relative_to()` | 计算相对路径 |
 
 大文件不要一次全部读入内存：
@@ -220,7 +220,7 @@ print(loaded_rows)
 
 ## 使用 DictReader 读取 CSV
 
-上面的代码接着使用 `csv.DictReader` 读取文件。它默认使用第一行作为字典的 key。
+上面的代码接着使用 `csv.DictReader` 读取文件。它默认使用第一行作为字典的键。
 
 运行结果：
 

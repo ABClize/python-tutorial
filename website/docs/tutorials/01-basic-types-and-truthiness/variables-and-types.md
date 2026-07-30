@@ -180,7 +180,7 @@ print("成绩处理完成")
 | `list` | `[1, 2, 3]` | 有序、可修改的序列 |
 | `tuple` | `(1, 2, 3)` | 有序、不可修改的序列 |
 | `set` | `{1, 2, 3}` | 不重复元素的集合 |
-| `dict` | `{"name": "小林"}` | key 与 value 的映射 |
+| `dict` | `{"name": "小林"}` | 键与值的映射 |
 | `NoneType` | `None` | 表示没有值或结果缺失 |
 
 容器类型会在[容器：列表、元组、字典与集合](../04-containers-and-sorting)中详细说明。
@@ -291,6 +291,10 @@ print(round(3.5))
 
 `any()` 常用于判断“是否至少有一个满足条件”，`all()` 常用于判断“是否全部满足条件”：
 
+> 进阶预览：下面的 `score >= 90 for score in scores` 是生成器表达式，可以先把它读作
+> “逐个检查 `scores` 中的分数”。生成器表达式将在
+> [生成器与 itertools](../03-functions-and-generators/generators-and-itertools#生成器表达式)中详细说明。
+
 ```python
 scores = [82, 91, 55]
 
@@ -310,12 +314,17 @@ True
 ```
 
 列表中有一个分数不低于 `90`，所以第一行是 `True`。并非所有分数都及格，所以第二行是 `False`。
-空可迭代对象没有任何真值元素，因此 `any([])` 为 `False`；它也没有任何反例，因此
-`all([])` 为 `True`。
+`any()` 只有遇到真值元素才返回 `True`，空列表中没有这样的元素，所以 `any([])` 为 `False`。
+`all()` 只有遇到假值元素才返回 `False`，空列表中也没有这样的元素，所以 `all([])` 为 `True`。
 
 ### `map()` 与 `filter()`
 
 `map()` 对每个元素调用函数，`filter()` 只保留让判断函数返回真值的元素：
+
+> 进阶预览：下面会先定义两个函数，并在后面用到推导式。如果这些写法还不熟悉，可以先关注
+> `map()` 是“逐个转换”、`filter()` 是“按条件筛选”；函数和推导式分别见
+> [函数定义、调用与参数](../03-functions-and-generators/function-basics)和
+> [集合、并集交集与推导式](../04-containers-and-sorting/sets-and-comprehensions)。
 
 ```python
 def square(number: int) -> int:

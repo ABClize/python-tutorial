@@ -64,7 +64,8 @@ async def load_product(catalog_client):
         return None
 ```
 
-超过 0.5 秒后，timeout 会取消当前 Task 中的等待，并在上下文外抛出 `TimeoutError`。
+超过 0.5 秒后，timeout 会取消当前 Task，在上下文内部产生 `CancelledError`，再由上下文管理器
+转换成外部可捕获的 `TimeoutError`。
 
 ## 超时会触发取消
 
@@ -115,8 +116,8 @@ async def load_product_and_stock(
 
 两个 await 共同使用 1 秒。若第一个耗时 0.8 秒，第二个大约只剩 0.2 秒，而不是重新获得 1 秒。
 
-仓库中的 `OrderService.create_order()` 把一组商品和库存查询放进同一个 timeout。任何上游未能在配置
-时间内完成，服务都会转换成 `UpstreamTimeoutError`。
+仓库中的 `OrderService.create_order()` 把一组商品和库存查询放进同一个 timeout。任何一个下游依赖
+未能在配置时间内完成，服务都会转换成 `UpstreamTimeoutError`。
 
 ## 单次 timeout 会层层累加
 
@@ -165,7 +166,7 @@ if remaining <= 0:
 超时太短会误伤正常长尾请求，太长又不能及时释放容量。设置时需要结合：
 
 - 入口的响应时间目标；
-- 下游 p95、p99 延迟；
+- 下游 p95、p99 延迟，即分别有 95%、99% 的请求耗时不超过该值；
 - 是否还有重试；
 - 连接池和并发上限；
 - 清理与响应生成需要的时间。

@@ -25,8 +25,9 @@ A 开始
 请求超时
 ```
 
-`asyncio.timeout()` 取消当前 Task 中的等待，并在上下文外表现为内置 `TimeoutError`。一个超时上下文
-可以包围多次 await，让它们共享一个时间上限。
+`asyncio.timeout()` 到期时会取消当前 Task，在上下文内部产生 `CancelledError`，再由上下文管理器
+把它转换成外部可捕获的内置 `TimeoutError`。一个超时上下文可以包围多次 await，让它们共享一个
+时间上限。
 
 ## asyncio.wait_for
 
@@ -41,9 +42,9 @@ result = await asyncio.wait_for(
 
 - 多次 await 共享上限：使用 `asyncio.timeout()`；
 - 单个 awaitable 设置上限：可以使用 `wait_for()`；
-- 多层调用链：维护总 deadline，避免每层重新得到完整 timeout。
+- 多层调用链：维护整个操作必须结束的绝对截止时刻（deadline），避免每层重新得到完整 timeout。
 
-超时只说明调用方不再等待，不保证远端副作用没有完成。
+超时会在本地触发取消，但不能保证远端操作已经停止，也不能证明远端副作用没有完成。
 
 ## finally 清理资源
 
@@ -116,5 +117,5 @@ async def worker() -> None:
         raise
 ```
 
-CPU 循环没有 await 时不能及时收到取消。已经提交到远端的操作也可能无法撤销，因此取消语义要和具体
-资源协议一起设计。
+CPU 循环没有 await 时不能及时收到取消。已经提交到远端的操作也可能无法撤销，因此必须结合具体资源
+说明收到取消后哪些步骤会停止、哪些步骤仍可能完成。

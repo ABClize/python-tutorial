@@ -47,7 +47,7 @@ def binary_search(numbers: list[int], target: int) -> int:
 
 ## 大 O 描述增长速度
 
-大 O 关注输入增大时，主要操作次数如何增长。常见量级从慢到快排列如下：
+大 O 关注输入增大时，主要操作次数如何增长。常见量级按增长速度从慢到快排列如下：
 
 ```text
 O(1) < O(log n) < O(n) < O(n log n) < O(n²) < O(2ⁿ) < O(n!)

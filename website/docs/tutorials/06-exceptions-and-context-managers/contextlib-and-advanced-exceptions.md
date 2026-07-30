@@ -97,7 +97,9 @@ False
 True
 ```
 
-`nullcontext(value)` 不增加进入和退出行为。下面的示例把已有的 `StringIO` 直接交给 `with` 使用：
+`nullcontext(value)` 不执行额外的进入或退出操作，只把 `value` 原样交给 `as` 后面的变量。下面故意
+不直接使用 `with existing`，而是借助 `nullcontext` 在不关闭已有 `StringIO` 的前提下统一使用
+`with` 结构：
 
 ```python
 from contextlib import nullcontext
@@ -115,7 +117,8 @@ with nullcontext(existing) as file:
 Python
 ```
 
-`nullcontext` 不会替调用方关闭已有资源，资源所有权仍需明确。
+`StringIO` 自身也是上下文管理器；直接写 `with existing` 会在退出时关闭它。`nullcontext` 不会替
+调用方关闭已有资源，因此资源所有权和后续关闭时机仍需由调用方明确。
 
 ## ExitStack 动态管理多个资源
 
@@ -178,8 +181,8 @@ except* TimeoutError as errors:
 `except*` 会从异常组中拆出匹配部分。多个 `except*` 可以分别处理同一个异常组中的不同子异常，没有被
 处理的部分继续传播。
 
-普通顺序代码通常仍使用普通异常。`ExceptionGroup` 常见于结构化并发和批量操作，因为多个子任务可能
-在相近时间分别失败。
+普通顺序代码通常仍使用普通异常。`ExceptionGroup` 常见于由一个明确范围统一管理多个子任务的并发代码，
+这种做法称为结构化并发。批量操作也可能使用它，因为多个子任务可能在相近时间分别失败。
 
 ## contextlib 使用注意事项
 

@@ -35,7 +35,7 @@ print(withdraw(100, 30))
 | --- | --- |
 | `TypeError` | 值的类型不符合接口 |
 | `ValueError` | 类型正确，但值不在允许范围 |
-| `KeyError`、`IndexError` | key 或索引不存在 |
+| `KeyError`、`IndexError` | 字典键或索引不存在 |
 | `FileNotFoundError` | 指定文件不存在 |
 | `RuntimeError` | 没有更准确内置类型的运行状态错误 |
 

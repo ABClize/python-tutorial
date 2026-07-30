@@ -1,7 +1,8 @@
 # 任务时间线、gather 与 TaskGroup
 
-调用异步函数会得到协程对象。把协程包装成 Task 后，事件循环才会调度它。Task 运行到 `await` 时
-可能暂停，等待完成后再继续。`gather()` 和 `TaskGroup` 都能组织多个 Task，但失败处理方式不同。
+调用异步函数会得到协程对象。协程对象可以由当前协程直接 `await`；需要让它与当前工作并发运行时，
+再把它包装成 Task 交给事件循环调度。Task 运行到 `await` 时可能暂停，等待完成后再继续。
+`gather()` 和 `TaskGroup` 都能组织多个 Task，但失败处理方式不同。
 
 <!-- 对应源码：python/python_interview_practice/13_asyncio_concurrency.py、python/backend_interview/async_patterns.py -->
 
@@ -36,7 +37,7 @@ results = await asyncio.gather(
 结果顺序与传入 awaitable 的顺序一致，不与完成顺序绑定。
 
 默认情况下，一个 awaitable 抛出异常时，调用 `gather()` 的位置得到该异常。`gather()` 不是完整的
-兄弟任务生命周期管理器；需要一项失败就取消其余项时，TaskGroup 语义更明确。
+兄弟任务生命周期管理器；需要一项失败就取消其余项时，TaskGroup 的行为更明确。
 
 ## 把异常作为结果收集
 
@@ -72,7 +73,9 @@ ZeroDivisionError
 
 ## TaskGroup
 
-Python 3.11 提供结构化并发：
+Python 3.11 提供 `TaskGroup`。它把一组相关的子任务放在同一个代码块中：退出代码块前会等待这些任务
+结束，一个任务失败时会统一取消仍在运行的其他任务并处理异常。这种由明确范围统一管理子任务的做法，
+称为结构化并发：
 
 ```python
 async def main() -> None:
@@ -115,4 +118,4 @@ async def run_all(values, run_one):
 | 一项失败，整组取消并收尾 | `TaskGroup` |
 | 需要独立控制单个长期任务 | 保存 `create_task()` 返回值 |
 
-选择的重点是任务所有权和失败语义，不是哪个写法行数更少。
+选择的重点是谁负责管理任务，以及一个任务失败后其他任务怎么办，不是哪个写法行数更少。

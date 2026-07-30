@@ -35,7 +35,7 @@ print(two_sum([2, 7, 11, 15], 9))
 处理到当前元素 `number` 时，需要寻找的是 `target - number`。字典 `seen` 保存“前面出现过的值
 及其下标”。
 
-每轮循环结束后，都满足下面的条件：
+每轮循环开始时，都满足下面的条件：
 
 > 每次循环开始时，`seen` 恰好包含当前下标之前已经处理过的数。
 
@@ -77,7 +77,7 @@ O(n) 时间、O(n) 额外空间。
 如果希望减少额外空间，可以使用左右指针。指针跳过不参与比较的字符，直到相遇：
 
 ```python
-def is_palindrome_in_place(text: str) -> bool:
+def is_palindrome_two_pointer(text: str) -> bool:
     left = 0
     right = len(text) - 1
 

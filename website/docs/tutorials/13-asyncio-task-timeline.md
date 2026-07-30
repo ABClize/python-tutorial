@@ -1,7 +1,8 @@
 # Python asyncio：协程、任务与事件循环
 
-`asyncio` 是 Python 标准库中的异步 I/O 框架。事件循环会在多个协程之间切换，让一个线程同时等待
-许多网络、数据库或消息队列操作。程序还要显式处理任务、异常、超时、取消和并发数量。
+`asyncio` 是 Python 标准库中的异步 I/O 框架。事件循环会调度多个 Task：一个 Task 等待 I/O 时，
+事件循环可以运行其他 Task，让一个线程同时等待许多网络、数据库或消息队列操作。程序还要显式处理
+任务、异常、超时、取消和并发数量。
 
 <!-- 对应源码：python/python_interview_practice/13_asyncio_concurrency.py、python/backend_interview/async_patterns.py -->
 

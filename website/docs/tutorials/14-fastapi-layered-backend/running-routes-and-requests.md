@@ -93,10 +93,10 @@ FastAPI 会依次读取 JSON、创建 `CreateItemRequest`、调用路径函数�
 | --- | --- | --- |
 | `POST /orders` | 创建一个订单 | JSON、`Idempotency-Key` |
 | `POST /orders/bulk` | 批量创建订单 | 批量 JSON |
-| `POST /orders/payment/validate` | 校验支付方式结构 | 判别联合 JSON |
+| `POST /orders/payment/validate` | 校验支付方式结构 | 带 `kind` 类型标记的支付 JSON |
 | `GET /orders` | 分页查询订单 | `offset`、`limit` |
 | `GET /orders/{order_id}` | 查询一个订单 | UUID 路径参数 |
-| `PATCH /orders/{order_id}/status` | 修改订单状态 | JSON、`If-Match` |
+| `PATCH /orders/{order_id}/status` | 修改订单状态 | JSON、`X-Expected-Version` |
 | `GET /orders/{order_id}/summary` | 查询订单与风控摘要 | UUID 路径参数 |
 
 大括号包围的是路径参数。访问 `/orders/abc` 时，FastAPI 会尝试把 `abc` 转成路由声明的 UUID；转换
@@ -182,7 +182,7 @@ curl -X POST http://127.0.0.1:8000/orders \
 
 `id` 和 `created_at` 每次创建时生成，实际值不会与示例相同。
 
-## `response_model` 是输出契约
+## `response_model` 规定输出格式
 
 项目的创建路由声明了响应模型和成功状态：
 
@@ -205,8 +205,8 @@ async def create_order(
 2. 按模型序列化并过滤输出；
 3. 检查服务端返回值是否符合声明。
 
-它不是给编辑器看的装饰。如果实现返回了错误形状，说明服务端违反了自己的契约，FastAPI 不会把未知
-数据不加检查地交给客户端。
+它不是给编辑器看的装饰。如果实现返回的数据不符合声明，说明服务端没有遵守自己规定的输出格式。
+FastAPI 不会把未知数据不加检查地交给客户端。
 
 ## `def` 还是 `async def`
 

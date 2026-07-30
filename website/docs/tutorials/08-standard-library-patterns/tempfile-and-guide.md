@@ -146,7 +146,7 @@ except ValueError:
 | CSV 表格文本 | `csv` |
 | 分级日志 | `logging` |
 | 频次统计 | `collections.Counter` |
-| 按 key 收集值 | `collections.defaultdict` |
+| 按键收集值 | `collections.defaultdict` |
 | 队列和最近记录 | `collections.deque` |
 | 多层配置查找 | `collections.ChainMap` |
 | 时间点、时区和时长 | `datetime`、`zoneinfo` |

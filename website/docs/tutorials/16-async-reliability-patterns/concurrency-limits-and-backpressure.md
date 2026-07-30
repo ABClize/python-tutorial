@@ -1,13 +1,15 @@
 # 并发限制与背压
 
 并发限制控制同一时刻正在执行的任务数量。背压表示下游处理不过来时，上游必须减速、等待或拒绝新
-任务。`Semaphore` 限制运行中的任务，有界 `Queue` 限制等待中的任务。
+任务。`Semaphore` 限制同时进入受保护操作的任务数，有界 `Queue` 限制尚未处理的排队项数量。
+
+这里把发送任务的一方称为上游，把接收并处理任务的一方称为下游。
 
 数据库连接、文件描述符和下游服务容量都有限，不能因为创建 Task 很便宜就无限创建。
 
 <!-- 对应源码：python/backend_interview/async_patterns.py、python/backend_interview/service.py -->
 
-## Semaphore 限制在途数量
+## Semaphore 限制同时执行的操作数
 
 下面让最多 10 个商品查询同时调用下游：
 
@@ -162,16 +164,16 @@ async def queue_worker(
 仓库中的 `queue_worker()` 若在 handler 处抛错，会结束当前 worker。队列中还有项目时，
 `run_queue_pipeline()` 可能停在 `queue.join()`，因为剩余项再也无人消费。
 
-生产级管线必须定义失败协议：
+实际使用时，必须提前决定某个任务失败后怎样处理：
 
 - 任一项失败就取消所有 worker；
 - 单项按条件重试；
-- 失败项写入死信队列；
+- 失败项写入死信队列，即专门保存最终处理失败任务的队列；
 - 记录失败后继续其他项。
 
-仅仅使用 Queue 不会自动获得可靠 worker 池。
+仅仅使用 Queue，不会自动得到一个能够正确处理失败的 worker 池。
 
-## 限制应该放在哪个生命周期
+## 限制对象应该在什么范围内共享
 
 `OrderService` 构造时创建批量 Semaphore。FastAPI 每次请求都会组装新的 Service，因此它主要限制
 单次批量请求内部，并不是全进程共享上限。
@@ -195,7 +197,7 @@ async def queue_worker(
       ↓
 有界等待队列
       ↓
-Semaphore 控制在途数
+Semaphore 控制同时执行的操作数
       ↓
 单次调用 timeout
 ```

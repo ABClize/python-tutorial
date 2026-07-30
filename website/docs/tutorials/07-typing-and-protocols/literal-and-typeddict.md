@@ -1,7 +1,7 @@
 # Python Enum、Literal、类型别名与 TypedDict
 
 普通的 `int`、`str` 和 `dict` 有时说明得不够具体。类型别名给复杂类型起名字，`Literal` 限制可选
-值，`Enum` 创建运行时可用的枚举成员，`TypedDict` 说明字典中有哪些 key。
+值，`Enum` 创建运行时可用的枚举成员，`TypedDict` 说明字典中有哪些键。
 
 <!-- 对应源码：python/python_interview_practice/11_typing_protocols.py -->
 
@@ -52,8 +52,8 @@ print(load_user(UserId(1001)))
 user-1001
 ```
 
-静态检查器会区分 `UserId` 和 `OrderId`。运行时 `NewType` 几乎不增加包装，不能承担范围校验和对象
-行为；需要这些能力时应定义真正的值对象。
+静态检查器会区分 `UserId` 和 `OrderId`。运行时调用 `UserId(value)` 会直接返回原对象，不创建
+包装对象，也不执行范围校验；需要校验或对象行为时，应定义真正的值对象。
 
 ## Literal 限制有限值
 
@@ -226,8 +226,8 @@ print(display_candidate(candidate))
 小林：0 年
 ```
 
-默认情况下每个字段都是必需的。`NotRequired[int]` 表示 key 可以不存在；它不是 `int | None`，key
-存在时 value 仍必须是 int。
+默认情况下每个字段都是必需的。`NotRequired[int]` 表示键可以不存在；它不是 `int | None`，键
+存在时对应的值仍必须是 `int`。
 
 TypedDict 实例在运行时仍是普通 dict：
 
@@ -257,8 +257,8 @@ class UpdateCandidate(TypedDict, total=False):
     years: int
 ```
 
-这里 `candidate_id` 必须存在，`name` 和 `years` 可以省略。是否允许省略 key 与 value 是否允许 None
-是两个独立问题。
+这里 `candidate_id` 必须存在，`name` 和 `years` 可以省略。是否允许省略键，与键对应的值是否允许
+为 `None`，是两个独立问题。
 
 ## TypeGuard 缩窄 TypedDict
 
@@ -308,7 +308,7 @@ if has_experience(candidate):
 | 限制少量固定值 | `Literal` |
 | 组织运行时可遍历的固定成员 | `Enum` |
 | 固定成员还要直接作为字符串使用 | `StrEnum` |
-| 描述既有 dict 的 key 结构 | `TypedDict` |
+| 描述既有 `dict` 的键结构 | `TypedDict` |
 | 需要运行时校验 | Pydantic 或显式校验 |
 | 需要方法和不变量 | dataclass 或普通类 |
 

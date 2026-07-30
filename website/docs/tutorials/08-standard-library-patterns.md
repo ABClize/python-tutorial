@@ -24,6 +24,6 @@ Python 标准库是安装 Python 时自带的一组模块。处理命令行参�
 - [heapq 与 bisect](./08-standard-library-patterns/heapq-and-bisect)：
   维护优先队列、查找 Top-K，并在有序列表中查找插入位置。
 - [functools 函数工具](./08-standard-library-patterns/functools)：
-  缓存函数、固定参数、归约和按类型分派。
+  缓存函数、固定参数、逐步合并一组值和按类型分派。
 - [tempfile、logging 与标准库工具选择](./08-standard-library-patterns/tempfile-and-guide)：
   安全创建临时文件，记录分级日志，并按常见需求选择标准库模块。

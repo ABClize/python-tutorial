@@ -120,7 +120,7 @@ def test_status_update_and_optimistic_lock_conflict(
 
     confirmed = client.patch(
         f"/orders/{order_id}/status",
-        headers={"X-API-Key": "test-api-key", "If-Match": "1"},
+        headers={"X-API-Key": "test-api-key", "X-Expected-Version": "1"},
         json={"status": "confirmed"},
     )
     assert confirmed.status_code == 200
@@ -129,7 +129,7 @@ def test_status_update_and_optimistic_lock_conflict(
 
     stale = client.patch(
         f"/orders/{order_id}/status",
-        headers={"X-API-Key": "test-api-key", "If-Match": "1"},
+        headers={"X-API-Key": "test-api-key", "X-Expected-Version": "1"},
         json={"status": "cancelled"},
     )
     assert stale.status_code == 409
@@ -144,14 +144,14 @@ def test_invalid_status_transition_returns_conflict(
     order_id = create_order(client, auth_headers, order_payload)["order"]["id"]
     cancelled = client.patch(
         f"/orders/{order_id}/status",
-        headers={"X-API-Key": "test-api-key", "If-Match": "1"},
+        headers={"X-API-Key": "test-api-key", "X-Expected-Version": "1"},
         json={"status": "cancelled"},
     )
     assert cancelled.status_code == 200
 
     invalid = client.patch(
         f"/orders/{order_id}/status",
-        headers={"X-API-Key": "test-api-key", "If-Match": "2"},
+        headers={"X-API-Key": "test-api-key", "X-Expected-Version": "2"},
         json={"status": "confirmed"},
     )
     assert invalid.status_code == 409

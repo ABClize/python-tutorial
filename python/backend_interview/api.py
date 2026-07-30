@@ -96,7 +96,7 @@ async def update_order_status(
     order_id: UUID,
     command: UpdateOrderStatusRequest,
     service: ServiceDep,
-    expected_version: Annotated[int, Header(alias="If-Match", ge=1)],
+    expected_version: Annotated[int, Header(alias="X-Expected-Version", ge=1)],
 ) -> OrderResponse:
     order = await service.change_status(order_id, command.status, expected_version)
     return OrderResponse.from_domain(order)

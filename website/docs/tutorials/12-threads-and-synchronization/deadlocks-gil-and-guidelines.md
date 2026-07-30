@@ -80,7 +80,8 @@ with ThreadPoolExecutor(max_workers=4) as executor:
         future.result()
 ```
 
-`result()` 会重新抛出异常。若完全丢弃 Future，失败可能只留下不明显的日志或被忽略。
+`result()` 会重新抛出异常。若不保存并检查 Future，其中保存的异常可能始终无人读取，任务失败也不会
+进入调用方的处理流程。
 
 线程和线程池都要有明确关闭条件：
 

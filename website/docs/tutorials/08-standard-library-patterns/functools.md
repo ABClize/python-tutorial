@@ -44,7 +44,8 @@ print(fibonacci.cache_info().currsize)
 
 ## partial 固定部分参数
 
-`partial()` 可以预先填写一部分参数。下面先固定税率，再重复计算不同价格：
+`partial()` 可以预先填写一部分参数。下面固定 `int()` 的 `base=2`，得到一个把二进制字符串转换为
+整数的可调用对象：
 
 ```python
 from functools import partial
@@ -64,9 +65,10 @@ print(base_two("1111"))
 
 `partial()` 返回一个新可调用对象，预先固定部分参数。它适合把通用函数调整为回调需要的接口。
 
-## reduce
+## reduce 逐步合并一组值
 
-`reduce()` 把二元函数连续应用到序列：
+`reduce()` 先合并前两个值，再把结果与下一个值合并，直到得到一个最终结果。这种把一组值逐步合并成
+一个值的过程称为归约：
 
 ```python
 from functools import reduce
@@ -81,8 +83,8 @@ print(reduce(mul, [1, 2, 3, 4], 1))
 24
 ```
 
-求和、最大值和连接字符串应优先使用 `sum()`、`max()`、`join()` 等专用函数。归约规则确实是核心含义
-时再使用 reduce。
+求和、最大值和连接字符串应优先使用 `sum()`、`max()`、`join()` 等专用函数。确实需要自定义逐步
+合并规则时，再使用 `reduce()`。
 
 ## singledispatch
 

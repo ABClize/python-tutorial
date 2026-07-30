@@ -13,7 +13,7 @@
   只重试临时错误，并防止重复请求产生重复副作用。
 - [并发限制与背压](./16-async-reliability-patterns/concurrency-limits-and-backpressure)：
   限制同时执行和等待处理的任务数量。
-- [Single-flight、竞争请求与任务组](./16-async-reliability-patterns/single-flight-and-task-groups)：
-  合并重复请求，竞争第一个成功结果，或让一组任务共同成败。
+- [合并相同键请求、请求竞速与任务组](./16-async-reliability-patterns/single-flight-and-task-groups)：
+  用 single-flight 合并相同键请求，并发竞速第一个成功结果，或让一组任务共同成败。
 - [取消、故障隔离与可观测性](./16-async-reliability-patterns/cancellation-isolation-and-observability)：
   正确停止任务、缩小故障影响并记录运行指标。

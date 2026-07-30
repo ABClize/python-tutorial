@@ -137,7 +137,7 @@ print(apply_rule(200, add_tax))
 212.0
 ```
 
-`formatter = add_tax` 没有圆括号，表示保存函数对象；`add_tax(100)` 才是调用函数。排序的 `key`、
+`formatter = add_tax` 没有圆括号，表示保存函数对象；`add_tax(100)` 才是调用函数。排序的 `key` 参数、
 事件回调、中间件和装饰器都依赖这一特性。
 
 `lambda` 可以创建只包含一个表达式的匿名函数。下面按分数对学生排序：

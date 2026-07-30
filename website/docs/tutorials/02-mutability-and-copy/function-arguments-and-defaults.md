@@ -3,6 +3,9 @@
 调用函数时，传入的对象会交给形参名使用。Python 不会自动复制这个对象。因此，函数可以修改传入的
 列表，可变默认参数也可能在多次调用之间保留内容。
 
+> 阅读提示：本页会直接使用函数定义和类型标注。如果这些写法还不熟悉，可以先阅读
+> [函数定义、调用与参数](../03-functions-and-generators/function-basics)，再回来理解参数与对象引用。
+
 <!-- 对应源码：python/python_interview_practice/03_collections_copy.py -->
 
 ## 函数参数与对象引用
@@ -62,10 +65,8 @@ print("函数外：", my_skills)
 函数内打印新列表 `["Java"]`，函数外仍打印原列表 `["Python"]`。`skills = ["Java"]`
 只改变局部变量 `skills` 的指向，不会改变调用方变量 `my_skills`。
 
-这种参数传递方式常称为“对象引用按值传递”或“共享传参”：
-
-- 函数能够修改形参所指向的可变对象；
-- 函数不能通过重新绑定形参来改变调用方变量的指向。
+调用时，实参所指向的对象会绑定到形参名。函数能够修改形参所指向的可变对象，但不能通过重新绑定
+形参来改变调用方变量的指向。
 
 ## 可变默认参数
 
@@ -122,6 +123,10 @@ print(collect(2))
 两个调用分别得到 `[1]` 和 `[2]`。每次没有传入 `bucket` 时，函数体都会创建一个新列表。
 
 ### dataclass 的可变默认值
+
+> 进阶预览：`dataclass`、类和字段将在
+> [dataclass 与特殊方法](../05-oop-and-data-model/dataclasses-and-special-methods)中详细说明。
+> 此处只需关注 `default_factory` 会为每个实例创建新的默认对象。
 
 `dataclass` 的列表字段也不能直接使用一个共享空列表，应使用 `default_factory`：
 

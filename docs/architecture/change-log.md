@@ -1,5 +1,10 @@
 # 架构变更记录
 
+## 2026-07-31：纠正乐观锁请求头语义
+
+- 订单状态更新接口用 `X-Expected-Version` 传递整数版本号，不再把标准 `If-Match` 当作普通整数头。
+- 保留版本不匹配返回 HTTP 409 的业务冲突语义，并同步 API 测试、后端说明和教程。
+
 ## 2026-07-30：项目更名并接入 GitHub Pages
 
 - 仓库由 `python-interview-learning` 更名为 `python-tutorial`，站点默认地址调整为

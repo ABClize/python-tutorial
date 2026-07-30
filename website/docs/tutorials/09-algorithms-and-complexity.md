@@ -13,4 +13,4 @@
 - [正确性与查找](./09-algorithms-and-complexity/correctness-and-search)：通过每轮循环都保持成立的条件，理解两数之和、回文判断和二分查找。
 - [栈、队列与广度优先搜索](./09-algorithms-and-complexity/stacks-queues-and-bfs)：根据“后进先出”和“先进先出”选择数据结构。
 - [动态规划与序列处理](./09-algorithms-and-complexity/dynamic-programming-and-sequences)：从斐波那契数到合并有序列表、分组和文本处理。
-- [测试与实际测量](./09-algorithms-and-complexity/testing-and-measurement)：边界用例、属性测试和 `timeit` 的基本用法。
+- [测试与实际测量](./09-algorithms-and-complexity/testing-and-measurement)：边界用例、基于性质的测试和 `timeit` 的基本用法。

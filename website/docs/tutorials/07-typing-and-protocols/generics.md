@@ -79,7 +79,7 @@ def louder(animal: AnimalT) -> AnimalT:
     return animal
 ```
 
-`bound=Animal` 允许 Animal 的任意子类，返回值仍保留具体子类类型。
+`bound=Animal` 允许 `Animal` 本身及其任意子类，静态检查器仍能保留传入对象的具体类型。
 
 ## 受约束 TypeVar
 

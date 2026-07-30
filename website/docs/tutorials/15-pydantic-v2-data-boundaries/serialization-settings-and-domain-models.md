@@ -243,7 +243,8 @@ Pydantic 模型校验成功，不表示一次业务操作必然可以执行。�
 | `orm_mode = True` | `from_attributes=True` |
 | `pydantic.BaseSettings` | `pydantic_settings.BaseSettings` |
 
-迁移不能只批量替换名称。validator 模式、严格转换、配置键和序列化行为也要按 v2 语义重新测试。
+迁移不能只批量替换名称。validator 模式、严格转换、配置键和序列化行为也要按照 v2 的实际行为重新
+测试。
 
 ## Pydantic 数据处理检查清单
 

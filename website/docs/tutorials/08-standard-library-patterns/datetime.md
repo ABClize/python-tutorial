@@ -37,9 +37,9 @@ print(finished_at - started_at)
 
 不要用字符串加减模拟日期运算。跨日、闰年和月份长度应由 datetime 处理。
 
-## naive 与 aware datetime
+## 不带和带时区信息的 datetime
 
-没有时区信息的 datetime 称为 naive datetime：
+没有时区信息的 datetime 通常称为 naive datetime：
 
 ```python
 from datetime import datetime
@@ -54,8 +54,9 @@ print(value.tzinfo)
 None
 ```
 
-带 `tzinfo` 的称为 aware datetime。跨系统保存时间点时通常使用 UTC aware datetime，展示时转换到
-用户时区。
+带有可用时区信息、能够确定 UTC 偏移量的 datetime 称为 aware datetime。仅让 `tzinfo` 不为
+`None` 还不够，它的 `utcoffset()` 也必须能返回偏移量。跨系统保存时间点时通常使用 UTC aware
+datetime，展示时再转换到用户时区。
 
 ## zoneinfo 转换时区
 
@@ -104,6 +105,6 @@ print(value.strftime("%Y年%m月%d日 %H:%M"))
 
 ## 使用注意事项
 
-- 不要直接比较 naive 和 aware datetime。
+- 不要直接比较不带时区信息的 datetime（naive）和带时区信息的 datetime（aware）。
 - 跨系统时间点通常使用 UTC，展示时转换时区。
 - 时长使用 `timedelta`，不要把秒数和时间点混在一起。

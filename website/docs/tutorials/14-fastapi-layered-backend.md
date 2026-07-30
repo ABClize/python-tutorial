@@ -12,7 +12,7 @@ FastAPI 是用于编写 HTTP API 的 Python Web 框架。仓库中的订单 API 
 - [依赖注入、应用生命周期与中间件](./14-fastapi-layered-backend/dependencies-and-lifecycle)：
   使用 `Depends` 提供对象，并管理请求级和应用级资源。
 - [一次请求如何穿过各层](./14-fastapi-layered-backend/request-flow-and-layers)：
-  查看 API、Schema、服务、领域、仓储和网关分别处理什么。
+  查看 API、请求与响应模型、服务、领域、仓储和网关分别处理什么。
 - [持久化、幂等与乐观锁](./14-fastapi-layered-backend/persistence-idempotency-and-locking)：
   防止重复创建和并发更新覆盖数据。
 - [错误响应、批量接口与 OpenAPI](./14-fastapi-layered-backend/errors-batch-and-openapi)：

@@ -29,6 +29,10 @@ python/
 
 依赖和工具由 `uv` 管理。执行命令的工作目录是 `python/`，包导入根也是该目录。
 
+`backend_interview` 的订单状态更新接口使用整数请求头 `X-Expected-Version` 传递调用方看到的版本号；
+版本不匹配属于业务并发冲突，返回 HTTP 409。该示例没有复用标准 `If-Match`，因为 `If-Match`
+要求使用实体标签（ETag）并遵循 HTTP 条件请求语义。
+
 ## 教程站点
 
 ```text

@@ -71,7 +71,7 @@ curl -X POST http://127.0.0.1:8000/orders \
 
 ### 乐观锁状态更新
 
-`PATCH /orders/{order_id}/status` 使用 `If-Match` 请求头传入客户端看到的版本号。
+`PATCH /orders/{order_id}/status` 使用 `X-Expected-Version` 请求头传入客户端看到的版本号。
 仓储保存前比较当前版本和期望版本：一致才更新并递增版本，不一致返回 409。
 这能避免两个调用方基于旧状态互相覆盖。
 
@@ -99,7 +99,7 @@ curl -X POST http://127.0.0.1:8000/orders \
 1. `dependencies.py::require_api_key`：观察依赖树如何注入设置。
 2. `service.py::create_order`：观察 TaskGroup 中目录和库存任务。
 3. `repository.py::create`：观察幂等键并发竞争为何只能创建一个订单。
-4. `repository.py::save`：修改 `If-Match`，观察乐观锁冲突。
+4. `repository.py::save`：修改 `X-Expected-Version`，观察乐观锁冲突。
 5. `main.py::request_context_middleware`：观察请求 ID 的设置与清理。
 6. `async_patterns.py::AsyncSingleFlightCache.get_or_create`：观察并发未命中合并。
 

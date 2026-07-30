@@ -10,7 +10,8 @@
 ## 本章内容
 
 - [测量方法与 timeit](./10-performance-and-memory/measurement-and-timeit)：确定指标、控制测量范围并比较小段代码。
-- [使用 cProfile 定位热点](./10-performance-and-memory/profiling-with-cprofile)：读懂调用次数、自身耗时和累计耗时。
+- [使用 cProfile 找出最耗时的函数](./10-performance-and-memory/profiling-with-cprofile)：
+  找到最耗时、最值得优先检查的部分（性能热点），并读懂调用次数、自身耗时和累计耗时。
 - [测量 Python 内存](./10-performance-and-memory/measuring-memory)：使用 `tracemalloc`、`getsizeof()` 和 `__slots__`。
 - [迭代器、垃圾回收与 RSS](./10-performance-and-memory/iterators-gc-and-rss)：理解惰性计算、引用计数、循环引用和进程内存。
 - [泄漏、缓存与优化顺序](./10-performance-and-memory/leaks-caches-and-optimization)：排查持续增长并决定先优化哪里。

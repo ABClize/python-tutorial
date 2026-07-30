@@ -53,7 +53,8 @@ async def serial() -> list[str]:
 
 ## 并发等待
 
-下面先创建两个 Task，再一起等待结果：
+下面把两个协程交给 `gather()`。`gather()` 会自动把协程安排为 Task，让它们并发运行，再一起等待
+结果：
 
 ```python
 async def concurrent() -> list[str]:
@@ -120,5 +121,5 @@ first = await first_task
 second = await second_task
 ```
 
-后一种方式需要自己负责兄弟任务失败、取消和异常处理。共同组成一个用例的任务通常使用 TaskGroup 更
-清楚。
+后一种方式需要自己负责兄弟任务失败、取消和异常处理。属于同一组并发操作的任务通常使用 TaskGroup
+更清楚。

@@ -1,6 +1,7 @@
 # 持久化、幂等与乐观锁
 
-持久化是把数据保存到内存仓储、文件或数据库。幂等表示同一个请求重复执行时，不会重复产生副作用。
+存储可以使用内存、文件或数据库。持久化通常特指把数据写入进程重启后仍能保留的文件或数据库；当前
+内存仓储只实现存储接口，不提供这种持久性。幂等表示同一个请求重复执行时，不会重复产生副作用。
 乐观锁使用版本号检查数据是否已被其他请求修改。
 
 网络请求可能重发，多个客户端也可能同时写入。只在服务层“先查询、再写入”仍然会出现竞态，最终
@@ -59,7 +60,7 @@ class OrderRepository(Protocol):
 
 `created: false` 表示这次请求复用了已有订单，没有再次执行创建操作。
 
-## 服务层提前查询只是快速路径
+## 服务层提前查询可以减少重复工作
 
 服务先查询已有结果：
 
@@ -117,7 +118,7 @@ async def find_replay(
 
 只在 Python 进程中加锁无法约束其他进程或其他服务器实例。
 
-## 幂等键还要绑定请求语义
+## 幂等键还要绑定请求内容
 
 完整实现通常会保存请求体摘要：
 
@@ -133,21 +134,22 @@ async def find_replay(
 
 ## 乐观锁解决并发更新
 
-订单响应带有 `version`。客户端更新状态时把读到的版本放入 `If-Match`：
+订单响应带有 `version`。客户端更新状态时，把读到的整数版本放入自定义请求头
+`X-Expected-Version`：
 
 ```bash
 curl -X PATCH \
   http://127.0.0.1:8000/orders/ORDER_UUID/status \
   -H 'Content-Type: application/json' \
   -H 'X-API-Key: development-only-key' \
-  -H 'If-Match: 1' \
+  -H 'X-Expected-Version: 1' \
   -d '{"status": "confirmed"}'
 ```
 
 仓储保存前比较版本：
 
 ```text
-存储中的 version == If-Match
+存储中的 version == X-Expected-Version
     是：保存新状态，并把版本加 1
     否：抛出 OptimisticLockError
 ```
@@ -155,11 +157,15 @@ curl -X PATCH \
 假设 A、B 都读到版本 1：
 
 ```text
-A 携带 If-Match: 1，更新成功，版本变成 2
-B 仍携带 If-Match: 1，更新失败，返回 409
+A 携带 X-Expected-Version: 1，更新成功，版本变成 2
+B 仍携带 X-Expected-Version: 1，更新失败，返回 409
 ```
 
 没有这个比较时，B 会基于旧数据覆盖 A 的更新。
+
+这里没有使用标准 `If-Match`，因为 `If-Match` 应携带服务器通过 `ETag` 返回的实体标签
+（entity-tag），例如 `If-Match: "1"`，条件不满足时通常返回 `412 Precondition Failed`。本项目
+选择自定义整数版本头，并把版本不匹配作为业务并发冲突返回 409。
 
 ## 乐观锁与互斥锁不是一回事
 
@@ -181,8 +187,8 @@ WHERE id = :id AND version = :expected_version
 
 领域对象在目标状态与当前状态相同时返回自身。服务层不会调用 `save()`，版本也不会增加。
 
-这是一种“无变化即不写入”的语义。它是否适合真实系统，要看业务是否还需要记录每一次操作尝试、
-审计事件或命令 ID，不能仅凭技术习惯决定。
+这里采用“状态没有变化就不写入”的处理方式。它是否适合真实系统，要看业务是否还需要记录每一次操作
+尝试、审计事件或命令 ID，不能仅凭技术习惯决定。
 
 ## 仓储写入需要保证什么
 

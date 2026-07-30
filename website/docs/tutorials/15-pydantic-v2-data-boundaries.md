@@ -1,7 +1,8 @@
 # Pydantic v2 数据边界
 
-Pydantic 是 Python 的数据校验库。它根据类型标注读取字典、JSON、环境变量或普通对象，把合法输入
-转换成模型，并为错误输入生成结构化错误。模型输出时，还可以控制字段和序列化格式。
+Pydantic 是 Python 的数据校验库。它根据类型标注校验字典、JSON 或普通对象，把合法输入转换成模型，
+并为错误输入生成结构化错误。模型输出时，还可以控制字段和序列化格式。需要从环境变量加载配置时，
+使用基于同一套校验机制的独立包 `pydantic-settings`。
 
 <!-- 对应源码：python/backend_interview/schemas.py、python/backend_interview/pydantic_patterns.py、python/backend_interview/config.py -->
 

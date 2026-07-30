@@ -44,7 +44,8 @@ async def test_async_result_explicit() -> None:
 
 ## AsyncMock
 
-异步依赖必须返回可等待对象：
+被 `await` 的依赖调用必须返回可等待对象。使用 `AsyncMock` 模拟异步方法时，`return_value`
+直接设置为等待完成后的最终结果即可：
 
 ```python
 from unittest.mock import AsyncMock
@@ -73,11 +74,11 @@ async def test_load_name() -> None:
 - Semaphore 并发上限是否生效；
 - 测试后是否残留 Task 或连接。
 
-不要只验证内部 await 次数。实现可以重构，但对外的超时、取消和资源语义应保持稳定。
+不要只验证内部 await 次数。实现可以重构，但对外表现出的超时、取消和资源清理行为应保持稳定。
 
 ## unittest.TestCase
 
-下面的例子使用 `TestCase` 检查加法结果和异常：
+下面的例子使用 `TestCase` 检查折扣计算结果：
 
 ```python
 import unittest

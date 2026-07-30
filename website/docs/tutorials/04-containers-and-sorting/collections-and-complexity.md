@@ -30,11 +30,11 @@ print(counts.most_common(2))
 ```
 
 `"python"` 出现三次，未出现的 `"rust"` 返回 `0`。`most_common(2)` 返回出现次数最多的两项。
-普通 dict 读取缺失 key 会报错，而 `Counter` 对缺失元素返回计数 `0`。
+普通 `dict` 读取缺失键会报错，而 `Counter` 对缺失元素返回计数 `0`。
 
 ## `defaultdict`
 
-`defaultdict` 在访问缺失 key 时调用工厂函数创建默认值。下面按单词长度分组：
+`defaultdict` 在访问缺失键时调用工厂函数创建默认值。下面按单词长度分组：
 
 ```python
 from collections import defaultdict
@@ -56,8 +56,8 @@ print(dict(groups))
 
 `defaultdict(list)` 会为每个新长度创建空列表，然后把单词加入对应列表。它适合分组和累计。
 
-与 `dict.get()` 不同，读取缺失 key 会把新 key 真正写入 `defaultdict`，因此不要用无意的读取来
-探测 key 是否存在。
+与 `dict.get()` 不同，读取缺失键会把新键真正写入 `defaultdict`，因此不要用无意的读取来
+探测键是否存在。
 
 ## `deque`
 
@@ -145,9 +145,15 @@ print(moving_average([1, 2, 3, 4, 5], 3))
 ```
 
 三个窗口分别是 `[1, 2, 3]`、`[2, 3, 4]` 和 `[3, 4, 5]`，平均值为 `2.0`、`3.0`
-和 `4.0`。每个元素最多入队和出队一次，时间复杂度为 O(n)，额外空间为 O(window_size)。
+和 `4.0`。这里的 `n` 表示输入元素数量，`window_size` 表示窗口大小。每个元素最多入队和出队一次，
+所以时间复杂度为 O(n)，额外空间为 O(window_size)。
 
 ## 常见操作的复杂度
+
+下面使用大 O 记号描述数据量增长时，操作成本怎样变化。O(1) 表示成本基本不随元素数量增长，
+O(n) 表示成本大致随元素数量线性增长。“平均”是对常见输入情况估算，“摊销”则把偶尔较慢的操作
+平均到连续多次操作中。更完整的解释见
+[复杂度基础](../09-algorithms-and-complexity/complexity-basics)。
 
 下面列出常见操作的平均或摊销复杂度：
 
@@ -157,7 +163,7 @@ print(moving_average([1, 2, 3, 4, 5], 3))
 | list 末尾追加、弹出 | 摊销 O(1) |
 | list 头部插入、删除 | O(n) |
 | list 按值查找 | O(n) |
-| dict 按 key 查询 | 平均 O(1) |
+| dict 按键查询 | 平均 O(1) |
 | set 成员判断 | 平均 O(1) |
 | 排序 | O(n log n) |
 
@@ -169,7 +175,7 @@ print(moving_average([1, 2, 3, 4, 5], 3))
 - 不要在遍历 list 或 dict 时无计划地修改其长度。
 - list 的原地修改方法通常返回 `None`。
 - tuple 中仍可引用可变对象。
-- dict key 和 set 元素必须可哈希。
+- dict 键和 set 元素必须可哈希。
 - 不要依赖 set 的显示和遍历顺序。
 - 需要保序去重时，应明确采用 dict 或 `seen` 算法。
 - 排序复杂对象时，应通过 `key` 写清主要和次要规则。
